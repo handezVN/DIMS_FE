@@ -1,0 +1,31 @@
+.container {
+    min-height: 1000px;
+    display: flex;
+    justify-content: center;
+}
+.loginForm {
+    width: 420px;
+}
+.login_orWrapper {
+    border-top: 1px solid #d9d9d9;
+    text-align: center;
+    margin-top: 30px;
+}
+.login_or {
+    display: inline-block;
+    padding: 5px 15px;
+    transform: translateY(-15px);
+    background-color: #fff;
+}
+.titleForm {
+    padding-top: 50px;
+    padding-bottom: 10px;
+}
+
+.btn-register {
+    margin-top: 10px;
+    width: 100%;
+}
+.form-group {
+    margin-bottom: 20px;
+}

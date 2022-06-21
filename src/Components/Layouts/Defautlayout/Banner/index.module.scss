@@ -1,0 +1,33 @@
+.Banner .slick-dots {
+    position: absolute;
+    bottom: 20px;
+    display: block;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+.Banner .slick-dots li.slick-active button:before {
+    color: #337ab7;
+    font-size: 10px;
+}
+.Banner .slick-dots li button:before {
+    font-size: 10px;
+    color: #337ab7;
+}
+.container {
+    width: 100%;
+    overflow: hidden;
+}
+
+.Banner img {
+    width: 100%;
+    object-fit: fill;
+}
+@media (max-width: 740px) {
+    .Banner img {
+        width: auto;
+        height: 200px;
+        object-fit: cover;
+    }
+}

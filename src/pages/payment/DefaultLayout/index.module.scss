@@ -1,0 +1,71 @@
+.header img {
+    height: 47px;
+    width: auto;
+}
+.header {
+    background-color: white;
+    box-shadow: 0 0px 8px rgb(0 0 0 / 15%);
+}
+
+.header_inner {
+    width: 100%;
+    padding: 15px 0px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-right {
+    display: flex;
+    align-items: center;
+}
+.step-space {
+    width: 50px;
+    height: 2px;
+    margin: 0 15px;
+    background-color: #dadada;
+}
+.step-item {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    letter-spacing: 0.7px;
+}
+.step-checkbox {
+    width: 25px;
+    height: 25px;
+    border: 1px solid #dadada;
+    border-radius: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 10px 0 5px;
+}
+.step-checkbox i {
+    color: white;
+}
+.step-item-active .step-checkbox {
+    background-color: var(--bluesky);
+}
+.step-item-active {
+    color: var(--bluesky);
+}
+
+@media (max-width: 780px) {
+    .header_inner img {
+        display: none;
+    }
+    .step-item {
+        display: flex;
+        flex-direction: column;
+        width: 33.33%;
+        text-align: center;
+    }
+    .step-space {
+        display: none;
+    }
+    .header-right {
+        display: flex;
+        width: 100%;
+        align-items: flex-start;
+    }
+}
