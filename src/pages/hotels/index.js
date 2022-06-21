@@ -96,7 +96,7 @@ function Hotels() {
             default:
                 break;
         }
-    }, [sortvalue]);
+    }, [sortvalue, hotels]);
     return (
         <div>
             <SearchBox logo="false" location={namelocation} night={night} checkinDate={checkinDate} />
@@ -318,11 +318,10 @@ function Hotels() {
                                         return (
                                             <div key={hotel.hotelId}>
                                                 <HotelItem
-                                                    image={
-                                                        hotel.photos.map((photo) => {
-                                                            if (photo.isMain) return photo.photoUrl;
-                                                        }) || 'https://picsum.photos/200/300?random=1'
-                                                    }
+                                                    image={hotel.photos.map((photo) => {
+                                                        if (photo.isMain) return photo.photoUrl;
+                                                        return 'https://picsum.photos/200/300?random=1';
+                                                    })}
                                                     name={hotel.hotelName}
                                                     address={hotel.hotelAddress}
                                                     oldPrice={hotel.smallPrice * 1500}

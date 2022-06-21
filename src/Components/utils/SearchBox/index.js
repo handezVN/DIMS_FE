@@ -59,7 +59,8 @@ export default function SearchBox(props) {
         if (search.length < 2) {
             setLocations(defaultLocation);
         }
-    }, [search, isInput, defaultLocation]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [search, isInput]);
     const [locations, setLocations] = useState(defaultLocation);
 
     // setSuggest(false)

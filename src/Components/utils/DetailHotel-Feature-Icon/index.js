@@ -14,6 +14,7 @@ export default function Feature_Icon(props) {
                     width={32}
                     height={32}
                     style={{ objectFit: 'fill', objectPosition: '50% 50%' }}
+                    alt={props.title}
                 />
                 {props.title}
             </div>

@@ -16,8 +16,9 @@ export default function HotelDetail() {
     const [Params] = useSearchParams();
     const navigator = useNavigate();
     // // UseState and set Params
-    const [checkinDate, setCheckInDate] = useState(Params.get('ArrivalDate'));
-    const [night, setNight] = useState(Params.get('TotalNight') || 1);
+    // eslint-disable-next-line
+    const [checkinDate, setCheckInDate] = useState(Params.get('ArrivalDate')); // eslint-disable-next-line
+    const [night, setNight] = useState(Params.get('TotalNight') || 1); // eslint-disable-next-line
     const [peopleQuanity, setPeopleQuanity] = useState(Params.get('peopleQuanity') || 1);
     const hotelid = Params.get('hotelId');
     // UseState
