@@ -18,10 +18,8 @@ const HotelItem = (props) => {
         <div className="listHotel__item">
             <div className="hotelItem">
                 <div className="row">
-                    <div className="col-lg-4 col-4">
-                        <div className="hotelItem__img">
-                            <img src={props.image} alt={props.name} class="" />
-                        </div>
+                    <div className={cx('hotelItem__img', 'col-lg-4 col-4')}>
+                        <img src={props.image} alt={props.name} class="" />
                     </div>
                     <div className={cx('hotelItem_mobile', 'col-lg-8', 'col-8')}>
                         <div className="row">
@@ -51,6 +49,7 @@ const HotelItem = (props) => {
                     </div>
                 </div>
             </div>
+            <div className={cx('mobile-click')} onClick={HandleViewRoom}></div>
         </div>
     );
 };

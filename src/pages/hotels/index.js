@@ -98,14 +98,35 @@ function Hotels() {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [sortvalue]);
+    //
+    const [scrollPosition, setScrollPosition] = useState(0);
+    const handleScroll = () => {
+        const position = window.pageYOffset;
+        setScrollPosition(position);
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
     return (
         <div>
             <SearchBox logo="false" location={namelocation} night={night} checkinDate={checkinDate} />
 
             <div className="hotelList__body">
                 <div className="container">
-                    <div className="row">
-                        <div className={cx('filter_box', 'col-sm-3', filter ? 'filter_box_open' : 'filter_box_close')}>
+                    <div className={cx('inner')}>
+                        <div
+                            className={cx(
+                                'filter_box',
+                                filter ? 'filter_box_open' : 'filter_box_close',
+                                scrollPosition > 350 ? 'sticky' : '',
+                            )}
+                        >
                             <div className={cx('headerPopup')}>
                                 Filter
                                 <button style={{ border: 'none', backgroundColor: '#1890ff' }}>
@@ -245,13 +266,12 @@ function Hotels() {
                                 </div>
                             </div>
                         </div>
-                        <div className={cx('hotels_box', 'col-sm-9')}>
+                        <div className={cx('hotels_box')}>
                             <div>
-                                <h5 className="d-flex">
+                                <h5>
                                     <Link to="/">
-                                        {' '}
-                                        <h5>Trang chủ {'> '}</h5>{' '}
-                                    </Link>{' '}
+                                        <h5>{'Trang chủ >'}</h5>
+                                    </Link>
                                     {namelocation} Tìm được : {hotels.length} Khách Sạn
                                 </h5>
                                 <hr></hr>
@@ -303,17 +323,6 @@ function Hotels() {
                                 </div>
                             </div>
                             <div className="listHotel__item">
-                                <HotelItem
-                                    image={'https://picsum.photos/id/1015/250/150/'}
-                                    name="Hello"
-                                    address="Hello 123"
-                                    oldPrice={200 * 1500}
-                                    price={200 * 1000}
-                                    id={3}
-                                    province={namelocation}
-                                    checkinDate={checkinDate}
-                                    night={night}
-                                />
                                 {hotels.length > 0 ? (
                                     hotels.map((hotel) => {
                                         return (

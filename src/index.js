@@ -10,13 +10,13 @@ import './index.css';
 axios.defaults.baseURL = 'https://dims-system.herokuapp.com';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <React.StrictMode>
-        <DataProvider>
-            <GlobalStyles>
-                <App />
-            </GlobalStyles>
-        </DataProvider>
-    </React.StrictMode>,
+    // <React.StrictMode>
+    <DataProvider>
+        <GlobalStyles>
+            <App />
+        </GlobalStyles>
+    </DataProvider>,
+    // </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

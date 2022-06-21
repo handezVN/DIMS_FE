@@ -24,7 +24,7 @@ export default function HotelDetail() {
     // UseState
     const [hotel, setHotel] = useState({});
     const [listImages, setListImages] = useState([]);
-    const [smallPrice, setSmallPrice] = useState(200000);
+    const [roomSmallPrice, setRoomSmallPrice] = useState({});
     let list = [];
     // Call API
     useEffect(() => {
@@ -39,13 +39,22 @@ export default function HotelDetail() {
             .then((data) => {
                 setHotel(data);
                 setListImages(data.photos);
+                let tmp_price = {
+                    categoryname: '',
+                    price: 200000,
+                    roomid: '',
+                };
                 data.lsCate.map((cate) => {
                     cate.rooms.map((room) => {
-                        if (room.price < smallPrice) setSmallPrice(room.price);
-                        return null;
+                        if (room.price < tmp_price.price)
+                            tmp_price = {
+                                categoryname: cate.categoryName,
+                                price: room.price,
+                                roomid: room.roomId,
+                            };
                     });
-                    return null;
                 });
+                setRoomSmallPrice(tmp_price);
                 dispatch(dispatchSuccess());
             })
             .catch((err) => dispatch(dispatchFailed()));
@@ -159,7 +168,7 @@ export default function HotelDetail() {
                     <hr></hr>
                     <div className={cx('detailHotel_Rate-Price')}>
                         <div>
-                            <h3>{hotel.hotelName}</h3>
+                            <h3>{roomSmallPrice.categoryname}</h3>
                             <h5 style={{ color: 'rgba(1,148,243,1.00)' }}>{hotel.totalRate} Điểm Ấn Tượng</h5>
                             <h6>Đánh giá từ 125 du khách</h6>
                         </div>
@@ -167,12 +176,17 @@ export default function HotelDetail() {
                             <h3>Giá phòng mỗi đêm từ</h3>
                             <div>
                                 <del>
-                                    {(smallPrice * 1000 * 1.5).toLocaleString(undefined, { maximumFractionDigits: 0 })}{' '}
+                                    {(roomSmallPrice.price * 1000 * 1.5).toLocaleString(undefined, {
+                                        maximumFractionDigits: 0,
+                                    })}{' '}
                                     VNĐ
                                 </del>
                                 <br />
                                 <span color="red">
-                                    {(smallPrice * 1000).toLocaleString(undefined, { maximumFractionDigits: 0 })} VNĐ
+                                    {(roomSmallPrice.price * 1000).toLocaleString(undefined, {
+                                        maximumFractionDigits: 0,
+                                    })}{' '}
+                                    VNĐ
                                 </span>
                             </div>
                         </div>

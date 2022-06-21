@@ -69,7 +69,7 @@ export default function GalleryImage(props) {
             setSlideRight(false);
         }, 1000);
     };
-    console.log(props.list);
+
     return (
         <div>
             <div className={cx('DetailHotel_Room_Image')}>
@@ -124,7 +124,6 @@ export default function GalleryImage(props) {
                         slideRight_S1 ? 'animation_slideRight_S1' : '',
                     )}
                 >
-                    {console.log(props.list)}
                     <img
                         src={props.list.length > 0 ? props.list[indexImage].photoUrl : images[0].original}
                         alt="hello"

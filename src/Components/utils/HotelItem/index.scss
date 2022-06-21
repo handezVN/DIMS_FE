@@ -1,0 +1,35 @@
+.hotelItem {
+    display: flex;
+}
+.mobile-click {
+    z-index: -1000;
+}
+
+@media (max-width: 740px) {
+    .hotelItem__img {
+        width: 35%;
+        padding: 0;
+    }
+    .hotelItem__img > img {
+        width: 100%;
+        padding: 0;
+    }
+    .hotelItem_mobile {
+        width: 65%;
+    }
+    .hotelItem {
+        padding: 0;
+    }
+    .listHotel__item {
+        box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+        position: relative;
+    }
+    .mobile-click {
+        z-index: 1000;
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}

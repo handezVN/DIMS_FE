@@ -45,38 +45,38 @@ export default function RoomType(props) {
     const [comTmp, setComTmp] = useState([]);
     const [flag, setFlag] = useState(true);
     useEffect(() => {
+        let flag = true;
+        let tmp = [];
         if (props.props.rooms.length > 0) {
-            props.props.rooms.map((room) => {
-                if (comTmp.length < 1) {
-                    setComTmp([
-                        {
-                            price: room.price,
-                            description: room.roomDescription,
-                            count: 1,
-                        },
-                    ]);
-                } else {
-                    const newState = comTmp.map((item, index) => {
-                        setFlag(true);
-                        if (item.price !== room.price) setFlag(false);
-                        if (item.description !== room.roomDescription) setFlag(false);
-                        if (flag) {
-                            return { ...item, count: item.count++ };
-                        } else {
-                            setComTmp([
-                                ...comTmp,
-                                {
-                                    price: room.price,
-                                    description: room.roomDescription,
-                                    count: 1,
-                                },
-                            ]);
-                        }
-                        return item;
+            props.props.rooms.map((room, index) => {
+                console.log(room, index);
+                if (tmp.length < 1) {
+                    tmp.push({
+                        description: room.roomDescription,
+                        price: room.price,
+                        count: 1,
                     });
-                    setComTmp(newState);
+                } else {
+                    const tmp_index = tmp.map((check, index) => {
+                        flag = true;
+                        if (check.price !== room.price) flag = false;
+                        if (check.description !== room.roomDescription) flag = false;
+                        if (flag) return index;
+                        return null;
+                    });
+
+                    if (!flag) {
+                        tmp.push({
+                            description: room.roomDescription,
+                            price: room.price,
+                            count: 1,
+                        });
+                    } else {
+                        tmp[tmp_index].count = tmp[tmp_index].count + 1;
+                    }
                 }
-                return null;
+                setComTmp(tmp);
+                // tmp.push(index);
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -87,14 +87,13 @@ export default function RoomType(props) {
             <h5>{props.props.categoryName}</h5>
             <div className={cx('row', 'DetailHotel_Room_inner')}>
                 <div className={cx('col-md-4', 'DetailHotel_Room_Image')}>
-                    {console.log(props.props.catePhotos)}
                     <GalleryImage list={props.props.catePhotos} />
                 </div>
                 <div className={cx('col-md-8', 'DetailHotel_Room_Info')}>
-                    {comTmp.map((tmp) => {
+                    {comTmp.map((tmp, index) => {
                         return (
                             <>
-                                <div>
+                                <div key={index}>
                                     <h5>{props.props.categoryName}</h5>
                                     <div className="row">
                                         <div className={cx('col-md-4', 'DetailHotel_Room_Info_Header')}>
