@@ -25,7 +25,10 @@
         "redux": "^4.2.0",
         "redux-devtools-extension": "^2.13.9",
         "slick-carousel": "^1.8.1",
-        "web-vitals": "^2.1.4"
+        "web-vitals": "^2.1.4",
+        "force-resolutions": "^1.0.10",
+        "sass": "^1.51.0",
+        "scss": "^0.2.4"
     },
     "scripts": {
         "start": "react-scripts start",
@@ -52,11 +55,7 @@
             "last 1 safari version"
         ]
     },
-    "devDependencies": {
-        "force-resolutions": "^1.0.10",
-        "sass": "^1.51.0",
-        "scss": "^0.2.4"
-    },
+    "devDependencies": {},
     "resolutions": {
         "autoprefixer": "10.4.5"
     }
