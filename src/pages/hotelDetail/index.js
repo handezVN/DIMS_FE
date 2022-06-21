@@ -19,7 +19,7 @@ export default function HotelDetail() {
     // eslint-disable-next-line
     const [checkinDate, setCheckInDate] = useState(Params.get('ArrivalDate')); // eslint-disable-next-line
     const [night, setNight] = useState(Params.get('TotalNight') || 1); // eslint-disable-next-line
-    const [peopleQuanity, setPeopleQuanity] = useState(Params.get('peopleQuanity') || 1);
+    const [peopleQuanity, setPeopleQuanity] = useState(Params.get('peopleQuanity') || 1); // eslint-disable-next-line
     const hotelid = Params.get('hotelId');
     // UseState
     const [hotel, setHotel] = useState({});

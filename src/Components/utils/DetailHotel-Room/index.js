@@ -87,6 +87,7 @@ export default function RoomType(props) {
             <h5>{props.props.categoryName}</h5>
             <div className={cx('row', 'DetailHotel_Room_inner')}>
                 <div className={cx('col-md-4', 'DetailHotel_Room_Image')}>
+                    {console.log(props.props.catePhotos)}
                     <GalleryImage list={props.props.catePhotos} />
                 </div>
                 <div className={cx('col-md-8', 'DetailHotel_Room_Info')}>

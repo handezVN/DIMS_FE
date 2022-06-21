@@ -124,7 +124,11 @@ export default function GalleryImage(props) {
                         slideRight_S1 ? 'animation_slideRight_S1' : '',
                     )}
                 >
-                    <img src={props.list[indexImage].photoUrl} alt="hello"></img>
+                    {console.log(props.list)}
+                    <img
+                        src={props.list.length > 0 ? props.list[indexImage].photoUrl : images[0].original}
+                        alt="hello"
+                    ></img>
                 </div>
                 <div className={cx('gallery_thumnail')}>
                     {props.list.map((image, index) => {
