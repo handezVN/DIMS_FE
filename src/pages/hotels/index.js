@@ -96,7 +96,8 @@ function Hotels() {
             default:
                 break;
         }
-    }, [sortvalue, hotels]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [sortvalue]);
     return (
         <div>
             <SearchBox logo="false" location={namelocation} night={night} checkinDate={checkinDate} />
