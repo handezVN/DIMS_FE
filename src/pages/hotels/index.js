@@ -235,6 +235,47 @@ function Hotels() {
                                 </div>
                                 <div className="filterBox__item">
                                     <div className="filterBox__checked">
+                                        <p className="filterBox__title">Tiện nghi</p>
+                                        <div></div>
+                                        <div className={cx('filterItem_Checkbox')}>
+                                            <Checkbox onChange={onChangeChecked} value={'wifi'}>
+                                                Wifi
+                                            </Checkbox>
+                                        </div>
+                                        <div className={cx('filterItem_Checkbox')}>
+                                            <Checkbox onChange={onChangeChecked} value={'pool'}>
+                                                Hồ Bơi
+                                            </Checkbox>
+                                        </div>
+                                        <div className={cx('filterItem_Checkbox')}>
+                                            <Checkbox onChange={onChangeChecked} value={'parking'}>
+                                                Chỗ Đậu Xe
+                                            </Checkbox>
+                                        </div>
+                                        <div className={cx('filterItem_Checkbox')}>
+                                            <Checkbox onChange={onChangeChecked} value={'restaurent'}>
+                                                Nhà hàng
+                                            </Checkbox>
+                                        </div>
+                                        <div className={cx('filterItem_Checkbox')}>
+                                            <Checkbox onChange={onChangeChecked} value={'elevator'}>
+                                                Thang máy
+                                            </Checkbox>
+                                        </div>
+                                        <div className={cx('filterItem_Checkbox')}>
+                                            <Checkbox onChange={onChangeChecked} value={'gym'}>
+                                                Trung tâm thể dục
+                                            </Checkbox>
+                                        </div>
+                                        <div className={cx('filterItem_Checkbox')}>
+                                            <Checkbox onChange={onChangeChecked} value={'meeting'}>
+                                                Phòng họp
+                                            </Checkbox>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="filterBox__item">
+                                    <div className="filterBox__checked">
                                         <p className="filterBox__title">Loại hình lưu trú</p>
                                         <div></div>
                                         <div className={cx('filterItem_Checkbox')}>

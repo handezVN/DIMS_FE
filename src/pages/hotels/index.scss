@@ -55,6 +55,8 @@
     border-radius: 20px;
     width: 300px;
     height: 100%;
+    overflow: hidden;
+    overflow-y: auto;
 }
 .hotels_box {
     min-height: 800px;
@@ -303,4 +305,29 @@
 .sticky {
     position: fixed;
     top: 0;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+.filter_box:hover {
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
 }
