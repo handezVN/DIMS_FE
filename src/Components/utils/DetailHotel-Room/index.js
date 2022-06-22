@@ -43,7 +43,6 @@ export default function RoomType(props) {
 
     // const [count, setCount] = useState(0);
     const [comTmp, setComTmp] = useState([]);
-    const [flag, setFlag] = useState(true);
     useEffect(() => {
         let flag = true;
         let tmp = [];
@@ -77,6 +76,7 @@ export default function RoomType(props) {
                 }
                 setComTmp(tmp);
                 // tmp.push(index);
+                return null;
             });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

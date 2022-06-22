@@ -44,8 +44,8 @@ export default function HotelDetail() {
                     price: 200000,
                     roomid: '',
                 };
-                data.lsCate.map((cate) => {
-                    cate.rooms.map((room) => {
+                data.lsCate.forEach((cate) => {
+                    cate.rooms.forEach((room) => {
                         if (room.price < tmp_price.price)
                             tmp_price = {
                                 categoryname: cate.categoryName,
