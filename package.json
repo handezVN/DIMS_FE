@@ -60,8 +60,5 @@
             "last 1 safari version"
         ]
     },
-    "devDependencies": {},
-    "resolutions": {
-        "autoprefixer": "10.4.5"
-    }
+    "devDependencies": {}
 }
