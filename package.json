@@ -1,7 +1,10 @@
 {
-    "name": "tiktok-ui",
-    "version": "0.1.0",
+    "name": "dims-user",
+    "version": "1.0.0",
     "private": true,
+    "engines": {
+        "node": "16.x"
+    },
     "dependencies": {
         "@fortawesome/react-fontawesome": "^0.1.18",
         "@testing-library/jest-dom": "^5.16.4",
