@@ -34,7 +34,7 @@ export default function PaymentPage2() {
             setBooking(parse_booking);
             setImg(parse_booking.hotelImg[0].photoUrl);
         }
-
+        setBooking(parse_booking);
         // localStorage.removeItem('booking');
     }, []);
     const handleSubmit = () => {
