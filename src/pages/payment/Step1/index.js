@@ -26,12 +26,15 @@ export default function PaymentPage2() {
         const parse_booking = JSON.parse(stringif_booking);
         const stringif_booking_info = localStorage.getItem('booking-info');
         const info = JSON.parse(stringif_booking_info);
-        setName(info.name);
-        setNumber(info.number);
-        setEmail(info.email);
-        setRole(info.role);
-        setBooking(parse_booking);
-        setImg(parse_booking.hotelImg[0].photoUrl);
+        if (info) {
+            setName(info.name);
+            setNumber(info.number);
+            setEmail(info.email);
+            setRole(info.role);
+            setBooking(parse_booking);
+            setImg(parse_booking.hotelImg[0].photoUrl);
+        }
+
         // localStorage.removeItem('booking');
     }, []);
     const handleSubmit = () => {
