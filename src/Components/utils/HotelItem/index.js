@@ -1,10 +1,12 @@
 import classNames from 'classnames/bind';
 import styles from './index.scss';
 import { Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 const cx = classNames.bind(styles);
 const HotelItem = (props) => {
     const price = parseInt(props.price);
     const oldPrice = parseInt(props.oldPrice);
+    const navigator = useNavigate();
     const HandleViewRoom = () => {
         window.open(
             `/hotels/hoteldetail?hotelId=${props.id}&ArrivalDate=${props.checkinDate}&TotalNight=${
