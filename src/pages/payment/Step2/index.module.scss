@@ -14,10 +14,79 @@
     margin-right: 30px;
     box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
     background-color: white;
-    padding: 10px;
     height: 100%;
+    border-radius: 5px;
 }
-
+.inner-left-navbar {
+    width: 30%;
+    background-color: rgb(7, 62, 104);
+    height: 200px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.inner-left-navbar-title {
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 15px;
+    border-bottom: 2px solid;
+    font-size: 18px;
+    font-weight: 500;
+}
+.inner-left-navbar-item {
+    color: white;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+    border: none;
+    background-color: rgb(7, 62, 104);
+    text-align: left;
+}
+.inner-left-content-title {
+    background-color: rgb(241, 248, 252);
+    padding: 16px;
+    color: rgb(13, 127, 204);
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+}
+.inner-left-content-method {
+    padding: 15px;
+}
+.banking-note {
+    color: rgb(104, 113, 118);
+    padding-bottom: 15px;
+}
+.banking-needread {
+    color: rgb(3, 18, 26);
+    line-height: 24px;
+    font-weight: 500;
+    font-size: 16px;
+}
+.banking-needread-content {
+    padding: 0 10px 0 10px;
+}
+.banking-needread-content li {
+    margin-left: 15px;
+}
+.banking-needread-content ul {
+    list-style: disc;
+}
+.banking-selection-title {
+    color: rgb(3, 18, 26);
+    line-height: 24px;
+    font-weight: 500;
+    font-size: 16px;
+}
+.selection {
+    background-color: white;
+    color: rgb(7, 62, 104);
+}
+.inner-left-content {
+    width: 70%;
+}
 .inner-right {
     width: 36%;
 }

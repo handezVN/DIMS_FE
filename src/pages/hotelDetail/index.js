@@ -9,7 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import * as SearchApi from '../../api/SearchApi';
 import { useDispatch } from 'react-redux';
 import { dispatchFecth, dispatchFailed, dispatchSuccess } from '../../redux/actions/authAction';
+import { createContext } from 'react';
 import GalleryMainImage from '../../Components/utils/DetailHotel-MainImageGallery';
+export const roomContext = createContext();
 export default function HotelDetail() {
     const cx = classNames.bind(styles);
     const dispatch = useDispatch();
@@ -126,7 +128,11 @@ export default function HotelDetail() {
             title: 'WiFi',
         },
     ];
-
+    // Scroll Focus
+    const scrolltoRoom = () => {
+        const e = document.getElementById('rooms');
+        e.scrollIntoView();
+    };
     return (
         <div>
             <div className={cx('container_body')}>
@@ -192,7 +198,7 @@ export default function HotelDetail() {
                         </div>
                     </div>
                     <div className={cx('detailHotel_Btn')}>
-                        <button className={cx('detailHotel_Btn-Book')} onClick={() => navigator('/payment/step1')}>
+                        <button className={cx('detailHotel_Btn-Book')} onClick={scrolltoRoom}>
                             Đặt Ngay
                         </button>
                     </div>
@@ -212,13 +218,23 @@ export default function HotelDetail() {
                 </div>
             </div>
             <div className={cx('container_body')}>
-                <div className={cx('DetailHotel_Rooms')}>
-                    {hotel.lsCate
-                        ? hotel.lsCate.map((cate) => {
-                              return <RoomType props={cate} />;
-                          })
-                        : ''}
-                </div>
+                <roomContext.Provider
+                    value={{
+                        date: checkinDate,
+                        night: night,
+                        hotelname: hotel.hotelName,
+                        hotelAddress: hotel.hotelAddress,
+                        hotelImg: listImages,
+                    }}
+                >
+                    <div className={cx('DetailHotel_Rooms')} id="rooms">
+                        {hotel.lsCate
+                            ? hotel.lsCate.map((cate, index) => {
+                                  return <RoomType props={cate} key={index} />;
+                              })
+                            : ''}
+                    </div>
+                </roomContext.Provider>
             </div>
         </div>
     );

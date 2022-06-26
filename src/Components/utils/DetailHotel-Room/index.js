@@ -4,6 +4,9 @@ import classNames from 'classnames/bind';
 import GalleryImage from '../DetailHotel-ImageGallery';
 import bedFront from '../../../asset/bed-front.png';
 import guestIcon from '../../../asset/guest.png';
+import { useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import { roomContext } from '../../../pages/hotelDetail';
 export default function RoomType(props) {
     const services = [
         {
@@ -40,15 +43,29 @@ export default function RoomType(props) {
         },
     ];
     const cx = classNames.bind(styles);
+    const navigator = useNavigate();
+    const hotelContext = useContext(roomContext);
+    const handleBookNow = ({ price, title, quantity }) => {
+        console.log(hotelContext);
+        const newContext = {
+            ...hotelContext,
+            price: price,
+            title: title,
+            quantity: quantity,
+        };
+        localStorage.setItem('booking', JSON.stringify(newContext));
+
+        navigator('/payment/step1');
+    };
 
     // const [count, setCount] = useState(0);
     const [comTmp, setComTmp] = useState([]);
+
     useEffect(() => {
         let flag = true;
         let tmp = [];
         if (props.props.rooms.length > 0) {
             props.props.rooms.map((room, index) => {
-                console.log(room, index);
                 if (tmp.length < 1) {
                     tmp.push({
                         description: room.roomDescription,
@@ -81,9 +98,8 @@ export default function RoomType(props) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.props]);
-
     return (
-        <div className={cx('DetailHotel_Room')}>
+        <div className={cx('DetailHotel_Room')} key={props.key}>
             <h5>{props.props.categoryName}</h5>
             <div className={cx('row', 'DetailHotel_Room_inner')}>
                 <div className={cx('col-md-4', 'DetailHotel_Room_Image')}>
@@ -172,7 +188,18 @@ export default function RoomType(props) {
                                                     VNĐ
                                                 </span>
                                                 <i>/ phòng / đêm</i>
-                                                <button className={cx('DetailHotel_Room_Info_Button')}>Đặt Ngay</button>
+                                                <button
+                                                    className={cx('DetailHotel_Room_Info_Button')}
+                                                    onClick={() =>
+                                                        handleBookNow({
+                                                            price: tmp.price,
+                                                            title: props.props.categoryName,
+                                                            quantity: props.props.quanity,
+                                                        })
+                                                    }
+                                                >
+                                                    Đặt Ngay
+                                                </button>
                                                 <i>Còn {tmp.count} phòng</i>
                                             </div>
                                         </div>

@@ -16,18 +16,6 @@ export default function GalleryImage(props) {
             original: 'https://picsum.photos/id/1019/1000/600/',
             thumbnail: 'https://picsum.photos/id/1019/250/150/',
         },
-        {
-            original: 'https://picsum.photos/id/1018/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1015/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1019/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1019/250/150/',
-        },
     ];
     const [indexImage, setIndexImage] = useState(0);
     const [gallery, setGallery] = useState(false);
@@ -73,7 +61,7 @@ export default function GalleryImage(props) {
     return (
         <div>
             <div className={cx('DetailHotel_Room_Image')}>
-                {props.list ? (
+                {props.list.length > 0 ? (
                     props.list.map((image, index) => {
                         if (index <= 3) {
                             return (

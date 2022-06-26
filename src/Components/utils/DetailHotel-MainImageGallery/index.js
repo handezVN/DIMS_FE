@@ -90,7 +90,7 @@ export default function GalleryMainImage(props) {
                                 <img
                                     style={{ objectFit: 'fill', objectPosition: '50% 50%' }}
                                     src={image.photoUrl}
-                                    key={index}
+                                    key={`Thumnailmain${index}`}
                                     onClick={() => handleOpenImage(index)}
                                     className={cx(indexImage === index ? 'selected' : '')}
                                     alt=""
