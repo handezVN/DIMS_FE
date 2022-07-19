@@ -14,10 +14,115 @@
     margin-right: 30px;
     box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
     background-color: white;
-    padding: 10px;
     height: 100%;
+    border-radius: 5px;
+}
+.inner-left-navbar {
+    width: 30%;
+    background-color: rgb(7, 62, 104);
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.inner-left-navbar-title {
+    width: 100%;
+    text-align: center;
+    color: white;
+    padding: 15px;
+    border-bottom: 2px solid;
+    font-size: 18px;
+    font-weight: 500;
+}
+.inner-left-navbar-item {
+    color: white;
+    padding: 15px;
+    font-size: 15px;
+    font-weight: 500;
+    width: 100%;
+    border: none;
+    background-color: rgb(7, 62, 104);
+    text-align: left;
+}
+.banking-selection-item {
+    display: flex;
+    border: 1px solid rgba(205, 208, 209, 1);
+    padding: 16px;
+    border-radius: 5px;
+    align-items: center;
+    margin-top: 12px;
+    width: 100%;
+    justify-content: space-between;
 }
 
+.banking-selection-button {
+    background-color: white;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    border: 1px solid rgba(205, 208, 209, 1);
+    margin-right: 10px;
+    display: inline-block;
+    position: relative;
+}
+.banking-selection-button-dot {
+    position: absolute;
+    background-color: #1890ff;
+    height: 10px;
+    width: 10px;
+    top: 5px;
+    left: 5px;
+    border-radius: 50%;
+}
+.banking-selection-items {
+    width: 100%;
+    border: none;
+    // height: 100%;
+    background-color: white;
+    margin-top: 12px;
+}
+.inner-left-content-title {
+    background-color: rgb(241, 248, 252);
+    padding: 16px;
+    color: rgb(13, 127, 204);
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    text-align: center;
+}
+.inner-left-content-method {
+    padding: 15px;
+}
+.banking-note {
+    color: rgb(104, 113, 118);
+    padding-bottom: 15px;
+}
+.banking-needread {
+    color: rgb(3, 18, 26);
+    line-height: 24px;
+    font-weight: 500;
+    font-size: 16px;
+}
+.banking-needread-content {
+    padding: 0 10px 0 10px;
+}
+.banking-needread-content li {
+    margin-left: 15px;
+}
+.banking-needread-content ul {
+    list-style: disc;
+}
+.banking-selection-title {
+    color: rgb(3, 18, 26);
+    line-height: 24px;
+    font-weight: 500;
+    font-size: 16px;
+}
+.selection {
+    background-color: white;
+    color: rgb(7, 62, 104);
+}
+.inner-left-content {
+    width: 70%;
+}
 .inner-right {
     width: 36%;
 }
@@ -166,7 +271,81 @@
 .headerPopup {
     display: none;
 }
+.banking-coupon {
+    display: flex;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+.banking-coupon-input {
+    width: 200px;
+    border: 1px solid rgba(205, 208, 209, 1);
+    border-radius: 6px;
+    line-height: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 7px;
+    margin-right: 16px;
+}
+.banking-coupon-input-btn {
+    width: calc(100% - 216px);
+    background-color: rgb(242, 243, 243);
+    outline-width: 0px;
+    border: none;
+    font-size: 14px;
+    padding: 5px;
+    border-radius: 6px;
+    font-weight: 700;
+    color: rgba(205, 208, 209, 1);
+}
+.active {
+    background-color: #1890ff;
+    color: white;
+}
+.banking-coupon-input-btn.active:hover {
+    color: #1890ff;
+    background-color: white;
+    border: 1px solid #1890ff;
+}
+.banking-payment {
+    display: flex;
+    justify-content: end;
+}
 
+.banking-payment button {
+    padding: 10px;
+    border: none;
+    background-color: #ff8917;
+    width: 200px;
+    border-radius: 10px;
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+}
+.banking-usecoupon {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.bookinguser-title {
+    font-size: 16px;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+}
+.bookinguser-btnedit {
+    color: #1890ff;
+}
+.bookinguser-btnedit:hover {
+    text-decoration: underline;
+}
+.bookinguser-info {
+    display: flex;
+    justify-content: space-between;
+}
+.stripe-button {
+    height: 20px;
+    width: 200px;
+}
 @media (max-width: 780px) {
     .inner-left {
         width: 100%;

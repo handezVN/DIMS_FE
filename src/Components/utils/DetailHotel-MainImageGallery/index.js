@@ -54,7 +54,7 @@ export default function GalleryMainImage(props) {
                         {props.list.map((image, index) => {
                             if (index < 3)
                                 return (
-                                    <div key={`${index}main`} className={cx('gallery_image-thumnail-item')}>
+                                    <div key={index} className={cx('gallery_image-thumnail-item')}>
                                         <div
                                             className={cx(index === 2 ? 'viewAll' : 'hidden')}
                                             onClick={() => setGallery(!gallery)}

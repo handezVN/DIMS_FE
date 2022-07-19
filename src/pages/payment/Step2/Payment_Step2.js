@@ -3,20 +3,27 @@ import PaymentHeader from '../DefaultLayout/header';
 import classNames from 'classnames/bind';
 import styles from './index.module.scss';
 import moment from 'moment';
+import Banking from './Banking';
+import { Link } from 'react-router-dom';
+import CreditCard from './Credit';
 export default function PaymentPage2() {
     const cx = classNames.bind(styles);
     const [img, setImg] = useState('');
     const [booking, setBooking] = useState({});
     const [viewInfo, setViewInfo] = useState(false);
+    const [bookinguser, setBooingUser] = useState('');
+
     useEffect(() => {
         const stringif_booking = localStorage.getItem('booking');
         const parse_booking = JSON.parse(stringif_booking);
         const stringif_booking_info = localStorage.getItem('booking-info');
         const info = JSON.parse(stringif_booking_info);
+        setBooingUser(info);
         setImg(parse_booking.hotelImg[0].photoUrl);
         setBooking(parse_booking);
     }, []);
     const [method, setMethod] = useState('banking');
+
     return (
         <div>
             <div className={cx('reset-css')}>
@@ -53,37 +60,8 @@ export default function PaymentPage2() {
                                     <div className={cx('inner-left-content')}>
                                         <div className={cx('inner-left-content-title')}>Thông tin thanh toán</div>
                                         <div className={cx('inner-left-content-method')}>
-                                            {method.match('banking') ? (
-                                                <div>
-                                                    <div className={cx('banking-title')}>
-                                                        <h5>Chuyển khoản ngân hàng</h5>
-                                                    </div>
-                                                    <div className={cx('banking-note')}>
-                                                        Bạn có thể chuyển tiền mặt tại quầy giao dịch hoặc chuyển khoản
-                                                        qua Internet Banking và trạm ATM.
-                                                    </div>
-                                                    <div className={cx('banking-needread')}>
-                                                        Lưu ý trước khi thanh toán
-                                                    </div>
-                                                    <div className={cx('banking-needread-content')}>
-                                                        <ul>
-                                                            <li>
-                                                                Bạn cần phải nhập <b>mã chặt chỗ </b> vào mục
-                                                                <b> Nội Dung Chuyển Khoản</b>.
-                                                            </li>
-                                                            <li>Phí chuyển khoản sẽ do người chuyển trả.</li>
-                                                        </ul>
-                                                    </div>
-                                                    <div className={cx('banking-selection')}>
-                                                        <div className={cx('banking-selection-title')}>
-                                                            Chọn ngân hàng
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ) : (
-                                                ''
-                                            )}
-                                            {method.match('credit') ? <div>Credit</div> : ''}
+                                            {method.match('banking') ? <Banking></Banking> : ''}
+                                            {method.match('credit') ? <CreditCard></CreditCard> : ''}
                                         </div>
                                     </div>
                                 </div>
@@ -187,12 +165,41 @@ export default function PaymentPage2() {
                                             </div>
                                         </div>
                                         <div>(Đã bao gồm thuế VAT)</div>
+                                        <hr></hr>
+                                        <div>
+                                            <div className={cx('bookinguser-title')}>
+                                                <div>Thông tin đặt phòng</div>{' '}
+                                                <Link className={cx('bookinguser-btnedit')} to={'/payment/step1'}>
+                                                    Sửa
+                                                </Link>
+                                            </div>
+                                            <div className={cx('bookinguser-info')}>
+                                                <div className={cx('bookinguser-info-left')}>Người đặt phòng</div>
+                                                <div className={cx('bookinguser-info-right')}>{bookinguser.name}</div>
+                                            </div>
+                                            <div className={cx('bookinguser-info')}>
+                                                <div className={cx('bookinguser-info-left')}>Số điện thoại</div>
+                                                <div className={cx('bookinguser-info-right')}>{bookinguser.number}</div>
+                                            </div>
+                                            <div className={cx('bookinguser-info')}>
+                                                <div className={cx('bookinguser-info-left')}>Email</div>
+                                                <div className={cx('bookinguser-info-right')}>{bookinguser.email}</div>
+                                            </div>
+                                            <div className={cx('bookinguser-info')}>
+                                                <div className={cx('bookinguser-info-left')}>Người nhận phòng</div>
+                                                <div className={cx('bookinguser-info-right')}>
+                                                    {bookinguser.name2 ? bookinguser.name2 : bookinguser.name}
+                                                </div>
+                                            </div>
+                                            <div className={cx('bookinguser-info')}>
+                                                <div className={cx('bookinguser-info-left')}>Số điện thoại</div>
+                                                <div className={cx('bookinguser-info-right')}>
+                                                    {bookinguser.number2 ? bookinguser.number2 : bookinguser.number}
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <hr></hr>
-                            <div className={cx('inner-right-alert', 'alert')}>
-                                Giá còn rẻ hơn khi nhập mã giảm giá (nếu có) ở bước sau
                             </div>
                         </div>
                     </div>

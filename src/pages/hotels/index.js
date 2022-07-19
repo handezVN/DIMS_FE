@@ -308,7 +308,7 @@ function Hotels() {
                             </div>
                         </div>
                         <div className={cx('hotels_box')}>
-                            <div className={cx('hotels_box_title')}>
+                            <div>
                                 <h5>
                                     <Link to="/">
                                         <h5>{'Trang chủ >'}</h5>
