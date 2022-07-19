@@ -1,0 +1,41 @@
+.login-popup{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container{
+    height: 600px;
+    width: 400px;
+    background-color: #fff;
+    z-index: 1;
+}
+.login-popup-over{
+    height: 100%;
+    width: 100%;
+    background-color: #113131;
+    position: fixed;
+    opacity: 0.5;
+}
+.loginForm-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    flex-direction: column;
+}
+.loginForm{
+    padding: 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+.input{
+    width: 90%;
+}

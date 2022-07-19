@@ -11,7 +11,7 @@ export default function BankingMethod(props) {
                         <div className={cx('banking-selection-button')}>
                             <div className={cx(props.selection === true ? 'banking-selection-button-dot' : '')}></div>
                         </div>
-                        {props.name}
+                        <div className={cx('banking-selection-title')}>{props.name}</div>
                     </div>
                 </div>
                 <div className={cx('banking-selection-item-right')}>

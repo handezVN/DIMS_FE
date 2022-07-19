@@ -6,6 +6,8 @@ import moment from 'moment';
 import { Checkbox } from 'antd';
 import { Result, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import LoginPopup from '../../../Components/Layouts/LoginPopup';
 export default function PaymentPage2() {
     const cx = classNames.bind(styles);
     const [takeroom, setTakeRoom] = useState(true);
@@ -21,6 +23,8 @@ export default function PaymentPage2() {
     const [name2, setName2] = useState('');
     const [number2, setNumber2] = useState('');
     const [img, setImg] = useState('');
+    const islogged = useSelector((state) => state.auth.isLogged)
+    console.log(islogged)
     useEffect(() => {
         const stringif_booking = localStorage.getItem('booking');
         const parse_booking = JSON.parse(stringif_booking);
@@ -308,6 +312,10 @@ export default function PaymentPage2() {
                     }
                 />
             )}
+            {
+                islogged  ? '' : <LoginPopup/>
+            }
+            
         </div>
     );
 }

@@ -73,7 +73,7 @@ export default function GalleryImage(props) {
                                     height={144}
                                     style={{ objectFit: 'fill', objectPosition: '50% 50%' }}
                                     src={image.photoUrl}
-                                    key={index}
+                                    key={`${image.photoId}`}
                                     onClick={() => handleOpenImage(index)}
                                     alt=""
                                 />
@@ -123,7 +123,7 @@ export default function GalleryImage(props) {
                             <img
                                 style={{ objectFit: 'fill', objectPosition: '50% 50%' }}
                                 src={image.photoUrl}
-                                key={index}
+                                key={`${image.photoId}`}
                                 onClick={() => handleOpenImage(index)}
                                 className={cx(indexImage === index ? 'selected' : '')}
                                 alt=""

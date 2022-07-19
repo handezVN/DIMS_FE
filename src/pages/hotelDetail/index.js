@@ -48,10 +48,10 @@ export default function HotelDetail() {
                 };
                 data.lsCate.forEach((cate) => {
                     cate.rooms.forEach((room) => {
-                        if (room.price < tmp_price.price)
+                        if (room.roomPrice < tmp_price.price)
                             tmp_price = {
                                 categoryname: cate.categoryName,
-                                price: room.price,
+                                price: room.roomPrice,
                                 roomid: room.roomId,
                             };
                     });
@@ -62,7 +62,6 @@ export default function HotelDetail() {
             .catch((err) => dispatch(dispatchFailed()));
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hotelid, checkinDate, night, peopleQuanity]);
-
     useEffect(() => {
         // Add All Image to List
 

@@ -25,15 +25,6 @@ export default function SearchBox(props) {
         { id: '01', name: 'Thành phố Hà Nội', type: 'Thành phố ' },
         { id: '79', name: 'Thành phố Hồ Chí Minh', type: 'Thành phố ' },
         { id: '77', name: 'Tỉnh Bà Rịa - Vũng Tàu', type: 'Tỉnh' },
-        { id: '01', name: 'Thành phố Hà Nội', type: 'Thành phố ' },
-        { id: '79', name: 'Thành phố Hồ Chí Minh', type: 'Thành phố ' },
-        { id: '77', name: 'Tỉnh Bà Rịa - Vũng Tàu', type: 'Tỉnh' },
-        { id: '01', name: 'Thành phố Hà Nội', type: 'Thành phố ' },
-        { id: '79', name: 'Thành phố Hồ Chí Minh', type: 'Thành phố ' },
-        { id: '77', name: 'Tỉnh Bà Rịa - Vũng Tàu', type: 'Tỉnh' },
-        { id: '01', name: 'Thành phố Hà Nội', type: 'Thành phố ' },
-        { id: '79', name: 'Thành phố Hồ Chí Minh', type: 'Thành phố ' },
-        { id: '77', name: 'Tỉnh Bà Rịa - Vũng Tàu', type: 'Tỉnh' },
     ];
     const handleChangeInput = (e) => {
         setSearch(e.target.value);

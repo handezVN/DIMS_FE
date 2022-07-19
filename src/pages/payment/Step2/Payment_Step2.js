@@ -22,7 +22,7 @@ export default function PaymentPage2() {
         setImg(parse_booking.hotelImg[0].photoUrl);
         setBooking(parse_booking);
     }, []);
-    const [method, setMethod] = useState('banking');
+    const [method, setMethod] = useState('credit');
 
     return (
         <div>
@@ -38,15 +38,7 @@ export default function PaymentPage2() {
                                 <div className="d-flex">
                                     <div className={cx('inner-left-navbar')}>
                                         <div className={cx('inner-left-navbar-title')}>PayMent Method</div>
-                                        <button
-                                            className={cx(
-                                                'inner-left-navbar-item',
-                                                method.match('banking') ? 'selection' : '',
-                                            )}
-                                            onClick={() => setMethod('banking')}
-                                        >
-                                            Chuyển khoản ngân hàng
-                                        </button>
+                                        
                                         <button
                                             className={cx(
                                                 'inner-left-navbar-item',
@@ -56,12 +48,21 @@ export default function PaymentPage2() {
                                         >
                                             Thẻ thanh toán
                                         </button>
+                                        <button
+                                            className={cx(
+                                                'inner-left-navbar-item',
+                                                method.match('banking') ? 'selection' : '',
+                                            )}
+                                            onClick={() => setMethod('banking')}
+                                        >
+                                            Chuyển khoản ngân hàng
+                                        </button>
                                     </div>
                                     <div className={cx('inner-left-content')}>
                                         <div className={cx('inner-left-content-title')}>Thông tin thanh toán</div>
                                         <div className={cx('inner-left-content-method')}>
-                                            {method.match('banking') ? <Banking></Banking> : ''}
                                             {method.match('credit') ? <CreditCard></CreditCard> : ''}
+                                            {method.match('banking') ? <Banking></Banking> : ''}
                                         </div>
                                     </div>
                                 </div>

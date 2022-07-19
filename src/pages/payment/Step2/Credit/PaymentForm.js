@@ -11,12 +11,21 @@ export default function PaymentForm() {
     const cx = classNames.bind(styles);
     const [show, setShow] = useState(false);
     const [inputCoupon, setInputCoupon] = useState('');
+    const [rate,setRate] = useState('23400');
+    const [token,setToken] = useState('');
     const handleSubmit = async (e) => {
+        await axios.get('https://api.exchangerate-api.com/v4/latest/USD').then(result=>{
+            setRate(result.data.rates.VND);
+        })
+        const booking = JSON.parse(localStorage.getItem('booking'));
+        const bookinginfo = JSON.parse(localStorage.getItem('booking-info'));
+        console.log(booking)
+        console.log(bookinginfo);
         e.preventDefault();
         await stripe
             .createToken(elements.getElement(CardNumberElement))
-            .then((token) => console.log(token))
-            .catch((err) => console.log(err));
+            .then((token) => setToken(token.token.id))
+            .catch((err) => alert('Your Card is inCorrect !'));
     };
 
     return (
@@ -44,7 +53,7 @@ export default function PaymentForm() {
                             ></img>
                         </div>
                     </div>
-                    <form onSubmit={handleSubmit}>
+                    
                         <fieldset className="FormGroup">
                             <div className={cx('FormInput')}>
                                 Số thẻ tín dụng
@@ -87,9 +96,9 @@ export default function PaymentForm() {
                             </div>
                         </fieldset>
                         <div className={cx('banking-payment')}>
-                            <button>Thanh Toán</button>
+                            <button onClick={handleSubmit}>Thanh Toán</button>
                         </div>
-                    </form>
+                    
                 </div>
             ) : (
                 <div>
