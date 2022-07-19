@@ -1,11 +1,23 @@
 .hotelItem {
     display: flex;
+    height: 200px;
+    max-height: 200px;
+    padding: 0 10px 0 10px;
+    position: relative;
 }
 .mobile-click {
     z-index: -1000;
 }
-
-@media (max-width: 740px) {
+.hotelItem__img {
+    height: 100%;
+    object-fit: cover;
+}
+.hotelItem__img > img {
+    width: calc(100%);
+    height: 100%;
+    object-fit: cover;
+}
+@media (max-width: 724px) {
     .hotelItem__img {
         width: 35%;
         padding: 0;

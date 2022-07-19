@@ -172,6 +172,9 @@
     background-color: white;
     border-left: 1px solid #d9d9d9;
 }
+.hotels_box_title {
+    padding: 0 20px 0 20px;
+}
 @media (min-width: 990px) {
     .hotelList__tab {
         display: none;
@@ -220,6 +223,7 @@
     .hotels_box {
         width: 100%;
     }
+
     .hotel-sort-box {
         position: fixed;
         top: 50%;

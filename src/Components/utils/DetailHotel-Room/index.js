@@ -69,13 +69,13 @@ export default function RoomType(props) {
                 if (tmp.length < 1) {
                     tmp.push({
                         description: room.roomDescription,
-                        price: room.price,
+                        price: room.roomPrice,
                         count: 1,
                     });
                 } else {
                     const tmp_index = tmp.map((check, index) => {
                         flag = true;
-                        if (check.price !== room.price) flag = false;
+                        if (check.price !== room.roomPrice) flag = false;
                         if (check.description !== room.roomDescription) flag = false;
                         if (flag) return index;
                         return null;
@@ -84,7 +84,7 @@ export default function RoomType(props) {
                     if (!flag) {
                         tmp.push({
                             description: room.roomDescription,
-                            price: room.price,
+                            price: room.roomPrice,
                             count: 1,
                         });
                     } else {
