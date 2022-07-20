@@ -5,6 +5,7 @@ const initialState = {
     isLogged: false,
     isAdmin: false,
     isUser: false,
+    isHost: false,
 };
 
 const authReducer = (state = initialState, action) => {
@@ -22,12 +23,14 @@ const authReducer = (state = initialState, action) => {
                 isLogged: false,
                 user: undefined,
                 isUser: false,
+                isHost: false,
             };
         case ACTIONS.GETUSER:
             return {
                 ...state,
                 isLogged: true,
                 isUser: action.payload.isUser,
+                isHost: action.payload.isHost,
             };
         case ACTIONS.RELOAD:
             const foundUser = localStorage.getItem('user');

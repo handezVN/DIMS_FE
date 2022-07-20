@@ -1,0 +1,55 @@
+.header {
+    height: 60px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: white;
+    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
+    z-index: 2;
+}
+
+.header__inner {
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+.slide-bar {
+    width: 235px;
+    height: 100%;
+    background: #3a3f51;
+}
+.header-container {
+    width: calc(100% - 235px);
+    height: 100%;
+    background: aquamarine;
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+.header_avatar {
+    height: 32px;
+    width: 32px;
+    border-radius: 32px;
+}
+.header_avatar_icon {
+    height: 32px;
+    width: 32px;
+}
+.header_account {
+    width: 120px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: black;
+}
+.dropdown_item {
+    height: 30px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+}

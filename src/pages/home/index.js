@@ -1,16 +1,24 @@
-import { React } from 'react';
+import { React, useEffect } from 'react';
 import Banner from '../../Components/Layouts/Defautlayout/Banner';
 import classNames from 'classnames/bind';
 import styles from './index.scss';
 import SearchBox from '../../Components/utils/SearchBox';
 import { useNavigate } from 'react-router-dom';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 function Home() {
     const cx = classNames.bind(styles);
     const navigation = useNavigate();
     const handleNavigate = (title) => {
         navigation(`/hotels?checkinDate=${moment().format('YYYY-MM-DD')}&night=1&type=areas&namelocation=${title}`);
     };
+    const isHost = useSelector((state) => state.auth.isHost);
+    console.log(isHost);
+    useEffect(() => {
+        if (isHost === true) {
+            navigation('/manager/dashboard');
+        }
+    }, [isHost]);
     return (
         <div>
             <Banner />

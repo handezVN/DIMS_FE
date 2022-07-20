@@ -6,6 +6,9 @@ import HotelDetail from '../pages/hotelDetail';
 import PaymentPage1 from '../pages/payment/Step1/index';
 import PaymentPage2 from '../pages/payment/Step2/Payment_Step2';
 import PaymentPage3 from '../pages/payment/Step3/Payment_Step3';
+import Dashboard from '../pages/Manager/dashboard';
+import Booking from '../pages/Manager/Booking';
+import Rooms from '../pages/Manager/Rooms';
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '/hotels', component: Hotels },
@@ -19,5 +22,9 @@ const privateRoutes = [
     { path: '/payment/step2', component: PaymentPage2 },
     { path: '/payment/step3', component: PaymentPage3 },
 ];
-
-export { publicRoutes, privateRoutes };
+const hostRoutes = [
+    { path: '/manager/dashboard', component: Dashboard },
+    { path: '/manager/booking', component: Booking },
+    { path: '/manager/room', component: Rooms },
+];
+export { publicRoutes, privateRoutes, hostRoutes };

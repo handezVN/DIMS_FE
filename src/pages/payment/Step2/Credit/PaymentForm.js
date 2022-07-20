@@ -11,20 +11,34 @@ export default function PaymentForm() {
     const cx = classNames.bind(styles);
     const [show, setShow] = useState(false);
     const [inputCoupon, setInputCoupon] = useState('');
-    const [rate,setRate] = useState('23400');
-    const [token,setToken] = useState('');
+    const [rate, setRate] = useState('23400');
+    const [token, setToken] = useState('');
     const handleSubmit = async (e) => {
-        await axios.get('https://api.exchangerate-api.com/v4/latest/USD').then(result=>{
-            setRate(result.data.rates.VND);
-        })
         const booking = JSON.parse(localStorage.getItem('booking'));
         const bookinginfo = JSON.parse(localStorage.getItem('booking-info'));
-        console.log(booking)
+        console.log(booking);
         console.log(bookinginfo);
         e.preventDefault();
         await stripe
             .createToken(elements.getElement(CardNumberElement))
-            .then((token) => setToken(token.token.id))
+            .then(async (token) => {
+                await axios.get('https://api.exchangerate-api.com/v4/latest/USD').then((result) => {
+                    console.log({
+                        token: token.token.id,
+                        hotelId: 0,
+                        fullName: bookinginfo.name,
+                        email: bookinginfo.email,
+                        phoneNumber: bookinginfo.number,
+                        arrivalDate: booking.date,
+                        totalNight: booking.night,
+                        peopleQuanity: booking.quantity,
+                        description: bookinginfo.specicalSuggest,
+                        voucherId: '',
+                        currencyRate: result.data.rates.VND,
+                        bookingDetails: booking.room,
+                    });
+                });
+            })
             .catch((err) => alert('Your Card is inCorrect !'));
     };
 
@@ -53,52 +67,51 @@ export default function PaymentForm() {
                             ></img>
                         </div>
                     </div>
-                    
-                        <fieldset className="FormGroup">
-                            <div className={cx('FormInput')}>
-                                Số thẻ tín dụng
-                                <CardNumberElement
-                                    className={cx('Credit-number')}
-                                    options={{ placeholder: 'Số thẻ tín dụng' }}
-                                ></CardNumberElement>
-                                <div className={cx('Credit-content')}>
-                                    <div className={cx('Credit-exp')}>
-                                        Expiration date
-                                        <CardExpiryElement className={cx('Credit-number')}></CardExpiryElement>
-                                    </div>
-                                    <div className={cx('Credit-cvc')}>
-                                        CVC
-                                        <CardCvcElement className={cx('Credit-number')}></CardCvcElement>
-                                    </div>
+
+                    <fieldset className="FormGroup">
+                        <div className={cx('FormInput')}>
+                            Số thẻ tín dụng
+                            <CardNumberElement
+                                className={cx('Credit-number')}
+                                options={{ placeholder: 'Số thẻ tín dụng' }}
+                            ></CardNumberElement>
+                            <div className={cx('Credit-content')}>
+                                <div className={cx('Credit-exp')}>
+                                    Expiration date
+                                    <CardExpiryElement className={cx('Credit-number')}></CardExpiryElement>
                                 </div>
-                                Tên chủ thẻ
-                                <div>
-                                    <input className={cx('Credit-name')} placeholder="Tên chủ thẻ"></input>
-                                </div>
-                                <div className={cx('banking-coupon')}>
-                                    <Switch checked={show} onChange={() => setShow(!show)} /> Thêm mã Coupon
-                                </div>
-                                <div className={cx('banking-usecoupon', show ? '' : 'hidden')}>
-                                    <input
-                                        className={cx('banking-coupon-input')}
-                                        placeholder="EXAMPLE : CHEAPTRAVEL"
-                                        onChange={(e) => setInputCoupon(e.target.value)}
-                                    ></input>
-                                    <button
-                                        className={cx(
-                                            'banking-coupon-input-btn',
-                                            inputCoupon.length > 0 ? 'active' : 'disable',
-                                        )}
-                                    >
-                                        Use Coupon
-                                    </button>
+                                <div className={cx('Credit-cvc')}>
+                                    CVC
+                                    <CardCvcElement className={cx('Credit-number')}></CardCvcElement>
                                 </div>
                             </div>
-                        </fieldset>
-                        <div className={cx('banking-payment')}>
-                            <button onClick={handleSubmit}>Thanh Toán</button>
+                            Tên chủ thẻ
+                            <div>
+                                <input className={cx('Credit-name')} placeholder="Tên chủ thẻ"></input>
+                            </div>
+                            <div className={cx('banking-coupon')}>
+                                <Switch checked={show} onChange={() => setShow(!show)} /> Thêm mã Coupon
+                            </div>
+                            <div className={cx('banking-usecoupon', show ? '' : 'hidden')}>
+                                <input
+                                    className={cx('banking-coupon-input')}
+                                    placeholder="EXAMPLE : CHEAPTRAVEL"
+                                    onChange={(e) => setInputCoupon(e.target.value)}
+                                ></input>
+                                <button
+                                    className={cx(
+                                        'banking-coupon-input-btn',
+                                        inputCoupon.length > 0 ? 'active' : 'disable',
+                                    )}
+                                >
+                                    Use Coupon
+                                </button>
+                            </div>
                         </div>
-                    
+                    </fieldset>
+                    <div className={cx('banking-payment')}>
+                        <button onClick={handleSubmit}>Thanh Toán</button>
+                    </div>
                 </div>
             ) : (
                 <div>

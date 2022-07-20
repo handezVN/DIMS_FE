@@ -45,14 +45,14 @@ export default function RoomType(props) {
     const cx = classNames.bind(styles);
     const navigator = useNavigate();
     const hotelContext = useContext(roomContext);
-    const handleBookNow = ({ price, title, quantity , roomId}) => {
-       
+    const handleBookNow = ({ price, title, quantity, roomId, hotelId }) => {
         const newContext = {
             ...hotelContext,
             price: price,
             title: title,
             quantity: quantity,
-            room : roomId
+            room: [roomId],
+            hotelId: hotelId,
         };
         localStorage.setItem('booking', JSON.stringify(newContext));
 
@@ -67,13 +67,12 @@ export default function RoomType(props) {
         let tmp = [];
         if (props.props.rooms.length > 0) {
             props.props.rooms.map((room, index) => {
-               
                 if (tmp.length < 1) {
                     tmp.push({
                         description: room.roomDescription,
                         price: room.roomPrice,
                         count: 1,
-                        room: room.roomId,
+                        room: [{ roomId: room.roomId }],
                     });
                 } else {
                     const tmp_index = tmp.map((check, index) => {
@@ -89,13 +88,16 @@ export default function RoomType(props) {
                             description: room.roomDescription,
                             price: room.roomPrice,
                             count: 1,
-                            room: [room.roomId]
+                            room: [{ roomId: room.roomId }],
                         });
                     } else {
                         tmp[tmp_index].count = tmp[tmp_index].count + 1;
-                        tmp[tmp_index].room = [tmp[tmp_index].room,room.roomId]
+                        const abc = tmp[tmp_index].room;
+
+                        tmp[tmp_index].room = [...abc, { roomId: room.roomId }];
                     }
                 }
+
                 setComTmp(tmp);
                 // tmp.push(index);
                 return null;
@@ -103,6 +105,7 @@ export default function RoomType(props) {
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [props.props]);
+
     return (
         <div className={cx('DetailHotel_Room')} key={props.key}>
             <h5>{props.props.categoryName}</h5>
@@ -195,15 +198,15 @@ export default function RoomType(props) {
                                                 <i>/ phòng / đêm</i>
                                                 <button
                                                     className={cx('DetailHotel_Room_Info_Button')}
-                                                    onClick={() =>{
-                                                        
+                                                    onClick={() => {
                                                         handleBookNow({
                                                             price: tmp.price,
                                                             title: props.props.categoryName,
                                                             quantity: props.props.quanity,
-                                                            roomId: tmp.room[0] 
-                                                        })}
-                                                    }
+                                                            roomId: tmp.room[0],
+                                                            hotelId: props.props.hotelId,
+                                                        });
+                                                    }}
                                                 >
                                                     Đặt Ngay
                                                 </button>

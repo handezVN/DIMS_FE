@@ -1,0 +1,68 @@
+.SlideBar {
+    position: fixed;
+    height: 100%;
+    width: 235px;
+    background: #3a3f51;
+    z-index: 1;
+    top: 60px;
+}
+.SliderBar_Person {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+.SliderBar_Avatar {
+    height: 75px;
+    width: 75px;
+    border-radius: 75px;
+    margin: 2px;
+}
+.SliderBar_Person {
+    color: #aaadb7;
+}
+.SliderBar_Border_Avatar {
+    border: 3px #aaadb7 solid;
+    border-radius: 75px;
+}
+
+.SliderBar_Person_Name {
+    color: #aaadb7;
+    letter-spacing: 1px;
+    font-size: x-large;
+    font-weight: 600;
+}
+.SliderBar_Person_Role {
+    font-size: small;
+}
+.SliderBar_Person_Select {
+    width: 100%;
+    justify-content: space-around;
+    display: flex;
+    padding: 10px;
+}
+.SliderBar_Person_Select i {
+    cursor: pointer;
+    font-size: 18px;
+}
+.SliderBar_Person_Select i:hover {
+    color: #fff;
+}
+.SlideBar_Item {
+    display: flex;
+    padding: 10px 15px;
+    align-items: center;
+    color: #aaadb7;
+}
+.SlideBar_Item_Title {
+    font-size: medium;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-left: 10px;
+}
+.SlideBar_Item:hover {
+    background: #273244;
+    cursor: pointer;
+    color: #fff;
+}

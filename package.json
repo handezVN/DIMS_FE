@@ -7,6 +7,9 @@
     },
     "dependencies": {
         "@fortawesome/react-fontawesome": "^0.1.18",
+        "@mdi/font": "^7.0.96",
+        "@mdi/js": "^7.0.96",
+        "@mdi/react": "^1.6.0",
         "@stripe/react-stripe-js": "^1.9.0",
         "@testing-library/jest-dom": "^5.16.4",
         "@testing-library/react": "^13.2.0",

@@ -13,7 +13,7 @@ export const GetUser = async (token) => {
     return res.data;
 };
 export const ActiveUser = async ({ token, code }) => {
-    const res = await axios.get(`api/UserManage/Active_Account`, {
+    const res = await axios.get(`api/UserManage/Active-Account`, {
         headers: { Authorization: `Bearer ${token}` },
         params: {
             AcitveCode: code,
