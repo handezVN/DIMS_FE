@@ -366,24 +366,27 @@ function Hotels() {
                             <div className="listHotel__item">
                                 {hotels.length > 0 ? (
                                     hotels.map((hotel) => {
-                                        return (
-                                            <div key={hotel.hotelId}>
-                                                <HotelItem
-                                                    image={hotel.photos.map((photo) => {
-                                                        if (photo.isMain) return photo.photoUrl;
-                                                        return 'https://picsum.photos/200/300?random=1';
-                                                    })}
-                                                    name={hotel.hotelName}
-                                                    address={hotel.hotelAddress}
-                                                    oldPrice={hotel.smallPrice * 1500}
-                                                    price={hotel.smallPrice * 1000}
-                                                    id={hotel.hotelId}
-                                                    province={namelocation}
-                                                    checkinDate={checkinDate}
-                                                    night={night}
-                                                />
-                                            </div>
-                                        );
+                                        if (hotel.totalRoom > 0) {
+                                            return (
+                                                <div key={hotel.hotelId}>
+                                                    <HotelItem
+                                                        image={hotel.photos.map((photo) => {
+                                                            if (photo.isMain) return photo.photoUrl;
+                                                            return 'https://picsum.photos/200/300?random=1';
+                                                        })}
+                                                        name={hotel.hotelName}
+                                                        address={hotel.hotelAddress}
+                                                        oldPrice={hotel.smallPrice * 1500}
+                                                        price={hotel.smallPrice * 1000}
+                                                        id={hotel.hotelId}
+                                                        province={namelocation}
+                                                        checkinDate={checkinDate}
+                                                        night={night}
+                                                    />
+                                                </div>
+                                            );
+                                        }
+                                        return <></>;
                                     })
                                 ) : (
                                     <div>Các Khách Sạn Đã Hết Phòng !</div>
@@ -402,29 +405,6 @@ function Hotels() {
                         <li>Sắp Xếp</li>
                     </button>
                 </ul>
-            </div>
-            <div className="jumbotron text-center">
-                <h1>Hotels</h1>
-                <p>Resize this responsive page to see the effect!</p>
-            </div>
-            <div className="container">
-                <div className="row">
-                    <div className="col-sm-4">
-                        <h3>Column 1</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-                    </div>
-                    <div className="col-sm-4">
-                        <h3>Column 2</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-                    </div>
-                    <div className="col-sm-4">
-                        <h3>Column 3</h3>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
-                        <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris...</p>
-                    </div>
-                </div>
             </div>
         </div>
     );
