@@ -9,8 +9,10 @@ import PaymentPage3 from '../pages/payment/Step3/Payment_Step3';
 import Dashboard from '../pages/Manager/dashboard';
 import Booking from '../pages/Manager/Booking';
 import Rooms from '../pages/Manager/Rooms';
+import dashboard from '../pages/dashboard';
 const publicRoutes = [
     { path: '/', component: Home },
+    { path: '/dashboard', component: dashboard },
     { path: '/hotels', component: Hotels },
     { path: '/login', component: Login },
     { path: '/register', component: Register },

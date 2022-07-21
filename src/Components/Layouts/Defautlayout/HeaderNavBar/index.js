@@ -9,20 +9,20 @@ export default function Header() {
         <header className={cx('wrapper')}>
             <div className={cx('inner')}>
                 <div className={cx('navbar', 'row')}>
-                    <div className={cx('col-4','page-navigator')}>
+                    <div className={cx('col-4', 'page-navigator')}>
                         <NavLink to="/" className={cx('nav', (isActive) => (!isActive ? ' active' : ''))}>
                             <span>Tìm Nhanh</span>
                         </NavLink>
                     </div>
-                    <div className={cx('col-4','page-navigator')}>
+                    <div className={cx('col-4', 'page-navigator')}>
                         <NavLink to="/hotels" className={cx('nav', (isActive) => (!isActive ? ' active' : ''))}>
                             <span>Khách Sạn</span>
                         </NavLink>
                     </div>
-                    <div className={cx('col-4','page-navigator')}>
-                        <a href="https://www.vntrip.vn/cam-nang/" className={cx('nav')}>
-                            Cẩm Nang
-                        </a>
+                    <div className={cx('col-4', 'page-navigator')}>
+                        <NavLink to="/dashboard" className={cx('nav', (isActive) => (!isActive ? ' active' : ''))}>
+                            <span>Đơn Hàng</span>
+                        </NavLink>
                     </div>
                 </div>
             </div>

@@ -4,6 +4,10 @@ import React, { useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './index.module.scss';
 import Switch from 'antd/lib/switch';
+import * as payment from '../../../../api/paymentApi';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { dispatchFecth, dispatchSuccess } from '../../../../redux/actions/authAction';
 export default function PaymentForm() {
     const [success, setSuccess] = useState(false);
     const stripe = useStripe();
@@ -13,31 +17,43 @@ export default function PaymentForm() {
     const [inputCoupon, setInputCoupon] = useState('');
     const [rate, setRate] = useState('23400');
     const [token, setToken] = useState('');
+    const dispatch = useDispatch();
+    const navigator = useNavigate();
     const handleSubmit = async (e) => {
+        const auth = JSON.parse(localStorage.getItem('user'));
         const booking = JSON.parse(localStorage.getItem('booking'));
         const bookinginfo = JSON.parse(localStorage.getItem('booking-info'));
-        console.log(booking);
-        console.log(bookinginfo);
         e.preventDefault();
+
         await stripe
             .createToken(elements.getElement(CardNumberElement))
             .then(async (token) => {
-                await axios.get('https://api.exchangerate-api.com/v4/latest/USD').then((result) => {
-                    console.log({
-                        token: token.token.id,
-                        hotelId: 0,
-                        fullName: bookinginfo.name,
-                        email: bookinginfo.email,
-                        phoneNumber: bookinginfo.number,
-                        arrivalDate: booking.date,
-                        totalNight: booking.night,
-                        peopleQuanity: booking.quantity,
-                        description: bookinginfo.specicalSuggest,
-                        voucherId: '',
-                        currencyRate: result.data.rates.VND,
-                        bookingDetails: booking.room,
+                if (token.error === undefined) {
+                    dispatch(dispatchFecth());
+                    await axios.get('https://api.exchangerate-api.com/v4/latest/USD').then((result) => {
+                        payment
+                            .finalPayment({
+                                token: token.token.id,
+                                hotelId: booking.hotelId,
+                                fullName: bookinginfo.name,
+                                email: bookinginfo.email,
+                                phoneNumber: bookinginfo.number,
+                                arrivalDate: booking.date,
+                                totalNight: booking.night,
+                                peopleQuanity: booking.quantity,
+                                description: bookinginfo.specicalSuggest,
+                                voucherId: '',
+                                currencyRate: result.data.rates.VND,
+                                roomsId: booking.room,
+                                tokenid: auth.token,
+                            })
+                            .then((result) => navigator('/payment/step3'))
+                            .catch((err) => alert(err.response.data.message))
+                            .finally(() => dispatch(dispatchSuccess()));
                     });
-                });
+                } else {
+                    alert(token.error.message);
+                }
             })
             .catch((err) => alert('Your Card is inCorrect !'));
     };

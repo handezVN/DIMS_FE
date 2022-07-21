@@ -6,13 +6,15 @@ import moment from 'moment';
 import Banking from './Banking';
 import { Link } from 'react-router-dom';
 import CreditCard from './Credit';
+import Spinner from '../../../Components/utils/loading/Spinner';
+import { useSelector } from 'react-redux';
 export default function PaymentPage2() {
     const cx = classNames.bind(styles);
     const [img, setImg] = useState('');
     const [booking, setBooking] = useState({});
     const [viewInfo, setViewInfo] = useState(false);
     const [bookinguser, setBooingUser] = useState('');
-
+    const loading = useSelector((state) => state.loadingReducer.loading);
     useEffect(() => {
         const stringif_booking = localStorage.getItem('booking');
         const parse_booking = JSON.parse(stringif_booking);
@@ -38,7 +40,7 @@ export default function PaymentPage2() {
                                 <div className="d-flex">
                                     <div className={cx('inner-left-navbar')}>
                                         <div className={cx('inner-left-navbar-title')}>PayMent Method</div>
-                                        
+
                                         <button
                                             className={cx(
                                                 'inner-left-navbar-item',
@@ -207,6 +209,7 @@ export default function PaymentPage2() {
                     <div className={cx('step1-inner-alert')}></div>
                 </div>
             </div>
+            {loading && <Spinner />}
         </div>
     );
 }

@@ -43,3 +43,18 @@ export const dispatchFailed = () => {
         type: ACTIONS.FAILED,
     };
 };
+export const dispatchPaymentFetch = () => {
+    return {
+        type: ACTIONS.PAYMENTFETCH,
+    };
+};
+export const dispatchPaymentSuccess = () => {
+    return {
+        type: ACTIONS.PAYMENTSUCCESS,
+    };
+};
+export const dispatchPaymentFailed = () => {
+    return {
+        type: ACTIONS.PAYMENTFAILED,
+    };
+};

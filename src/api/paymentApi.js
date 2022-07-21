@@ -13,8 +13,9 @@ export const finalPayment = async ({
     email,
     roomsId,
     description,
+    tokenid,
 }) => {
-    const res = await axios.post(`api/UserBookingManage/user-Online-Payment`, {
+    console.log({
         token: token,
         hotelId: hotelId,
         fullName: fullName,
@@ -28,5 +29,25 @@ export const finalPayment = async ({
         currencyRate: currencyRate,
         bookingDetails: roomsId,
     });
+    const res = await axios.post(
+        `api/UserBookingManage/user-Online-Payment`,
+        {
+            token: token,
+            hotelId: hotelId,
+            fullName: fullName,
+            email: email,
+            phoneNumber: phoneNumber,
+            arrivalDate: arrivalDate,
+            totalNight: totalNight,
+            peopleQuanity: peopleQuanity,
+            description: description,
+            voucherId: voucherId,
+            currencyRate: currencyRate,
+            bookingDetails: roomsId,
+        },
+        {
+            headers: { Authorization: `Bearer ${tokenid}` },
+        },
+    );
     return res.data;
 };
