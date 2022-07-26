@@ -8,7 +8,8 @@
 .photos {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-between;
+    width: 100%;
 }
 
 .middle {
@@ -32,6 +33,7 @@
 }
 .Image_Container {
     position: relative;
+    width: 33.3%;
 }
 .Image_Container:hover img {
     opacity: 0.3;
@@ -114,4 +116,15 @@
 
 ::-webkit-scrollbar {
     width: 0px;
+}
+@media (max-width: 728px) {
+    .Image_Container {
+        position: relative;
+        width: 100%;
+    }
+    .photos {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 }

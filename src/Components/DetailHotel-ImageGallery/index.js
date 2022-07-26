@@ -7,16 +7,8 @@ export default function GalleryImage({ props, handleDelete, iconDelete }) {
     const cx = classNames.bind(styles);
     const images = [
         {
-            original: 'https://picsum.photos/id/1018/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1018/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1015/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1015/250/150/',
-        },
-        {
-            original: 'https://picsum.photos/id/1019/1000/600/',
-            thumbnail: 'https://picsum.photos/id/1019/250/150/',
+            original: 'https://picsum.photos/1920/1080?random=8',
+            thumbnail: 'https://picsum.photos/1920/1080?random=8',
         },
     ];
     const [indexImage, setIndexImage] = useState(0);

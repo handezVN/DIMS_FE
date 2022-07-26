@@ -9,6 +9,8 @@ import styles from './index.module.scss';
 import classNames from 'classnames/bind';
 import Icon from '@mdi/react';
 import { mdiCloseThick } from '@mdi/js';
+import ImageGallery from 'react-image-gallery';
+import { image } from '@cloudinary/url-gen/qualifiers/source';
 export default function PhotosHotel({ hotelid }) {
     const cx = classNames.bind(styles);
     const [datas, setDatas] = useState([]);
@@ -28,6 +30,7 @@ export default function PhotosHotel({ hotelid }) {
         setDatas([...datas, ...files]);
         setNewPhotos([...newPhotos, ...uploadImgs]);
     };
+
     const getPhoto = () => {
         dispatch(dispatchHostFecth());
         HostApi.getHotelPhotos(auth.token, hotelid)
@@ -99,13 +102,13 @@ export default function PhotosHotel({ hotelid }) {
         setDatas(newData);
     };
     return (
-        <div>
+        <div style={{ maxWidth: 1080 }}>
             <h3 style={{ textAlign: 'center' }}>All Photos of Hotel</h3>
             <div className={cx('photos')}>
                 {photos.map((photo, index) => {
                     return (
                         <div className={cx('Image_Container')} key={`${photo.photoId}Main`}>
-                            <img src={photo.photoUrl} style={{ height: 200, width: 'auto' }}></img>
+                            <img src={photo.photoUrl} style={{ width: '100%' }}></img>
                             <div className={cx('middle')}>
                                 <div className={cx('button')} onClick={() => handSetIsMain(photo.photoId)}>
                                     Set MainImage
@@ -118,10 +121,11 @@ export default function PhotosHotel({ hotelid }) {
                         </div>
                     );
                 })}
+
                 {newPhotos.map((photo, index) => {
                     return (
                         <div className={cx('Image_Container')}>
-                            <img src={photo} style={{ height: 200, width: 'auto' }} key={index}></img>
+                            <img src={photo} style={{ width: '100%' }} key={index}></img>
                             <div className={cx('middle')}>
                                 <Icon
                                     path={mdiCloseThick}
@@ -136,6 +140,7 @@ export default function PhotosHotel({ hotelid }) {
                         </div>
                     );
                 })}
+
                 <div>
                     {/* <div className={cx('plus', 'alt')}></div> */}
                     <input

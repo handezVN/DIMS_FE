@@ -101,10 +101,10 @@
 }
 @media (max-width: 600px) {
     .SlideBar {
-        position: absolute;
+        position: fixed;
     }
     .unactive {
-        animation: sliderRighttoLeft 500ms ease-in-out forwards;
+        animation: sliderRighttoLeft 300ms ease-in-out forwards;
     }
     .active {
         animation: sliderLefttoRight 500ms ease-in-out;

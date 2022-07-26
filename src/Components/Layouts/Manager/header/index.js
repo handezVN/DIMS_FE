@@ -47,7 +47,10 @@ export default function Header({ slidebar, setSlideBar }) {
     return (
         <div className={cx('header')}>
             <div className={cx('header__inner')}>
-                <div className={cx('slide-bar')} onClick={() => setSlideBar(!slidebar)}></div>
+                <div
+                    className={cx(['slide-bar', slidebar ? 'active' : 'unactive'])}
+                    onClick={() => setSlideBar(!slidebar)}
+                ></div>
                 <div className={cx('header-container')}>
                     <Search
                         placeholder="input search text"

@@ -53,3 +53,31 @@
     justify-content: space-between;
     padding: 0 20px;
 }
+@media (max-width: 600px) {
+    .active {
+        width: 235px;
+        animation: sliderLefttoRight 500ms ease-in-out;
+    }
+    .unactive {
+        animation: sliderRighttoLeft 100ms linear forwards;
+        width: 50px;
+    }
+}
+
+@keyframes sliderLefttoRight {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+@keyframes sliderRighttoLeft {
+    0% {
+        transform: translateX(0%);
+    }
+    80% {
+        transform: translateX(-80%);
+    }
+}

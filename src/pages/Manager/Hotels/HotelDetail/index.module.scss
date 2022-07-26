@@ -93,7 +93,8 @@
     }
 }
 .active {
-    display: block;
+    display: flex;
+    justify-content: center;
     animation: growDown 300ms linear;
 }
 .unActive {
@@ -101,13 +102,13 @@
     animation-delay: 300ms;
 }
 .Menu {
-    width: calc(100%);
+    width: 80%;
     height: 36px;
     background-color: #273244;
     font-weight: 600;
     letter-spacing: 2px;
     color: aliceblue;
-    text-align: center;
+    padding: 0 30px;
     font-size: 24px;
     transition: 300ms;
     transform-origin: top;

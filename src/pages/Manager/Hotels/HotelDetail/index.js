@@ -20,7 +20,7 @@ export default function DetailHotels() {
     const [showImage, setShowImage] = useState(false);
     const [showCategory, setShowCategory] = useState(false);
     return (
-        <div>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div className={cx('Menu')} onClick={() => setShowImage(!showImage)}>
                 Show Image{' '}
                 <Icon path={mdiChevronDown} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
