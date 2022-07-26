@@ -4,15 +4,12 @@ import classNames from 'classnames/bind';
 import styles from './index.module.scss';
 import moment from 'moment';
 import { Link } from 'react-router-dom';
-import Spinner from '../../../Components/utils/loading/Spinner';
-import { useSelector } from 'react-redux';
 export default function PaymentPage3() {
     const cx = classNames.bind(styles);
     const [img, setImg] = useState('');
     const [booking, setBooking] = useState({});
     const [viewInfo, setViewInfo] = useState(false);
     const [bookinguser, setBooingUser] = useState('');
-    const loading = useSelector((state) => state.loadingReducer.loading);
     useEffect(() => {
         const stringif_booking = localStorage.getItem('booking');
         const parse_booking = JSON.parse(stringif_booking);
@@ -22,7 +19,6 @@ export default function PaymentPage3() {
         setImg(parse_booking.hotelImg[0].photoUrl);
         setBooking(parse_booking);
     }, []);
-    const [method, setMethod] = useState('credit');
     return (
         <div>
             <PaymentHeader step3="true"></PaymentHeader>
@@ -46,7 +42,9 @@ export default function PaymentPage3() {
                                     Xác nhận thanh toán thành công{' '}
                                 </div>
                                 <div>Vui Lòng Kiểm Tra Email Của Bạn !</div>
-                                <div className={cx('myBooked')}>Đặt Chỗ Của Tôi !</div>
+                                <Link to={'/dashboard'}>
+                                    <div className={cx('myBooked')}>Đặt Chỗ Của Tôi !</div>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -148,9 +146,6 @@ export default function PaymentPage3() {
                                     <div>
                                         <div className={cx('bookinguser-title')}>
                                             <div>Thông tin đặt phòng</div>{' '}
-                                            <Link className={cx('bookinguser-btnedit')} to={'/payment/step1'}>
-                                                Sửa
-                                            </Link>
                                         </div>
                                         <div className={cx('bookinguser-info')}>
                                             <div className={cx('bookinguser-info-left')}>Người đặt phòng</div>

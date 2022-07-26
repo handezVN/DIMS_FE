@@ -1,58 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import styles from './index.module.scss';
-
-export default function dashboard() {
+import * as authApi from '../../api/authApi';
+import { useSelector, useDispatch } from 'react-redux';
+import { dispatchFecth, dispatchSuccess } from '../../redux/actions/authAction';
+import BookingItem from '../../Components/Dashboard-BookingItem';
+export default function Dashboard() {
     const cx = classNames.bind(styles);
+    const [data, setData] = useState([]);
+    const auth = JSON.parse(localStorage.getItem('user'));
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (auth) {
+            dispatch(dispatchFecth());
+            authApi
+                .GetDashBoard(auth.token)
+                .then((result) => setData(result))
+                .catch((err) => console.log(err))
+                .finally(dispatch(dispatchSuccess()));
+        }
+    }, [auth]);
     return (
         <div className={cx('body')}>
             <div className={cx('container')}>
-                <div>Quản lý đơn hàng </div>
-                <div className={cx('Booking')}>
-                    {/* IMG */}
-                    <div className={cx('Booking_Img')}>
-                        <img
-                            src="https://i.vntrip.vn/200x205/smart/https://statics.vntrip.vn/data-v2/hotels/616077/img_max/616077_1587351127_237696762.jpg"
-                            alt="SPOT ON 726 SAKURA HOSTEL Saigon"
-                        />
-                    </div>
-                    {/* Content */}
-                    <div className={cx('Booking_Content')}>
-                        <div className={cx('Booking_Content_left')}>
-                            <div style={{ fontSize: '20px', fontWeight: '600' }}>Name</div>
-                            <div>
-                                <i class="fa-solid fa-location-dot"></i> Address
-                            </div>
-                            <div className={cx('row')}>
-                                <div className={cx('row_left')}>Mã Đơn Hàng:</div>
-                                <div className={cx('row_right')} style={{ color: 'orange', fontWeight: '600' }}>
-                                    Mã Đơn Hàng
-                                </div>
-                            </div>
-
-                            <div className={cx('row')}>
-                                <div className={cx('row_left')}>Nhận Phòng:</div>
-                                <div className={cx('row_right')}>Mã Đơn Hàng</div>
-                            </div>
-                            <div className={cx('row')}>
-                                <div className={cx('row_left')}>Trả Phòng:</div>
-                                <div className={cx('row_right')}>Mã Đơn Hàng</div>
-                            </div>
-                            <div className={cx('row')}>
-                                <div className={cx('row_left')}>Loại Phòng:</div>
-                                <div className={cx('row_right')}>Mã Đơn Hàng</div>
-                            </div>
-                        </div>
-                        {/* Total Price  */}
-                        <div className={cx('Booking_Content_right')}>
-                            <div>
-                                <div>Total Price: </div>
-                                200,000 VNĐ
-                            </div>
-                            <button>Quản Lý</button>
-                        </div>
-                    </div>
-                </div>
+                <div className={cx('title')}>Quản lý đơn hàng </div>
+                {data.length > 0 ? (
+                    data.map((order, index) => {
+                        return (
+                            <BookingItem
+                                bookingId={order.bookingId}
+                                categoryName={order.bookingDetails[0].categoryName}
+                                endDate={order.endDate}
+                                hotelAddress={order.hotelAddress}
+                                hotelName={order.hotelName}
+                                imgUrl={order.hotelPhotos[0].photoUrl}
+                                startDate={order.startDate}
+                                totalPrice={order.totalPrice}
+                                key={index}
+                            ></BookingItem>
+                        );
+                    })
+                ) : (
+                    <div>Bạn chưa có đơn hàng nào !</div>
+                )}
             </div>
         </div>
     );

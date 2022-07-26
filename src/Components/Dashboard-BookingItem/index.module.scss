@@ -1,13 +1,9 @@
 .container {
-    width: 880px;
+    width: 860px;
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    padding: 10px;
-    background: #fff;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
-    margin: 10px 0;
 }
 .body {
     width: 100%;
@@ -19,6 +15,10 @@
     background: white;
     box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
     width: 100%;
+    margin: 10px 0;
+    border-radius: 10px;
+    overflow: hidden;
+    max-height: 200px;
 }
 .Booking_Img {
     width: 200px;
@@ -43,9 +43,18 @@
 
 .Booking_Content_right {
     width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.Booking_Content_right_money {
+    font-size: 18px;
+    font-weight: 400;
+    color: var(--bluesky);
 }
 .row {
     display: flex;
+    width: 100%;
 }
 .row_left {
     width: 30%;
@@ -60,6 +69,7 @@
         flex-direction: column;
         max-width: 460px;
         align-items: center;
+        max-height: 100%;
     }
     .Booking_Img {
         width: 100%;
@@ -77,8 +87,19 @@
     .Booking_Content {
         width: calc(100%);
     }
-}
-.title {
-    font-size: 18px;
-    font-weight: 600;
+    .Booking_Content_left {
+        width: 100%;
+    }
+    .Booking_Content_right {
+        width: 100%;
+    }
+    .row_left {
+        width: 50%;
+    }
+    .row_right {
+        width: 50%;
+    }
+    .row {
+        line-height: 24px;
+    }
 }

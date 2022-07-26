@@ -58,3 +58,18 @@ export const dispatchPaymentFailed = () => {
         type: ACTIONS.PAYMENTFAILED,
     };
 };
+export const dispatchHostFecth = () => {
+    return {
+        type: ACTIONS.HOSTFETCH,
+    };
+};
+export const dispatchHostSuccess = () => {
+    return {
+        type: ACTIONS.HOSTSUCCESS,
+    };
+};
+export const dispatchHostFailed = () => {
+    return {
+        type: ACTIONS.HOSTFAILED,
+    };
+};

@@ -4,10 +4,24 @@ import classNames from 'classnames/bind';
 import { Input, Menu, Dropdown, Icon } from 'antd';
 import accountlogo from '../../../../asset/dp.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useDispatch } from 'react-redux';
+import { dispatchLogout } from '../../../../redux/actions/authAction';
+import { useNavigate } from 'react-router-dom';
+
 export default function Header() {
     const cx = classNames.bind(styles);
     const [show, setShow] = useState(false);
+    const dispatch = useDispatch();
+    const navigation = useNavigate();
     const { Search } = Input;
+    const handleLogout = () => {
+        if (window.confirm('Are you sure ?')) {
+            dispatch(dispatchLogout());
+            navigation('/');
+        } else {
+            console.log('No');
+        }
+    };
     const menu = (
         <Menu>
             <Menu.Item>
@@ -22,7 +36,7 @@ export default function Header() {
                 </div>
             </Menu.Item>
             <Menu.Item>
-                <div className={cx('dropdown_item')}>
+                <div className={cx('dropdown_item')} onClick={handleLogout}>
                     <Icon type="logout" />
                     Logout
                 </div>
@@ -42,9 +56,9 @@ export default function Header() {
                     <div>
                         <Dropdown overlay={menu} className={cx('header_account')}>
                             <div>
-                                <img alt="" class="img-circle " src={accountlogo} className={cx('header_avatar')} />
+                                <img alt="" src={accountlogo} className={cx('header_avatar', 'img-circle ')} />
                                 Handez
-                                <i class="fa-solid fa-chevron-down"></i>
+                                <i className="fa-solid fa-chevron-down"></i>
                             </div>
                         </Dropdown>
                     </div>

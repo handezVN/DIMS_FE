@@ -6,6 +6,8 @@
         "node": "16.x"
     },
     "dependencies": {
+        "@cloudinary/react": "^1.4.1",
+        "@cloudinary/url-gen": "^1.8.0",
         "@fortawesome/react-fontawesome": "^0.1.18",
         "@mdi/font": "^7.0.96",
         "@mdi/js": "^7.0.96",
@@ -25,6 +27,7 @@
         "react": "^18.1.0",
         "react-bootstrap": "^2.4.0",
         "react-dom": "^18.1.0",
+        "react-dropzone": "^14.2.2",
         "react-helmet": "^6.1.0",
         "react-image-gallery": "^1.2.8",
         "react-redux": "^8.0.1",

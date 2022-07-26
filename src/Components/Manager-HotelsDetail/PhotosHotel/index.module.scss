@@ -1,0 +1,117 @@
+.container {
+    padding: 20px;
+    box-shadow: var(--boxshadow);
+    margin: 0 20px;
+    align-items: center;
+    transform-origin: left top;
+}
+.photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.middle {
+    transition: 0.5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+.addImage {
+    height: 200px;
+    content-visibility: hidden;
+    border: solid;
+    border-radius: 20px;
+    background-image: url('../../../asset/addImage.png');
+    background-size: contain;
+    width: 200px;
+}
+.Image_Container {
+    position: relative;
+}
+.Image_Container:hover img {
+    opacity: 0.3;
+}
+
+.Image_Container:hover .middle {
+    opacity: 1;
+}
+.text {
+    background-color: #04aa6d;
+    color: white;
+    font-size: 16px;
+    padding: 16px 32px;
+}
+.Icon {
+    font-size: 30px;
+}
+.Save_Buton {
+    height: 35px;
+    width: 200px;
+    border-radius: 20px;
+    background-color: #04aa6d;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: aliceblue;
+}
+
+.button {
+    height: 32px;
+    width: 160px;
+    border-radius: 20px;
+    background-color: #04aa6d;
+    justify-content: center;
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: aliceblue;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+@keyframes growDown {
+    0% {
+        transform: scaleY(0);
+    }
+
+    100% {
+        transform: scaleY(1);
+    }
+}
+@keyframes growTop {
+    0% {
+        transform: scaleY(1);
+    }
+
+    100% {
+        transform: scaleY(0);
+    }
+}
+.active {
+    display: block;
+    animation: growDown 300ms ease-in-out;
+}
+.unActive {
+    animation: growTop 300ms ease-in-out;
+    display: none;
+}
+.Menu {
+    width: calc(100%);
+    height: 36px;
+    background-color: #273244;
+
+    font-weight: 600;
+    letter-spacing: 2px;
+    color: aliceblue;
+    text-align: center;
+    font-size: 24px;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+}

@@ -6,7 +6,7 @@ import moment from 'moment';
 import Banking from './Banking';
 import { Link } from 'react-router-dom';
 import CreditCard from './Credit';
-import Spinner from '../../../Components/utils/loading/Spinner';
+import Spinner from '../../../Components/loading/Spinner';
 import { useSelector } from 'react-redux';
 export default function PaymentPage2() {
     const cx = classNames.bind(styles);

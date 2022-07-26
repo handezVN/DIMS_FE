@@ -4,7 +4,7 @@ import { DefaultLayout } from './Components/Layouts';
 import { publicRoutes, privateRoutes, hostRoutes } from './routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { dispatchGetUser, dispatchReLoad } from './redux/actions/authAction';
-import Spinner from './Components/utils/loading/Spinner';
+import Spinner from './Components/loading/Spinner';
 import DefaultLayOut from './Components/Layouts/Manager/index.js';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -18,9 +18,10 @@ function App() {
     const loading = useSelector((state) => state.loadingReducer.loading);
     const user = useSelector((state) => state.auth.user);
     const auth = useSelector((state) => state.auth);
+
     const [show, setShow] = useState(false);
     const [email, setEmail] = useState('');
-    console.log(auth);
+
     useEffect(() => {
         if (auth.isLogged) {
             const token = user.token;

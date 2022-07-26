@@ -3,7 +3,7 @@ import styles from './index.scss';
 import moment from 'moment';
 import { Slider, Radio, Checkbox } from 'antd';
 import { useEffect, useState } from 'react';
-import HotelItem from '../../Components/utils/HotelItem';
+import HotelItem from '../../Components/HotelItem';
 import { Link, useSearchParams } from 'react-router-dom';
 import SearchBox from '../../Components/utils/SearchBox';
 import * as searchApi from '../../api/SearchApi';

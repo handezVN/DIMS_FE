@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames/bind';
-export default function GalleryImage(props) {
+import { mdiDelete } from '@mdi/js';
+import Icon from '@mdi/react';
+export default function GalleryImage({ props, handleDelete, iconDelete }) {
     const cx = classNames.bind(styles);
     const images = [
         {
@@ -57,12 +59,12 @@ export default function GalleryImage(props) {
             setSlideRight(false);
         }, 1000);
     };
-
+    console.log(props);
     return (
         <div>
             <div className={cx('DetailHotel_Room_Image')}>
-                {props.list.length > 0 ? (
-                    props.list.map((image, index) => {
+                {props.length > 0 ? (
+                    props.map((image, index) => {
                         if (index <= 3) {
                             return (
                                 <img
@@ -73,7 +75,7 @@ export default function GalleryImage(props) {
                                     height={144}
                                     style={{ objectFit: 'fill', objectPosition: '50% 50%' }}
                                     src={image.photoUrl}
-                                    key={`${image.photoId}`}
+                                    key={`${image.photoId}` || index}
                                     onClick={() => handleOpenImage(index)}
                                     alt=""
                                 />
@@ -96,7 +98,7 @@ export default function GalleryImage(props) {
                 )}
             </div>
             <div className={cx('numbers_Image')}>
-                <span>1/{props.list.length}</span>
+                <span>1/{props.length}</span>
             </div>
 
             <div className={cx('gallery', gallery ? 'show' : '')}>
@@ -112,13 +114,39 @@ export default function GalleryImage(props) {
                         slideRight_S1 ? 'animation_slideRight_S1' : '',
                     )}
                 >
-                    <img
-                        src={props.list.length > 0 ? props.list[indexImage].photoUrl : images[0].original}
-                        alt="hello"
-                    ></img>
+                    {iconDelete ? (
+                        <div className={cx('Image_Container')}>
+                            <img
+                                src={props.length > 0 ? props[indexImage].photoUrl : images[0].original}
+                                alt="hello"
+                            ></img>
+                            <div
+                                className={cx('middle')}
+                                onClick={() => {
+                                    if (window.confirm('Bạn muốn xóa hình ảnh này ?')) {
+                                        const tmp = parseInt(indexImage);
+                                        setIndexImage(indexImage - 1);
+                                        handleDelete(indexImage);
+                                    }
+                                }}
+                            >
+                                Xóa{' '}
+                                <Icon
+                                    path={mdiDelete}
+                                    title="Delete Item"
+                                    size={'60px'}
+                                    horizontal
+                                    vertical
+                                    rotate={180}
+                                />
+                            </div>
+                        </div>
+                    ) : (
+                        ''
+                    )}
                 </div>
                 <div className={cx('gallery_thumnail')}>
-                    {props.list.map((image, index) => {
+                    {props.map((image, index) => {
                         return (
                             <img
                                 style={{ objectFit: 'fill', objectPosition: '50% 50%' }}

@@ -52,8 +52,9 @@
 .SlideBar_Item {
     display: flex;
     padding: 10px 15px;
-    align-items: center;
+    align-items: flex-start;
     color: #aaadb7;
+    flex-direction: column;
 }
 .SlideBar_Item_Title {
     font-size: medium;
@@ -65,4 +66,36 @@
     background: #273244;
     cursor: pointer;
     color: #fff;
+}
+.SlideBar_Main_Item {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 0 10px 0;
+}
+
+.Selected {
+    background: #273244;
+    color: #fff;
+}
+.SlideBar_Sub_Item {
+    display: flex;
+    padding: 10px;
+    animation: rotateMenu 400ms ease-in-out forwards;
+    transform-origin: top center;
+    color: #aaadb7;
+}
+.SlideBar_Sub_Item:hover {
+    color: #fff;
+}
+@keyframes rotateMenu {
+    0% {
+        transform: rotateX(-90deg);
+    }
+    70% {
+        transform: rotateX(20deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
 }

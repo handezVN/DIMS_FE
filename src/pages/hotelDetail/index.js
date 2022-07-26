@@ -3,14 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import styles from './hotelDetail.module.scss';
 import classNames from 'classnames/bind';
-import Feature_Icon from '../../Components/utils/DetailHotel-Feature-Icon';
-import RoomType from '../../Components/utils/DetailHotel-Room';
+import Feature_Icon from '../../Components/DetailHotel-Feature-Icon';
+import RoomType from '../../Components/DetailHotel-Room';
 import { useNavigate } from 'react-router-dom';
 import * as SearchApi from '../../api/SearchApi';
 import { useDispatch } from 'react-redux';
 import { dispatchFecth, dispatchFailed, dispatchSuccess } from '../../redux/actions/authAction';
 import { createContext } from 'react';
-import GalleryMainImage from '../../Components/utils/DetailHotel-MainImageGallery';
+import GalleryMainImage from '../../Components/DetailHotel-MainImageGallery';
 export const roomContext = createContext();
 export default function HotelDetail() {
     const cx = classNames.bind(styles);

@@ -10,6 +10,8 @@ import Dashboard from '../pages/Manager/dashboard';
 import Booking from '../pages/Manager/Booking';
 import Rooms from '../pages/Manager/Rooms';
 import dashboard from '../pages/dashboard';
+import HotelsHost from '../pages/Manager/Hotels';
+import DetailHotels from '../pages/Manager/Hotels/HotelDetail';
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '/dashboard', component: dashboard },
@@ -28,5 +30,7 @@ const hostRoutes = [
     { path: '/manager/dashboard', component: Dashboard },
     { path: '/manager/booking', component: Booking },
     { path: '/manager/room', component: Rooms },
+    { path: '/manager/hotels', component: HotelsHost },
+    { path: '/mananger/hotels/detailHotels', component: DetailHotels },
 ];
 export { publicRoutes, privateRoutes, hostRoutes };

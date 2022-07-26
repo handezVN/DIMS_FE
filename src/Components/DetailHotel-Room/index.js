@@ -2,11 +2,11 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames/bind';
 import GalleryImage from '../DetailHotel-ImageGallery';
-import bedFront from '../../../asset/bed-front.png';
-import guestIcon from '../../../asset/guest.png';
+import bedFront from '../../asset/bed-front.png';
+import guestIcon from '../../asset/guest.png';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { roomContext } from '../../../pages/hotelDetail';
+import { roomContext } from '../../pages/hotelDetail';
 export default function RoomType(props) {
     const services = [
         {

@@ -1,0 +1,115 @@
+.body {
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    width: 1170px;
+    height: 500px;
+    background: pink;
+    margin-top: 20px;
+}
+
+.header_content {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.detailHotel {
+    min-height: 900px;
+    margin-top: 50px;
+    border-radius: 20px;
+    padding: 20px;
+    background-color: white;
+    box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+    width: 1040px;
+}
+.container_body {
+    display: flex;
+    justify-content: center;
+}
+.hotelType {
+    background-color: #2a78ec;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 20px;
+    margin-right: 20px;
+}
+.detailHotel_Type {
+    display: flex;
+    align-items: center;
+}
+.star {
+    color: #2a78ec;
+}
+.detailHotel_Rate-Price {
+    display: flex;
+    justify-content: space-between;
+}
+.detailHotel_Price {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.detailHotel_Price del {
+    font-size: medium;
+    font-weight: 500;
+    font-style: italic;
+}
+.detailHotel_Price span {
+    color: #2a78ec;
+    font-size: large;
+    font-weight: 500;
+    margin-right: 20px;
+}
+.detailHotel_Btn-Book {
+    width: 250px;
+    height: 40px;
+    background-color: #2a78ec;
+    border-radius: 20px;
+    border: none;
+    color: white;
+}
+.detailHotel_Btn {
+    display: flex;
+    justify-content: center;
+}
+@media (max-width: 514px) {
+    .detailHotel_Rate-Price {
+        flex-direction: column;
+    }
+    .detailHotel_Price {
+        align-items: flex-start;
+    }
+}
+.detailHotel_Feature_Icons {
+    display: flex;
+    padding: 30px;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+    .detailHotel_Feature_Icons {
+        padding: 10px;
+        flex-direction: column;
+    }
+}
+.DetailHotel_Room_Image {
+    position: relative;
+}
+.DetailHotel_Rooms {
+    background-color: rgba(242, 243, 243, 1);
+    max-width: 1040px;
+    margin-top: 20px;
+    box-shadow: 0 1px 3px 0 rgb(27 27 27 / 10%);
+    padding: 20px;
+    border-radius: 20px;
+}
+.gallery_image {
+    max-height: 500px;
+    object-fit: cover;
+    overflow: hidden;
+}

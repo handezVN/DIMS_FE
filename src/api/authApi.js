@@ -21,3 +21,10 @@ export const ActiveUser = async ({ token, code }) => {
     });
     return res.data;
 };
+
+export const GetDashBoard = async (token) => {
+    const res = await axios.get('api/UserBookingManage/user-Booking-list', {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};
