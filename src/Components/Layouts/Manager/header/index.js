@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { dispatchLogout } from '../../../../redux/actions/authAction';
 import { useNavigate } from 'react-router-dom';
 
-export default function Header() {
+export default function Header({ slidebar, setSlideBar }) {
     const cx = classNames.bind(styles);
     const [show, setShow] = useState(false);
     const dispatch = useDispatch();
@@ -43,10 +43,11 @@ export default function Header() {
             </Menu.Item>
         </Menu>
     );
+
     return (
         <div className={cx('header')}>
             <div className={cx('header__inner')}>
-                <div className={cx('slide-bar')}></div>
+                <div className={cx('slide-bar')} onClick={() => setSlideBar(!slidebar)}></div>
                 <div className={cx('header-container')}>
                     <Search
                         placeholder="input search text"

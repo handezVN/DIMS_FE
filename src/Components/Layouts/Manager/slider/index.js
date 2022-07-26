@@ -13,7 +13,7 @@ import { mdiBriefcaseVariant } from '@mdi/js';
 import { mdiChevronDown } from '@mdi/js';
 import { mdiBedKing } from '@mdi/js';
 import { mdiKey } from '@mdi/js';
-export default function SlideBar() {
+export default function SlideBar({ SlideBar }) {
     const cx = classNames.bind(styles);
     const dispatch = useDispatch();
     const navigation = useNavigate();
@@ -23,7 +23,7 @@ export default function SlideBar() {
     };
     const [hotelshow, setHotelShow] = useState(false);
     return (
-        <div className={cx('SlideBar')}>
+        <div className={cx(['SlideBar', SlideBar ? 'active' : 'unactive'])}>
             <div className={cx('SliderBar_Person')}>
                 <div className={cx('SliderBar_Border_Avatar')}>
                     <img src={accountlogo} className={cx('SliderBar_Avatar')} alt="Avatar"></img>
