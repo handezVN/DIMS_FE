@@ -87,3 +87,22 @@ export const addCategoryPhotos = async (hotelId, categoryId, list, token) => {
     );
     return res.data;
 };
+
+export const AddHotelCategory = async ({ token, hotelId, categoryName, cateDescrpittion, priceDefault, quanity }) => {
+    const res = await axios.post(
+        `api/HotelManage/Add-A-Hotel-Cates`,
+        [
+            {
+                hotelId: hotelId,
+                categoryName: categoryName,
+                cateDescrpittion: cateDescrpittion,
+                priceDefault: priceDefault,
+                quanity: quanity,
+            },
+        ],
+        {
+            headers: { Authorization: `Bearer ${token}` },
+        },
+    );
+    return res.data;
+};

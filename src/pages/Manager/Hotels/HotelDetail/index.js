@@ -28,7 +28,7 @@ export default function DetailHotels() {
             <div className={cx(['container', showImage ? 'active' : 'unActive'])}>
                 <PhotosHotel hotelid={hotelid}></PhotosHotel>
             </div>
-            <div className={cx('Menu')} onClick={() => setShowCategory(!showCategory)}>
+            <div className={cx(['Menu'])} onClick={() => setShowCategory(!showCategory)}>
                 Show Category{' '}
                 <Icon path={mdiChevronDown} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
             </div>

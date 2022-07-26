@@ -67,3 +67,18 @@
     animation: growTop 300ms ease-in-out;
     display: none;
 }
+
+.btn_newCategory {
+    height: 30px;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 500;
+    background: rgb(11, 193, 117);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    color: white;
+    border-radius: 20px;
+    width: 200px;
+    justify-content: center;
+}

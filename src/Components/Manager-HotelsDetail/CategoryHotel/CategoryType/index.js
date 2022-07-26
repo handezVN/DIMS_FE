@@ -6,12 +6,13 @@ import bedFront from '../../../../asset/bed-front.png';
 import guestIcon from '../../../../asset/guest.png';
 import * as Api from '../../../../api/ManagerApi';
 import { notification } from 'antd';
-
+import { mdiDelete } from '@mdi/js';
+import Icon from '@mdi/react';
 import { useDispatch } from 'react-redux';
 import { dispatchHostSuccess, dispatchHostFailed, dispatchHostFecth } from '../../../../redux/actions/authAction';
 import axios from 'axios';
 import { set } from 'date-fns';
-export default function CategoryType({ data, hotelId }) {
+export default function CategoryType({ data, hotelId, addnew, iconDelete }) {
     const dispatch = useDispatch();
     const services = [
         {
@@ -48,17 +49,27 @@ export default function CategoryType({ data, hotelId }) {
         },
     ];
     const [datas, setDatas] = useState([]);
-    const [photos, setPhotos] = useState(data.photos || []);
+    const [photos, setPhotos] = useState([]);
     const [newPhotos, setNewPhotos] = useState([]);
     const cx = classNames.bind(styles);
     // const [count, setCount] = useState(0);
-    const [edit, setEdit] = useState(false);
+    const [edit, setEdit] = useState(addnew || false);
     const handleEdit = () => {};
-    const [categoryName, setCategoryName] = useState(data.categoryName);
-    const [cateDescrpittion, setCateDescrpittion] = useState(data.cateDescrpittion);
-    const [priceDefault, setPriceDefault] = useState(data.priceDefault);
-    const [quanity, setQuanity] = useState(data.quanity);
+    const [categoryName, setCategoryName] = useState('');
+    const [cateDescrpittion, setCateDescrpittion] = useState('');
+    const [priceDefault, setPriceDefault] = useState(100);
+    const [quanity, setQuanity] = useState(1);
     const auth = JSON.parse(localStorage.getItem('user'));
+
+    useEffect(() => {
+        if (data) {
+            setPhotos(data.photos);
+            setCategoryName(data.categoryName);
+            setCateDescrpittion(data.cateDescrpittion);
+            setPriceDefault(data.priceDefault);
+            setQuanity(data.quanity);
+        }
+    }, []);
     const openNotificationWithIcon = (type, message, description) => {
         notification[type]({
             message: message,
@@ -75,7 +86,25 @@ export default function CategoryType({ data, hotelId }) {
         setPhotos(newPhotos);
     };
     const handleButton = () => {
-        if (edit) {
+        if (addnew) {
+            dispatch(dispatchHostFecth());
+            Api.AddHotelCategory({
+                token: auth.token,
+                hotelId: hotelId,
+                categoryName: categoryName,
+                cateDescrpittion: cateDescrpittion,
+                priceDefault: priceDefault,
+                quanity: quanity,
+            })
+                .then(() => {
+                    openNotificationWithIcon('success', 'Success', 'Đã Cập nhật thành công');
+                    dispatch(dispatchHostSuccess());
+                })
+                .catch((err) => {
+                    dispatch(dispatchHostFailed());
+                    openNotificationWithIcon('error', 'Failed', 'Đã có lỗi xảy ra khi cập nhật !');
+                });
+        } else if (edit) {
             Api.UpdateHotelCategory({
                 token: auth.token,
                 hotelId: hotelId,
@@ -149,22 +178,29 @@ export default function CategoryType({ data, hotelId }) {
     return (
         <div>
             <div className={cx('DetailHotel_Room')}>
-                <h5>{categoryName}</h5>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <h5>{categoryName}</h5>
+                    <Icon path={mdiDelete} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
+                </div>
                 <div className={cx('row', 'DetailHotel_Room_inner')}>
                     <div className={cx('col-md-4', 'DetailHotel_Room_Image')}>
                         <GalleryImage props={photos} iconDelete={true} handleDelete={handleDelete} />
 
-                        <div className={cx('AddImage')}>
-                            <div className={cx('AddImage-Btn')}>
-                                Thêm hình ảnh
-                                <input
-                                    type={'file'}
-                                    multiple
-                                    className={cx('inputFile')}
-                                    onChange={(e) => showUpImage(e.target.files)}
-                                ></input>
+                        {addnew ? (
+                            <></>
+                        ) : (
+                            <div className={cx('AddImage')}>
+                                <div className={cx('AddImage-Btn')}>
+                                    Thêm hình ảnh
+                                    <input
+                                        type={'file'}
+                                        multiple
+                                        className={cx('inputFile')}
+                                        onChange={(e) => showUpImage(e.target.files)}
+                                    ></input>
+                                </div>
                             </div>
-                        </div>
+                        )}
                         {newPhotos.length > 0 ? (
                             <div className={cx('AddImage')} onClick={() => upLoadImage()}>
                                 <div className={cx('AddImage-Btn')}>Save</div>
@@ -304,7 +340,7 @@ export default function CategoryType({ data, hotelId }) {
                                             className={cx('DetailHotel_Room_Info_Button')}
                                             onClick={() => handleButton()}
                                         >
-                                            {edit ? 'Cập Nhật' : 'Chỉnh Sửa'}
+                                            {addnew ? 'Thêm Loại Phòng' : edit ? 'Cập Nhật' : 'Chỉnh Sửa'}
                                         </button>
                                     </div>
                                 </div>
@@ -323,7 +359,6 @@ export default function CategoryType({ data, hotelId }) {
                                         width: '100%',
                                     }}
                                 ></textarea>{' '}
-                                Giường
                             </div>
                         ) : (
                             <div>{cateDescrpittion}</div>
