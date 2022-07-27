@@ -2,198 +2,23 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames/bind';
 import FloorItem from './FloorItem';
-import { mdiHome } from '@mdi/js';
+import { mdiClose, mdiHome } from '@mdi/js';
 import Icon from '@mdi/react';
 import { mdiMagnify } from '@mdi/js';
-import { Divider, Checkbox } from 'antd';
-export default function ShowRoomStatus() {
+import { Divider, Checkbox, Select, notification, Result, Modal } from 'antd';
+import { mdiPlus } from '@mdi/js';
+import * as Api from '../../../api/ManagerApi';
+import { useDispatch } from 'react-redux';
+import { dispatchHostFecth, dispatchHostSuccess } from '../../../redux/actions/authAction';
+import { mdiPencil } from '@mdi/js';
+import RoomInfo from './RoomInfo';
+export default function ShowRoomStatus({ hotelId }) {
     const cx = classNames.bind(styles);
-
-    const datatmp = [
-        {
-            roomId: 1,
-            roomName: '1',
-            hotelId: 0,
-            categoryId: 1,
-            categoryName: 'Single bedroom',
-            roomPrice: 1000,
-            floor: 0,
-            roomDescription: null,
-            allStatus: 3,
-            cleanStatus: true,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 2,
-            roomName: '2',
-            hotelId: 0,
-            categoryId: 2,
-            categoryName: 'Double bedroom',
-            roomPrice: 2000,
-            floor: 1,
-            roomDescription: null,
-            allStatus: 2,
-            cleanStatus: false,
-            bookedStatus: true,
-            status: true,
-        },
-        {
-            roomId: 3,
-            roomName: '3',
-            hotelId: 0,
-            categoryId: 3,
-            categoryName: 'Triple bedroom',
-            roomPrice: 3000,
-            floor: 2,
-            roomDescription: null,
-            allStatus: 3,
-            cleanStatus: true,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 4,
-            roomName: '4',
-            hotelId: 0,
-            categoryId: 1,
-            categoryName: 'Single bedroom',
-            roomPrice: 1000,
-            floor: 1,
-            roomDescription: null,
-            allStatus: 3,
-            cleanStatus: true,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 5,
-            roomName: '5',
-            hotelId: 0,
-            categoryId: 2,
-            categoryName: 'Double bedroom',
-            roomPrice: 2000,
-            floor: 0,
-            roomDescription: null,
-            allStatus: 3,
-            cleanStatus: true,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 6,
-            roomName: '6',
-            hotelId: 0,
-            categoryId: 3,
-            categoryName: 'Triple bedroom',
-            roomPrice: 3000,
-            floor: 1,
-            roomDescription: null,
-            allStatus: 3,
-            cleanStatus: true,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 7,
-            roomName: '7',
-            hotelId: 0,
-            categoryId: 1,
-            categoryName: 'Single bedroom',
-            roomPrice: 1000,
-            floor: 0,
-            roomDescription: null,
-            allStatus: 3,
-            cleanStatus: true,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 8,
-            roomName: '8',
-            hotelId: 0,
-            categoryId: 2,
-            categoryName: 'Double bedroom',
-            roomPrice: 2000,
-            floor: 1,
-            roomDescription: null,
-            allStatus: 1,
-            cleanStatus: false,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 9,
-            roomName: '9',
-            hotelId: 0,
-            categoryId: 3,
-            categoryName: 'Triple bedroom',
-            roomPrice: 3000,
-            floor: 2,
-            roomDescription: null,
-            allStatus: 1,
-            cleanStatus: false,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 10,
-            roomName: '10',
-            hotelId: 0,
-            categoryId: 1,
-            categoryName: 'Single bedroom',
-            roomPrice: 1000,
-            floor: 1,
-            roomDescription: null,
-            allStatus: 1,
-            cleanStatus: false,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 1040,
-            roomName: '11',
-            hotelId: 0,
-            categoryId: 1,
-            categoryName: 'Single bedroom',
-            roomPrice: 1000,
-            floor: 0,
-            roomDescription: null,
-            allStatus: 1,
-            cleanStatus: false,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 1041,
-            roomName: '99',
-            hotelId: 0,
-            categoryId: 1,
-            categoryName: 'Single bedroom',
-            roomPrice: 1000,
-            floor: 0,
-            roomDescription: 'string',
-            allStatus: 1,
-            cleanStatus: false,
-            bookedStatus: false,
-            status: true,
-        },
-        {
-            roomId: 1042,
-            roomName: '98',
-            hotelId: 0,
-            categoryId: 2,
-            categoryName: 'Double bedroom',
-            roomPrice: 2000,
-            floor: 0,
-            roomDescription: 'string',
-            allStatus: 1,
-            cleanStatus: false,
-            bookedStatus: false,
-            status: true,
-        },
-    ];
-    const [datas, setDatas] = useState(datatmp || []);
+    const dispatch = useDispatch();
+    const { Option } = Select;
+    const auth = JSON.parse(localStorage.getItem('user'));
+    const [datas, setDatas] = useState([]);
+    const [datatmp, setDataTmp] = useState([]);
     const removeDulicate = (arr) => {
         const uniqueIds = [];
         const unique = arr.filter((element) => {
@@ -216,10 +41,26 @@ export default function ShowRoomStatus() {
     const [SelectRoomNotAvailable, setSelectRoomNotAvailable] = useState(false);
     const [SelectRoomNotClean, setSelectRoomNotClean] = useState(false);
     const [searchRoom, setSearchRoom] = useState('');
+    const [addRoom, setAddRoom] = useState(false);
+    const [addRoomName, setAddRoomName] = useState('');
+    const [addRoomFloor, setAddRoomFloor] = useState('');
+    const [addRoomCategory, setAddRoomCategory] = useState('');
     let floorlist1 = [];
     let categoryList1 = [];
+    const getStatusRoom = async () => {
+        dispatch(dispatchHostFecth());
+        await Api.getStatusAllRooms(auth.token, hotelId)
+            .then((result) => {
+                setDatas(result);
+                setDataTmp(result);
+                filterRoom(result);
+            })
+            .finally(() => {
+                dispatch(dispatchHostSuccess());
+            });
+    };
     useEffect(() => {
-        filterRoom();
+        getStatusRoom();
     }, []);
     useEffect(() => {
         let newsData = [];
@@ -239,7 +80,7 @@ export default function ShowRoomStatus() {
             newsData.push(...news);
             flag = true;
         }
-        console.log(flag);
+
         if (!flag) {
             newsData = datatmp;
             setDatas(newsData);
@@ -250,9 +91,9 @@ export default function ShowRoomStatus() {
         }
         setDatas(newsData);
     }, [SelectRoomAvailable, SelectRoomNotAvailable, SelectRoomNotClean, searchRoom]);
-    const filterRoom = () => {
-        if (datas.length > 0) {
-            datas.forEach((data) => {
+    const filterRoom = (datatmp) => {
+        if (datatmp.length > 0) {
+            datatmp.forEach((data) => {
                 floorlist1.push({
                     id: data.floor,
                     floor: data.floor,
@@ -266,113 +107,301 @@ export default function ShowRoomStatus() {
             categoryList1 = removeDulicate(categoryList1);
             setFloorlist(floorlist1);
             setCategoryList(categoryList1);
+            setAddRoomCategory(categoryList1[0].id);
+        }
+    };
+    const [AddRooms, setAddRooms] = useState([]);
+    const handleAddRoom = () => {
+        const check = datatmp.filter((e) => addRoomName === e.roomName);
+        if (check.length > 0) {
+            openNotificationWithIcon('error', 'Failed', `Đã có phòng tên ${addRoomName} !`);
+            return;
+        }
+        const check2 = AddRooms.filter((e) => e.roomName === addRoomName);
+        if (check2.length > 0) {
+            openNotificationWithIcon('error', 'Failed', `Bạn vừa thêm phòng tên ${addRoomName} rồi !`);
+            return;
+        }
+        const newdata = {
+            roomName: addRoomName,
+            categoryId: addRoomCategory,
+            floor: parseInt(addRoomFloor),
+            roomDescription: '',
+            status: true,
+        };
+        setAddRooms([...AddRooms, newdata]);
+        setDatas([...datas, newdata]);
+        setAddRoomName('');
+    };
+
+    const handleAddRoomSubmit = () => {
+        Api.addRoom(hotelId, AddRooms, auth.token)
+            .then(() => {
+                openNotificationWithIcon('success', 'Success', 'Đã Cập nhật thành công');
+                setAddRooms([]);
+                getStatusRoom();
+            })
+            .catch((err) => {
+                console.log(err);
+                openNotificationWithIcon('error', 'Failed', 'Đã có lỗi xảy ra khi cập nhật !');
+            });
+    };
+    const openNotificationWithIcon = (type, message, description) => {
+        notification[type]({
+            message: message,
+            description: description,
+        });
+    };
+    const { confirm } = Modal;
+    const showConfirm = (data) => {
+        confirm({
+            title: `Xác nhận đã dọn phòng ${data.roomName}`,
+            content: ``,
+            onOk() {
+                Api.cleanRoom(data.roomId, auth.token)
+                    .then(() => {
+                        openNotificationWithIcon('success', 'Success', 'Đã Cập nhật thành công');
+                        getStatusRoom();
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        openNotificationWithIcon('error', 'Failed', 'Đã có lỗi xảy ra khi cập nhật !');
+                    });
+            },
+            onCancel() {},
+        });
+    };
+    const [listRoomsDetail, SetListRoomsDetail] = useState([]);
+    const handleRoomClick = (data) => {
+        if (data.allStatus === 3) {
+            showConfirm(data);
+            console.log('1');
+        }
+        if (data.allStatus === 2) {
+            dispatch(dispatchHostFecth());
+            Api.getRoomInfo(data.roomId, auth.token)
+                .then((result) => {
+                    Api.getUsedMenu(result.bookingDetailId, auth.token)
+                        .then((item) => {
+                            const mergedObject = {
+                                ...item,
+                                ...result,
+                            };
+                            const datatmp = [mergedObject, ...listRoomsDetail];
+                            SetListRoomsDetail(datatmp);
+                        })
+                        .catch();
+                })
+                .catch((err) => openNotificationWithIcon('error', 'Failed', 'Server đang bận vui lòng thử lại sau !'))
+                .finally(() => dispatch(dispatchHostSuccess()));
+        }
+        if (data.allStatus === 1) {
+            const newData = {
+                roomId: data.roomId,
+                roomName: data.roomName,
+                hotelId: hotelId,
+                roomStatus: 1,
+                bookingDetailMenus: [],
+                lsCustomer: [],
+                floor: data.floor,
+                categoryId: data.categoryId,
+            };
+            const newList = [newData, ...listRoomsDetail];
+            SetListRoomsDetail([...newList]);
+        }
+    };
+    const handleCloseRoom = (e, status) => {
+        const newList = listRoomsDetail.filter((data) => data.roomId !== e);
+        SetListRoomsDetail(newList);
+        if (status) {
+            getStatusRoom();
         }
     };
     return (
-        <div className={cx('body')}>
-            <div className={cx('title')}>
-                <h3>Hotel : ABC</h3>
-                <h3>All Room Status</h3>
-            </div>
-            <div className={cx('container')}>
-                <div className={cx('left')}>
-                    {(filterFloor ? floorlist : categoryList).map((filter) => {
-                        return (
-                            <div className={cx('Floor')}>
-                                <div className={cx('Floor_title')}>
-                                    <h3>{filterFloor ? `Lầu ${filter.floor} ` : filter.categoryName} :</h3>
-                                </div>
-                                {datas.map((data) => {
-                                    if (filterFloor ? data.floor === filter.floor : data.categoryId === filter.id) {
-                                        return (
-                                            <div className={cx('Room_Item')}>
-                                                <div>
-                                                    <Icon
-                                                        path={mdiHome}
-                                                        size={'24px'}
-                                                        color={
-                                                            data.allStatus === 2
-                                                                ? '#3DC5B5'
-                                                                : data.allStatus === 3
-                                                                ? '#E31717'
-                                                                : data.allStatus === 1
-                                                                ? '#000'
-                                                                : '#F9A000'
-                                                        }
-                                                    ></Icon>
-                                                </div>
-                                                <div>{data.roomName}</div>
-                                            </div>
-                                        );
-                                    }
-                                    return <></>;
-                                })}
+        <div>
+            <div className={cx('body')}>
+                <div className={cx('title')}>
+                    <h3>Hotel : ABC</h3>
+                    <div className={cx('title-right')}>
+                        {!addRoom ? (
+                            <div className={cx('addRoom-btn')} onClick={() => setAddRoom(!addRoom)}>
+                                <Icon path={mdiPlus} size={'20px'} color={'white'}></Icon> Add Room
                             </div>
-                        );
-                    })}
+                        ) : (
+                            <></>
+                        )}
+                        <h3>All Room Status</h3>
+                    </div>
                 </div>
-                <div className={cx('right')}>
-                    <div className={cx('searchBox')}>
-                        <input
-                            placeholder="Nhâp tên phòng"
-                            className={cx('searchRoom')}
-                            value={searchRoom}
-                            onChange={(e) => setSearchRoom(e.target.value)}
-                        ></input>
-                        <Icon path={mdiMagnify} size={'24px'} className={cx('searchIcon')}></Icon>
+                <div className={cx('container')}>
+                    <div className={cx('left')}>
+                        {(filterFloor ? floorlist : categoryList).map((filter) => {
+                            return (
+                                <div className={cx('Floor')} key={`${filter.id}a`}>
+                                    <div>
+                                        <h3 className={cx('Floor_title')}>
+                                            {filterFloor ? `Lầu ${filter.floor} ` : filter.categoryName} :
+                                        </h3>
+                                    </div>
+                                    {datas.map((data) => {
+                                        if (filterFloor ? data.floor === filter.floor : data.categoryId === filter.id) {
+                                            return (
+                                                <div
+                                                    className={cx('Room_Item')}
+                                                    key={data.roomId}
+                                                    onClick={() => handleRoomClick(data)}
+                                                >
+                                                    <div>
+                                                        <Icon
+                                                            path={mdiHome}
+                                                            size={'24px'}
+                                                            color={
+                                                                data.allStatus === 2
+                                                                    ? '#3DC5B5'
+                                                                    : data.allStatus === 3
+                                                                    ? '#E31717'
+                                                                    : data.allStatus === 1
+                                                                    ? '#000'
+                                                                    : '#F9A000'
+                                                            }
+                                                        ></Icon>
+                                                    </div>
+                                                    <div>{data.roomName}</div>
+                                                </div>
+                                            );
+                                        }
+                                        return <></>;
+                                    })}
+                                </div>
+                            );
+                        })}
                     </div>
-                    <Divider className={cx('divider')}>Filter</Divider>
-                    <div className={cx('FilterRoom')}>
-                        <div>Hiển Thị Phòng :</div>
-                        <ul>
-                            <li>
-                                <div className={cx('FilterRoom_item')}>
-                                    <div>Phòng trống</div>
-                                    <div>
-                                        <Checkbox
-                                            value={SelectRoomAvailable}
-                                            onChange={() => setSelectRoomAvailable(!SelectRoomAvailable)}
-                                        ></Checkbox>
-                                    </div>
+                    <div className={cx('right')}>
+                        {addRoom ? (
+                            <div className={cx('addNewRoom')}>
+                                <div>
+                                    <div>Tên Phòng:</div>
+                                    <input
+                                        placeholder="Room Name"
+                                        style={{ width: 200 }}
+                                        value={addRoomName}
+                                        onChange={(e) => setAddRoomName(e.target.value)}
+                                    ></input>
                                 </div>
-                            </li>
-                            <li>
-                                <div className={cx('FilterRoom_item')}>
-                                    <div>Phòng đang có khách</div>
-                                    <div>
-                                        <Checkbox
-                                            value={SelectRoomNotAvailable}
-                                            onChange={() => setSelectRoomNotAvailable(!SelectRoomNotAvailable)}
-                                        ></Checkbox>
-                                    </div>
-                                </div>
-                            </li>
-                            <li>
-                                <div className={cx('FilterRoom_item')}>
-                                    <div>Phòng cần vệ sinh</div>
-                                    <div>
-                                        <Checkbox
-                                            value={SelectRoomNotClean}
-                                            onChange={() => setSelectRoomNotClean(!SelectRoomNotClean)}
-                                        ></Checkbox>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <Divider className={cx('divider')}>Sort</Divider>
-                    <div className={cx('SortRoom')}>Sắp xếp phòng theo :</div>
+                                <div>
+                                    <div>Lầu</div>
 
-                    <div className={cx('btn-Sort')}>
-                        <div className={cx('btnSortFloor')} onClick={() => setFilterFloor(true)}>
-                            Lầu
-                        </div>{' '}
-                        <div className={cx('btnSortCategory')} onClick={() => setFilterFloor(false)}>
-                            Loại Phòng
-                        </div>
+                                    <input
+                                        placeholder="Lầu"
+                                        className={cx('FloorInput')}
+                                        type={'number'}
+                                        value={addRoomFloor}
+                                        onChange={(e) => setAddRoomFloor(e.target.value)}
+                                    ></input>
+                                </div>
+                                <div>
+                                    <div>Loại Phòng</div>
+                                    <Select
+                                        defaultValue={categoryList[0].id}
+                                        value={addRoomCategory}
+                                        style={{ width: 200 }}
+                                        onChange={(e) => setAddRoomCategory(e)}
+                                    >
+                                        {categoryList.map((e) => {
+                                            return <Option value={e.id}>{e.categoryName}</Option>;
+                                        })}
+                                    </Select>
+                                </div>
+                                <div className={cx('btn-add')} onClick={() => handleAddRoom()}>
+                                    Add
+                                </div>
+                                <div className={cx('ActiveAdd')}>
+                                    <div className={cx('btn-add-save')} onClick={() => handleAddRoomSubmit()}>
+                                        Save
+                                    </div>
+                                    <div className={cx('btn-add-cancel')} onClick={() => setAddRoom(!addRoom)}>
+                                        Cancel
+                                    </div>
+                                </div>
+                            </div>
+                        ) : (
+                            <div>
+                                {' '}
+                                <div className={cx('searchBox')}>
+                                    <input
+                                        placeholder="Nhâp tên phòng"
+                                        className={cx('searchRoom')}
+                                        value={searchRoom}
+                                        onChange={(e) => setSearchRoom(e.target.value)}
+                                    ></input>
+                                    <Icon path={mdiMagnify} size={'24px'} className={cx('searchIcon')}></Icon>
+                                </div>
+                                <Divider className={cx('divider')}>Filter</Divider>
+                                <div className={cx('FilterRoom')}>
+                                    <div>Hiển Thị Phòng :</div>
+                                    <ul>
+                                        <li>
+                                            <div className={cx('FilterRoom_item')}>
+                                                <div>Phòng trống</div>
+                                                <div>
+                                                    <Checkbox
+                                                        value={SelectRoomAvailable}
+                                                        onChange={() => setSelectRoomAvailable(!SelectRoomAvailable)}
+                                                    ></Checkbox>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className={cx('FilterRoom_item')}>
+                                                <div>Phòng đang có khách</div>
+                                                <div>
+                                                    <Checkbox
+                                                        value={SelectRoomNotAvailable}
+                                                        onChange={() =>
+                                                            setSelectRoomNotAvailable(!SelectRoomNotAvailable)
+                                                        }
+                                                    ></Checkbox>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div className={cx('FilterRoom_item')}>
+                                                <div>Phòng cần vệ sinh</div>
+                                                <div>
+                                                    <Checkbox
+                                                        value={SelectRoomNotClean}
+                                                        onChange={() => setSelectRoomNotClean(!SelectRoomNotClean)}
+                                                    ></Checkbox>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <Divider className={cx('divider')}>Sort</Divider>
+                                <div className={cx('SortRoom')}>Sắp xếp phòng theo :</div>
+                                <div className={cx('btn-Sort')}>
+                                    <div className={cx('btnSortFloor')} onClick={() => setFilterFloor(true)}>
+                                        Lầu
+                                    </div>{' '}
+                                    <div className={cx('btnSortCategory')} onClick={() => setFilterFloor(false)}>
+                                        Loại Phòng
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
+            {listRoomsDetail.map((e) => {
+                return (
+                    <RoomInfo
+                        data={e}
+                        handleClose={handleCloseRoom}
+                        categoryList={categoryList}
+                        hotelId={hotelId}
+                    ></RoomInfo>
+                );
+            })}
         </div>
     );
 }

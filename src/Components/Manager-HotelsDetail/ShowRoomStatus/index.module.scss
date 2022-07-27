@@ -6,6 +6,7 @@
     border-radius: 20px;
     padding-left: 70px;
     position: relative;
+    margin: 20px 0;
 }
 
 .title {
@@ -35,10 +36,34 @@
 }
 .Floor {
     display: flex;
-    overflow: auto;
     border-bottom: 1px solid #aaadb7;
-    height: 60px;
+    min-height: 60px;
+    max-height: 65px;
     align-items: center;
+    width: 710px;
+    overflow: auto;
+}
+
+.Floor::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+.Floor::-webkit-scrollbar-corner {
+    width: 5px;
+}
+/* Track */
+.Floor::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+.Floor::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+.Floor::-webkit-scrollbar-thumb:hover {
+    background: #555;
 }
 .Floor_title {
     padding-right: 30px;
@@ -50,6 +75,7 @@
     font-size: 16px;
     font-weight: 600;
     text-align: center;
+    cursor: pointer;
 }
 .searchRoom {
     width: 196px;
@@ -101,6 +127,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
 }
 .btn-Sort {
     display: flex;
@@ -119,4 +146,101 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    cursor: pointer;
+}
+.title-right {
+    display: flex;
+}
+.addRoom-btn {
+    height: 36px;
+    width: 120px;
+    border-radius: 10px;
+    background: green;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 30px;
+    cursor: pointer;
+}
+.editRoom-btn {
+    height: 36px;
+    width: 120px;
+    border-radius: 10px;
+    background: orange;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 30px;
+    cursor: pointer;
+}
+.addNewRoom {
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 300px;
+    align-items: center;
+}
+.FloorInput {
+    width: 40px;
+}
+.SelectCategory {
+    width: 199px;
+}
+.btn-add {
+    padding: 5px 20px;
+    background: orange;
+    width: 100px;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    color: white;
+}
+
+.btn-add-save {
+    padding: 5px 20px;
+    background: #1fab3e;
+    width: 80px;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    color: white;
+}
+
+.btn-add-cancel {
+    padding: 5px 20px;
+    background: red;
+    width: 80px;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    color: white;
+}
+.ActiveAdd {
+    display: flex;
+    margin-top: 20px;
+    width: 100%;
+    justify-content: space-between;
+}
+.close-Icon {
+    position: absolute;
+    top: 20px;
+    right: 25px;
 }

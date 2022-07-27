@@ -21,7 +21,7 @@ export default function Hotels() {
                 .catch((err) => console.log(err))
                 .finally(dispatch(dispatchHostSuccess()));
         }
-    }, []);
+    }, [auth, dispatch]);
 
     return (
         <div className={cx('body')}>

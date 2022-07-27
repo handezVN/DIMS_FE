@@ -106,3 +106,78 @@ export const AddHotelCategory = async ({ token, hotelId, categoryName, cateDescr
     );
     return res.data;
 };
+
+export const addRoom = async (hotelId, list, token) => {
+    const res = await axios.post(
+        `api/HotelManage/Add-Rooms`,
+        {
+            hotelId: hotelId,
+            rooms: list,
+        },
+        {
+            headers: { Authorization: `Bearer ${token}` },
+        },
+    );
+    return res.data;
+};
+let today = new Date();
+let date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+export const getStatusAllRooms = async (token, hotelId) => {
+    const res = await axios.get(`api/HostManage/Host-A-Hotel-All-Room-Status-Today?hotelId=${hotelId}&today=${date}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};
+
+export const cleanRoom = async (roomId, token) => {
+    const res = await axios.put(
+        `api/HostManage/Update-Clean-Status?roomID=${roomId}`,
+        {},
+        {
+            headers: { Authorization: `Bearer ${token}` },
+        },
+    );
+    return res;
+};
+
+export const getRoomInfo = async (roomId, token) => {
+    const res = await axios.get('api/HostManage/Host-A-Detail-Room', {
+        headers: { Authorization: `Bearer ${token}` },
+        params: {
+            RoomId: roomId,
+            today: today,
+        },
+    });
+    return res.data;
+};
+export const getUsedMenu = async (bookingDetailId, token) => {
+    const res = await axios.get(`api/HostManage/Get-User-Menu?BookingDetailID=${bookingDetailId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};
+
+export const removeRoom = async (roomId, token) => {
+    const res = await axios.delete(`api/HotelManage/Remove-A-Room?RoomId=${roomId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};
+export const updateRoomInfo = async (roomId, roomName, hotelId, categoryId, floor, token) => {
+    const res = await axios.put(
+        `api/HotelManage/Update-A-Room`,
+        {
+            roomId: roomId,
+            roomName: roomName,
+            hotelId: hotelId,
+            categoryId: categoryId,
+            floor: floor,
+            roomDescription: 'string',
+            status: true,
+        },
+        {
+            headers: { Authorization: `Bearer ${token}` },
+        },
+    );
+    return res;
+};

@@ -23,7 +23,7 @@ export default function DetailHotels() {
                 <Icon path={mdiChevronDown} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
             </div>
             <div className={cx(['container', showRoomStatus ? 'active' : 'unActive'])}>
-                <ShowRoomStatus hotelid={hotelid}></ShowRoomStatus>
+                <ShowRoomStatus hotelId={hotelid}></ShowRoomStatus>
             </div>
             <div className={cx('Menu')} onClick={() => setShowImage(!showImage)}>
                 Show Image{' '}
