@@ -104,7 +104,7 @@
 .Menu {
     width: 80%;
     height: 36px;
-    background-color: #273244;
+    background-color: #496d93e0;
     font-weight: 600;
     letter-spacing: 2px;
     color: aliceblue;
@@ -112,6 +112,7 @@
     font-size: 24px;
     transition: 300ms;
     transform-origin: top;
+    border-radius: 10px;
 }
 
 ::-webkit-scrollbar {

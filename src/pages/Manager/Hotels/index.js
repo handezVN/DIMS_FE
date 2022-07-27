@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames/bind';
-import Feature_Icon from '../../../Components/DetailHotel-Feature-Icon';
-import GalleryMainImage from '../../../Components/DetailHotel-MainImageGallery';
 import HotelItem from '../../../Components/Manager-HotelItem';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as HostApi from '../../../api/ManagerApi';
 import { dispatchHostFecth, dispatchHostSuccess } from '../../../redux/actions/authAction';
 export default function Hotels() {
@@ -19,7 +17,6 @@ export default function Hotels() {
             HostApi.getListHotels(auth.token)
                 .then((result) => {
                     setHotels(result);
-                    console.log(result);
                 })
                 .catch((err) => console.log(err))
                 .finally(dispatch(dispatchHostSuccess()));

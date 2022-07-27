@@ -51,7 +51,6 @@ export default function GalleryImage({ props, handleDelete, iconDelete }) {
             setSlideRight(false);
         }, 1000);
     };
-    console.log(props);
     return (
         <div>
             <div className={cx('DetailHotel_Room_Image')}>

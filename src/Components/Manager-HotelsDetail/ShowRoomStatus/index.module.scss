@@ -1,0 +1,122 @@
+.body {
+    width: 1040px;
+    min-height: 420px;
+    background: #fffcfc;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding-left: 70px;
+    position: relative;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0 15px 0;
+    width: 900px;
+    border-bottom: solid 1px #aaadb7;
+    align-items: center;
+}
+.container {
+    display: flex;
+    justify-content: space-between;
+    height: calc(100% - 70px);
+}
+.right {
+    width: 240px;
+    border-left: 1px solid #aaadb7;
+    margin: 10px 0;
+    height: calc(100% - 20px);
+    padding: 20px;
+}
+
+.left {
+    width: calc(100% - 240px);
+    padding-right: 20px;
+}
+.Floor {
+    display: flex;
+    overflow: auto;
+    border-bottom: 1px solid #aaadb7;
+    height: 60px;
+    align-items: center;
+}
+.Floor_title {
+    padding-right: 30px;
+    width: 160px;
+    overflow: hidden;
+}
+.Room_Item {
+    padding: 0 30px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+}
+.searchRoom {
+    width: 196px;
+    border-radius: 10px;
+    height: 32px;
+    padding: 0 10px;
+}
+.searchBox {
+    position: relative;
+}
+.searchIcon {
+    position: absolute;
+    right: 10px;
+    top: 5px;
+}
+.FilterRoom {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    font-style: normal;
+}
+.FilterRoom li {
+    list-style: disc;
+    padding: 5px 0;
+    margin-left: 20px;
+}
+.FilterRoom_item {
+    display: flex;
+    justify-content: space-between;
+}
+.divider {
+    margin: 0;
+}
+.SortRoom {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    font-style: normal;
+}
+.btnSortFloor {
+    width: 90px;
+    height: 30px;
+    background: #67badd;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-Sort {
+    display: flex;
+    justify-content: space-between;
+}
+
+.btnSortCategory {
+    width: 90px;
+    height: 30px;
+    background: #1fab3e;
+    border-radius: 10px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
