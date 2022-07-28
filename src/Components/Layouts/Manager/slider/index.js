@@ -13,6 +13,7 @@ import { mdiBriefcaseVariant } from '@mdi/js';
 import { mdiChevronDown } from '@mdi/js';
 import { mdiBedKing } from '@mdi/js';
 import { mdiKey } from '@mdi/js';
+import { mdiImageMultiple } from '@mdi/js';
 export default function SlideBar({ SlideBar }) {
     const cx = classNames.bind(styles);
     const dispatch = useDispatch();
@@ -33,7 +34,11 @@ export default function SlideBar({ SlideBar }) {
                 <div className={cx('SliderBar_Person_Role')}>Manager</div>
                 <div className={cx('SliderBar_Person_Select')}>
                     <i className="fa-solid fa-user" title="Profile"></i>
-                    <i className="fa-solid fa-gear" title="Settings"></i>
+                    <i
+                        className="fa-solid fa-gear"
+                        title="Settings"
+                        onClick={() => navigation('/manager/setting/hotelselection')}
+                    ></i>
                     <i
                         className="fa-solid fa-arrow-right-from-bracket"
                         title="Logout"
@@ -46,7 +51,7 @@ export default function SlideBar({ SlideBar }) {
             </Divider>
             <div className={cx('SlideBar_Container')}>
                 <div className={cx('SlideBar_Item')}>
-                    <div className={cx('SlideBar_Main_Item')}>
+                    <div className={cx('SlideBar_Main_Item')} onClick={() => navigation('/manager/dashboard')}>
                         <div className={cx('d-flex')}>
                             <Icon
                                 path={mdiViewDashboard}
@@ -95,7 +100,51 @@ export default function SlideBar({ SlideBar }) {
                     </div>
                     {hotelshow ? (
                         <div>
-                            <div className={cx('SlideBar_Sub_Item')}>
+                            <div
+                                className={cx('SlideBar_Sub_Item')}
+                                onClick={() =>
+                                    navigation(
+                                        `/mananger/hotels/detailHotels?hotelid=${hotelSelected.hotelid}&roomShow=true`,
+                                    )
+                                }
+                            >
+                                <Icon
+                                    path={mdiKey}
+                                    title="view-dashboard"
+                                    size={'20px'}
+                                    horizontal
+                                    vertical
+                                    rotate={180}
+                                />
+                                <div className={cx('SlideBar_Item_Title')}>Rooms </div>
+                            </div>
+
+                            <div
+                                className={cx('SlideBar_Sub_Item')}
+                                onClick={() =>
+                                    navigation(
+                                        `/mananger/hotels/detailHotels?hotelid=${hotelSelected.hotelid}&photoShow=true`,
+                                    )
+                                }
+                            >
+                                <Icon
+                                    path={mdiImageMultiple}
+                                    title="view-dashboard"
+                                    size={'20px'}
+                                    horizontal
+                                    vertical
+                                    rotate={180}
+                                />
+                                <div className={cx('SlideBar_Item_Title')}>Photos</div>
+                            </div>
+                            <div
+                                className={cx('SlideBar_Sub_Item')}
+                                onClick={() =>
+                                    navigation(
+                                        `/mananger/hotels/detailHotels?hotelid=${hotelSelected.hotelid}&categoryShow=true`,
+                                    )
+                                }
+                            >
                                 <Icon
                                     path={mdiBedKing}
                                     title="view-dashboard"
@@ -105,17 +154,6 @@ export default function SlideBar({ SlideBar }) {
                                     rotate={180}
                                 />
                                 <div className={cx('SlideBar_Item_Title')}>Category</div>
-                            </div>
-                            <div className={cx('SlideBar_Sub_Item')}>
-                                <Icon
-                                    path={mdiKey}
-                                    title="view-dashboard"
-                                    size={'20px'}
-                                    horizontal
-                                    vertical
-                                    rotate={180}
-                                />
-                                <div className={cx('SlideBar_Item_Title')}>Rooms</div>
                             </div>
                         </div>
                     ) : (
@@ -133,7 +171,7 @@ export default function SlideBar({ SlideBar }) {
                                 vertical
                                 rotate={180}
                             />
-                            <div className={cx('SlideBar_Item_Title')}>Order</div>
+                            <div className={cx('SlideBar_Item_Title')}>Booking</div>
                         </div>
                         <Icon
                             path={mdiChevronDown}

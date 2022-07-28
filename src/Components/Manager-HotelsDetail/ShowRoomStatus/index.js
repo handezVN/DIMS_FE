@@ -244,7 +244,7 @@ export default function ShowRoomStatus({ hotelId }) {
         <div>
             <div className={cx('body')}>
                 <div className={cx('title')}>
-                    <h3></h3>
+                    <h3>All Room Status</h3>
                     <div className={cx('title-right')}>
                         {!addRoom ? (
                             <div className={cx('addRoom-btn')} onClick={() => setAddRoom(!addRoom)}>
@@ -253,7 +253,6 @@ export default function ShowRoomStatus({ hotelId }) {
                         ) : (
                             <></>
                         )}
-                        <h3>All Room Status</h3>
                     </div>
                 </div>
                 <div className={cx('container')}>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import styles from './index.module.scss';
 import classNames from 'classnames/bind';
@@ -13,9 +13,24 @@ export default function DetailHotels() {
     const cx = classNames.bind(styles);
     const [params] = useSearchParams();
     const hotelid = params.get('hotelid');
+    const categoryShow = params.get('categoryShow');
+    const roomShow = params.get('roomShow');
+    const photoShow = params.get('photoShow');
     const [showRoomStatus, setShowRoomStatus] = useState(false);
     const [showImage, setShowImage] = useState(false);
     const [showCategory, setShowCategory] = useState(false);
+    useEffect(() => {
+        console.log(params);
+        if (categoryShow) {
+            setShowCategory(categoryShow);
+        }
+        if (roomShow) {
+            setShowRoomStatus(roomShow);
+        }
+        if (photoShow) {
+            setShowImage(photoShow);
+        }
+    }, [categoryShow, roomShow]);
     return (
         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div className={cx('Menu')} onClick={() => setShowRoomStatus(!showRoomStatus)}>

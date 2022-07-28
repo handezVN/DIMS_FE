@@ -181,3 +181,23 @@ export const updateRoomInfo = async (roomId, roomName, hotelId, categoryId, floo
     );
     return res;
 };
+
+export const getMoneyCheckOut = async (hotelid, from, to, token) => {
+    const res = await axios.get(
+        `api/HostManage/Get-Money-Checkout-info-By-Filter?hotelId=${hotelid}&startDate=${from}&endDate=${to}`,
+        {
+            headers: { Authorization: `Bearer ${token}` },
+        },
+    );
+    return res.data;
+};
+
+export const getMoneyNonCheckOut = async (hotelid, from, to, token) => {
+    const res = await axios.get(
+        `api/HostManage/Get-Money-not-Checkout-info-By-Filter?hotelId=${hotelid}&startDate=${from}&endDate=${to}`,
+        {
+            headers: { Authorization: `Bearer ${token}` },
+        },
+    );
+    return res.data;
+};
