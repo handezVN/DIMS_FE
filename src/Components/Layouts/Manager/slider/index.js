@@ -21,6 +21,7 @@ export default function SlideBar({ SlideBar }) {
         dispatch(dispatchLogout());
         navigation('/');
     };
+    const hotelSelected = JSON.parse(localStorage.getItem('hotelSelected'));
     const [hotelshow, setHotelShow] = useState(false);
     return (
         <div className={cx(['SlideBar', SlideBar ? 'active' : 'unactive'])}>
@@ -69,7 +70,10 @@ export default function SlideBar({ SlideBar }) {
                 </div>
                 <div className={cx('SlideBar_Item', hotelshow ? 'Selected' : '')}>
                     <div className={cx('SlideBar_Main_Item')} onClick={() => setHotelShow(!hotelshow)}>
-                        <div className={cx('d-flex')} onClick={() => navigation('/manager/hotels')}>
+                        <div
+                            className={cx('d-flex')}
+                            onClick={() => navigation(`/mananger/hotels/detailHotels?hotelid=${hotelSelected.hotelid}`)}
+                        >
                             <Icon
                                 path={mdiHomeCity}
                                 title="view-dashboard"

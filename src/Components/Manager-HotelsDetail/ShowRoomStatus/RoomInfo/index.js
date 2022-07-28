@@ -188,7 +188,10 @@ export default function RoomInfo({ data, handleClose, categoryList, hotelId }) {
                     <div className={cx(['d-flex', 'content_item'])}>
                         <div>Price :</div>
                         <div>
-                            {(data.totalPrice * 1000).toLocaleString(undefined, { maximumFractionDigits: 0 })} VNĐ
+                            {((data.totalPrice - data.extraFee) * 1000).toLocaleString(undefined, {
+                                maximumFractionDigits: 0,
+                            })}{' '}
+                            VNĐ
                         </div>
                     </div>
                     <div className={cx(['d-flex', 'content_item'])}>
@@ -228,7 +231,10 @@ export default function RoomInfo({ data, handleClose, categoryList, hotelId }) {
                         {(data.extraFee * 1000).toLocaleString(undefined, { maximumFractionDigits: 0 })} VNĐ
                     </div>
                     <div>
-                        Room Price : {(data.totalPrice * 1000).toLocaleString(undefined, { maximumFractionDigits: 0 })}{' '}
+                        Room Price :{' '}
+                        {((data.totalPrice - data.extraFee) * 1000).toLocaleString(undefined, {
+                            maximumFractionDigits: 0,
+                        })}{' '}
                         VNĐ
                     </div>
                     <div>
@@ -237,7 +243,7 @@ export default function RoomInfo({ data, handleClose, categoryList, hotelId }) {
                     <hr></hr>
                     <div>
                         Total :{' '}
-                        {((data.extraFee + data.totalPrice) * 1000).toLocaleString(undefined, {
+                        {(data.totalPrice * 1000).toLocaleString(undefined, {
                             maximumFractionDigits: 0,
                         })}{' '}
                         VNĐ

@@ -22,21 +22,20 @@ export default function DetailHotels() {
                 View All Rooms Status{' '}
                 <Icon path={mdiChevronDown} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
             </div>
-            <div className={cx(['container', showRoomStatus ? 'active' : 'unActive'])}>
+            <div className={cx(['container', showRoomStatus ? 'active' : 'unActive-left'])}>
                 <ShowRoomStatus hotelId={hotelid}></ShowRoomStatus>
             </div>
             <div className={cx('Menu')} onClick={() => setShowImage(!showImage)}>
-                Show Image{' '}
-                <Icon path={mdiChevronDown} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
+                Image <Icon path={mdiChevronDown} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
             </div>
-            <div className={cx(['container', showImage ? 'active' : 'unActive'])}>
+            <div className={cx(['container', showImage ? 'active' : 'unActive-right'])}>
                 <PhotosHotel hotelid={hotelid}></PhotosHotel>
             </div>
             <div className={cx(['Menu'])} onClick={() => setShowCategory(!showCategory)}>
-                Show Category{' '}
+                Category{' '}
                 <Icon path={mdiChevronDown} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
             </div>
-            <div className={cx(['container', showCategory ? 'active' : 'unActive'])}>
+            <div className={cx(['container', showCategory ? 'active-bottom' : 'unActive-bottom'])}>
                 <CategoryHotel hotelid={hotelid}></CategoryHotel>
             </div>
         </div>

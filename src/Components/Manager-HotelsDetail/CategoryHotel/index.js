@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 import CategoryType from './CategoryType';
 import { useSelector } from 'react-redux';
-export default function CategoryHotel({ hotelid }) {
+export default function CategoryHotel({ hotelid, display }) {
     const [datas, setData] = useState([]);
     const [addNew, setAddNew] = useState(false);
     const cx = classNames.bind(styles);

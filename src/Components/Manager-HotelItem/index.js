@@ -71,7 +71,7 @@ export default function HotelItem({ hotel }) {
                 </div>
                 <div className={cx('detailHotel_Btn')}>
                     <button className={cx('detailHotel_Btn-Book')} onClick={handleEdit}>
-                        Chỉnh Sửa
+                        Chọn khách sạn
                     </button>
                 </div>
                 <hr></hr>

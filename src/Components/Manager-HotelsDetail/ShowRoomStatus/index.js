@@ -112,6 +112,15 @@ export default function ShowRoomStatus({ hotelId }) {
     };
     const [AddRooms, setAddRooms] = useState([]);
     const handleAddRoom = () => {
+        if (addRoomName.length < 1) {
+            openNotificationWithIcon('error', 'Failed', `Bạn chưa tên phòng  !`);
+            return;
+        }
+        if (addRoomFloor.length < 1) {
+            openNotificationWithIcon('error', 'Failed', `Bạn chưa nhập lầu  !`);
+            return;
+        }
+
         const check = datatmp.filter((e) => addRoomName === e.roomName);
         if (check.length > 0) {
             openNotificationWithIcon('error', 'Failed', `Đã có phòng tên ${addRoomName} !`);
@@ -121,6 +130,16 @@ export default function ShowRoomStatus({ hotelId }) {
         if (check2.length > 0) {
             openNotificationWithIcon('error', 'Failed', `Bạn vừa thêm phòng tên ${addRoomName} rồi !`);
             return;
+        }
+        const findFloor = floorlist.find((e) => e.floor == addRoomFloor);
+        if (findFloor === undefined) {
+            setFloorlist([
+                ...floorlist,
+                {
+                    id: addRoomFloor,
+                    floor: addRoomFloor,
+                },
+            ]);
         }
         const newdata = {
             roomName: addRoomName,
@@ -217,11 +236,15 @@ export default function ShowRoomStatus({ hotelId }) {
             getStatusRoom();
         }
     };
+    const handleCancel = () => {
+        setAddRoom(!addRoom);
+        setDatas(datatmp);
+    };
     return (
         <div>
             <div className={cx('body')}>
                 <div className={cx('title')}>
-                    <h3>Hotel : ABC</h3>
+                    <h3></h3>
                     <div className={cx('title-right')}>
                         {!addRoom ? (
                             <div className={cx('addRoom-btn')} onClick={() => setAddRoom(!addRoom)}>
@@ -244,7 +267,7 @@ export default function ShowRoomStatus({ hotelId }) {
                                         </h3>
                                     </div>
                                     {datas.map((data) => {
-                                        if (filterFloor ? data.floor === filter.floor : data.categoryId === filter.id) {
+                                        if (filterFloor ? data.floor == filter.floor : data.categoryId == filter.id) {
                                             return (
                                                 <div
                                                     className={cx('Room_Item')}
@@ -319,7 +342,7 @@ export default function ShowRoomStatus({ hotelId }) {
                                     <div className={cx('btn-add-save')} onClick={() => handleAddRoomSubmit()}>
                                         Save
                                     </div>
-                                    <div className={cx('btn-add-cancel')} onClick={() => setAddRoom(!addRoom)}>
+                                    <div className={cx('btn-add-cancel')} onClick={() => handleCancel()}>
                                         Cancel
                                     </div>
                                 </div>

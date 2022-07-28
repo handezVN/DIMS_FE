@@ -4,7 +4,8 @@
     margin: 0 20px;
     align-items: center;
     transform-origin: left top;
-    display: none;
+    // display: none;
+    transition: 500ms linear;
 }
 .photos {
     display: flex;
@@ -77,29 +78,59 @@
 @keyframes growDown {
     0% {
         transform: scaleY(0);
+        height: 0;
     }
 
     100% {
         transform: scaleY(1);
+        height: auto;
     }
 }
 @keyframes growTop {
     0% {
         transform: scaleY(1);
+        height: auto;
     }
 
     100% {
         transform: scaleY(0);
+        height: 0;
     }
+}
+.active-bottom {
+    display: flex;
+    justify-content: center;
+    // animation: growDown 3000ms linear;
+    transform: translateY(0);
+    height: auto;
+}
+.unActive-bottom {
+    // animation: growTop 3000ms linear;
+    // animation-delay: 500ms;
+    transform: translateY(2000px);
+    padding: 0;
+    height: 0;
 }
 .active {
     display: flex;
     justify-content: center;
-    animation: growDown 300ms linear;
+    // animation: growDown 3000ms linear;
+    transform: translate(0);
+    height: auto;
 }
-.unActive {
-    animation: growTop 300ms linear;
-    animation-delay: 300ms;
+.unActive-right {
+    // animation: growTop 3000ms linear;
+    // animation-delay: 500ms;
+    transform: translate(2000px);
+    padding: 0;
+    height: 0;
+}
+.unActive-left {
+    // animation: growTop 3000ms linear;
+    // animation-delay: 500ms;
+    transform: translate(-2000px);
+    padding: 0;
+    height: 0;
 }
 .Menu {
     width: 80%;

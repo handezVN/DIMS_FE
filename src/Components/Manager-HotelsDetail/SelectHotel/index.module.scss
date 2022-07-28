@@ -1,0 +1,63 @@
+.body {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.container {
+    width: 900px;
+    height: 160px;
+    background: white;
+    box-shadow: var(--boxshadow);
+    display: flex;
+}
+.MainImg {
+    height: 160px;
+    object-fit: cover;
+    width: 250px;
+}
+.hotelType {
+    background-color: #2a78ec;
+    padding: 5px 10px;
+    color: white;
+    border-radius: 10px;
+    margin-right: 20px;
+    width: 100px;
+    display: flex;
+    justify-content: center;
+}
+.detailHotel_Type {
+    display: flex;
+    align-items: center;
+}
+.star {
+    color: #2a78ec;
+}
+.hotel-info-title {
+    display: flex;
+    justify-content: space-between;
+}
+.hotel-info {
+    width: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 10px;
+}
+.select {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.container:hover {
+    border: 2px solid #2a78ec;
+    cursor: pointer;
+}
+.container:hover .MainImg {
+    width: 250px;
+    height: 156px;
+    object-fit: cover;
+}
