@@ -101,13 +101,13 @@
     display: flex;
     justify-content: center;
     // animation: growDown 3000ms linear;
-    transform: translateY(0);
+    opacity: 1;
     height: auto;
 }
 .unActive-bottom {
     // animation: growTop 3000ms linear;
     // animation-delay: 500ms;
-    transform: translateY(2000px);
+    opacity: 0;
     padding: 0;
     height: 0;
 }

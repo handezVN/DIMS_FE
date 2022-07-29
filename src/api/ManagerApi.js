@@ -28,6 +28,12 @@ export const RemovePhotos = async (photoId, token) => {
     return res.data;
 };
 
+export const RemoveCategory = async (categoryId, token) => {
+    const res = await axios.delete(`api/HotelManage/Remove-A-Hotel-Cate?categoriID=${categoryId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};
 export const UpdateMainPhoto = async (hotelId, photoId, token) => {
     const res = await axios.put(
         `api/HotelManage/Update-Hotel-MainPhoto?hotelId=${hotelId}&photoId=${photoId}`,
@@ -199,5 +205,22 @@ export const getMoneyNonCheckOut = async (hotelid, from, to, token) => {
             headers: { Authorization: `Bearer ${token}` },
         },
     );
+    return res.data;
+};
+
+export const getBooking = async (hotelId, currentPage, PageSize, token) => {
+    const res = await axios.get(
+        `api/HostManage/Get-All-Book-By-Page?hotelId=${hotelId}&currentPage=${currentPage}&PageSize=${PageSize}`,
+        {
+            headers: { Authorization: `Bearer ${token}` },
+        },
+    );
+    return res.data;
+};
+
+export const getBookingDetail = async (bookingId, token) => {
+    const res = await axios.get(`api/HostManage/Get-A-Book-Full-Detail?bookingID=${bookingId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
     return res.data;
 };

@@ -7,12 +7,14 @@ import classNames from 'classnames/bind';
 import SelectHotel from '../../../../Components/Manager-HotelsDetail/SelectHotel';
 export default function HotelSelection() {
     const cx = classNames.bind(styles);
-    const hotelSelected = JSON.parse(localStorage.getItem('hotelSelected'));
     const [setlectHotel, setSelectHotel] = useState(false);
     const dispatch = useDispatch();
     const auth = JSON.parse(localStorage.getItem('user'));
     const [hotels, setHotels] = useState([]);
-
+    const [hotelSelected, setHotelSelect] = useState({
+        hotelid: '',
+    });
+    const hotel = JSON.parse(localStorage.getItem('hotelSelected'));
     useEffect(() => {
         // dispatch(dispatchHostFecth());
         if (auth) {
@@ -27,7 +29,7 @@ export default function HotelSelection() {
         if (hotelSelected === null) {
             setSelectHotel(true);
         }
-    }, [auth, dispatch]);
+    }, [auth]);
 
     return (
         <div className={cx('body')}>

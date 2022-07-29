@@ -18,6 +18,7 @@ const authReducer = (state = initialState, action) => {
             };
         case ACTIONS.LOGOUT:
             localStorage.removeItem('user');
+            localStorage.removeItem('hotelSelected');
             return {
                 ...state,
                 isLogged: false,

@@ -26,7 +26,7 @@ export default function GalleryImage({ props, handleDelete, iconDelete }) {
         setTimeout(() => {
             setSlideLeft_S1(false);
             if (indexImage === 0) {
-                setIndexImage(images.length - 1);
+                setIndexImage(props.length - 1);
             } else {
                 setIndexImage(indexImage - 1);
             }
@@ -40,7 +40,7 @@ export default function GalleryImage({ props, handleDelete, iconDelete }) {
         setSlideRight_S1(true);
         setTimeout(() => {
             setSlideRight_S1(false);
-            if (indexImage === images.length - 1) {
+            if (indexImage === props.length - 1) {
                 setIndexImage(0);
             } else {
                 setIndexImage(indexImage + 1);
@@ -105,12 +105,9 @@ export default function GalleryImage({ props, handleDelete, iconDelete }) {
                         slideRight_S1 ? 'animation_slideRight_S1' : '',
                     )}
                 >
-                    {iconDelete ? (
-                        <div className={cx('Image_Container')}>
-                            <img
-                                src={props.length > 0 ? props[indexImage].photoUrl : images[0].original}
-                                alt="hello"
-                            ></img>
+                    <div className={cx('Image_Container')}>
+                        <img src={props.length > 0 ? props[indexImage].photoUrl : images[0].original} alt="hello"></img>
+                        {iconDelete ? (
                             <div
                                 className={cx('middle')}
                                 onClick={() => {
@@ -131,10 +128,10 @@ export default function GalleryImage({ props, handleDelete, iconDelete }) {
                                     rotate={180}
                                 />
                             </div>
-                        </div>
-                    ) : (
-                        ''
-                    )}
+                        ) : (
+                            <></>
+                        )}
+                    </div>
                 </div>
                 <div className={cx('gallery_thumnail')}>
                     {props.map((image, index) => {

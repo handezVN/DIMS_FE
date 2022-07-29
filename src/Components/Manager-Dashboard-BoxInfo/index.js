@@ -8,7 +8,7 @@ export default function BoxInfo({ icon, title, strong, background, subContent })
     const date = new Date();
     const currentDate = date.getDate();
     const currentYear = date.getFullYear();
-    const currentMonth = date.getMonth() + 1; // 👈️ months are 0-based
+    const currentMonth = date.getMonth() + 1;
 
     function getDaysInMonth(year, month) {
         return new Date(year, month, 0).getDate();

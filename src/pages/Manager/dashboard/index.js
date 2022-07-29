@@ -10,7 +10,12 @@ import { mdiCashCheck, mdiCashClock, mdiCashFast, mdiWalletTravel } from '@mdi/j
 import BoxInfo from '../../../Components/Manager-Dashboard-BoxInfo';
 export default function Dashboard() {
     const cx = classNames.bind(styles);
-    const hotelSelected = JSON.parse(localStorage.getItem('hotelSelected'));
+    const [hotelSelected, setHotelSelect] = useState(
+        JSON.parse(localStorage.getItem('hotelSelected')) || {
+            hotelid: '',
+        },
+    );
+
     const navigation = useNavigate();
     const dispatch = useDispatch();
     const auth = JSON.parse(localStorage.getItem('user'));
@@ -24,6 +29,25 @@ export default function Dashboard() {
     const [checkOut, setCheckOut] = useState({});
     const [noncheckOut, setNonCheckOut] = useState({});
     const [TotalInMonth, setTotalInMonth] = useState({});
+
+    useEffect(() => {
+        console.log(hotelSelected);
+        if (hotelSelected.hotelid === '') {
+            navigation('/manager/setting/hotelselection');
+        } else {
+            if (auth) {
+                dispatch(dispatchHostFecth());
+                Promise.all([getMoneyCheckOut(), getMoneyNonCheckOut(), getTotalMoneyInMonth()])
+                    .then(() => {
+                        dispatch(dispatchHostSuccess());
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        dispatch(dispatchHostFailed());
+                    });
+            }
+        }
+    }, []);
     const getMoneyCheckOut = () => {
         return HostApi.getMoneyCheckOut(hotelSelected.hotelid, today, today, auth.token)
             .then((result) => {
@@ -45,24 +69,6 @@ export default function Dashboard() {
             })
             .catch((err) => console.log(err));
     };
-    useEffect(() => {
-        // dispatch(dispatchHostFecth());
-        if (auth) {
-            dispatch(dispatchHostFecth());
-            Promise.all([getMoneyCheckOut(), getMoneyNonCheckOut(), getTotalMoneyInMonth()])
-                .then(() => {
-                    dispatch(dispatchHostSuccess());
-                })
-                .catch((err) => {
-                    console.log(err);
-                    dispatch(dispatchHostFailed());
-                });
-        }
-        if (hotelSelected === null) {
-            navigation('/manager/setting/hotelselection');
-        }
-    }, []);
-
     return (
         <div className={cx('body')}>
             <div className={cx(['list-info-box'])}>
