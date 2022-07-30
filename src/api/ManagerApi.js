@@ -231,3 +231,9 @@ export const getListCategory = async (hotelid, token) => {
     });
     return res.data;
 };
+export const AddPriceCategory = async (list, token) => {
+    const res = await axios.post(`api/HotelManage/Add-A-SpecialPrice`,list,{
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};

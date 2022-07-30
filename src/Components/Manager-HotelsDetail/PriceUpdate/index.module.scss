@@ -1,5 +1,6 @@
 .body {
     width: 1040px;
+    z-index: 999;
 }
 .row {
     display: flex;
@@ -10,7 +11,8 @@
     width: 45%;
     border-right: 1px solid;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 .categoryList {
     width: 40%;
