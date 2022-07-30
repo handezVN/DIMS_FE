@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import accountlogo from '../../../../asset/dp.jpg';
 import { Divider } from 'antd';
 import Icon from '@mdi/react';
-import { mdiViewDashboard } from '@mdi/js';
+import { mdiCalendarEdit, mdiViewDashboard } from '@mdi/js';
 import { useDispatch } from 'react-redux';
 import { dispatchLogout } from '../../../../redux/actions/authAction';
 import { useNavigate } from 'react-router-dom';
@@ -154,6 +154,24 @@ export default function SlideBar({ SlideBar }) {
                                     rotate={180}
                                 />
                                 <div className={cx('SlideBar_Item_Title')}>Category</div>
+                            </div>
+                            <div
+                                className={cx('SlideBar_Sub_Item')}
+                                onClick={() =>
+                                    navigation(
+                                        `/mananger/hotels/detailHotels?hotelid=${hotelSelected.hotelid}&ShowCalendar=true`,
+                                    )
+                                }
+                            >
+                                <Icon
+                                    path={mdiCalendarEdit}
+                                    title="view-dashboard"
+                                    size={'20px'}
+                                    horizontal
+                                    vertical
+                                    rotate={180}
+                                />
+                                <div className={cx('SlideBar_Item_Title')}>Room Price</div>
                             </div>
                         </div>
                     ) : (

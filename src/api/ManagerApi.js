@@ -224,3 +224,10 @@ export const getBookingDetail = async (bookingId, token) => {
     });
     return res.data;
 };
+
+export const getListCategory = async (hotelid, token) => {
+    const res = await axios.get(`api/HotelManage/List-A-Hotel-Cates?hotelId=${hotelid}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};

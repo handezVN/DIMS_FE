@@ -9,6 +9,7 @@ import { mdiChevronDown } from '@mdi/js';
 import PhotosHotel from '../../../../Components/Manager-HotelsDetail/PhotosHotel';
 import CategoryHotel from '../../../../Components/Manager-HotelsDetail/CategoryHotel';
 import ShowRoomStatus from '../../../../Components/Manager-HotelsDetail/ShowRoomStatus';
+import CategoryPrice from '../../../../Components/Manager-HotelsDetail/PriceUpdate';
 export default function DetailHotels() {
     const cx = classNames.bind(styles);
     const [params] = useSearchParams();
@@ -19,8 +20,8 @@ export default function DetailHotels() {
     const [showRoomStatus, setShowRoomStatus] = useState(false);
     const [showImage, setShowImage] = useState(false);
     const [showCategory, setShowCategory] = useState(false);
+    const [showCalendar, setShowCalendar] = useState(false);
     useEffect(() => {
-        console.log(params);
         if (categoryShow) {
             setShowCategory(categoryShow);
             scrolltoItem('category');
@@ -59,6 +60,13 @@ export default function DetailHotels() {
             </div>
             <div className={cx(['container', showCategory ? 'active-bottom' : 'unActive-bottom'])}>
                 <CategoryHotel hotelid={hotelid}></CategoryHotel>
+            </div>
+            <div className={cx(['Menu'])} onClick={() => setShowCalendar(!showCalendar)} id="category">
+                Price Update{' '}
+                <Icon path={mdiChevronDown} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
+            </div>
+            <div className={cx(['container', showCalendar ? 'active-bottom' : 'unActive-bottom'])}>
+                <CategoryPrice></CategoryPrice>
             </div>
         </div>
     );

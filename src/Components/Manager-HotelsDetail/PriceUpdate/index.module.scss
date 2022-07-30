@@ -1,0 +1,35 @@
+.body {
+    width: 1040px;
+}
+.row {
+    display: flex;
+    padding: 10px 0;
+    border-top: 1px solid;
+}
+.datepicker {
+    width: 45%;
+    border-right: 1px solid;
+    display: flex;
+    justify-content: center;
+}
+.categoryList {
+    width: 40%;
+    border-right: 1px solid;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    line-height: 24px;
+}
+.PriceList {
+    width: 15%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    line-height: 24px;
+}
+.inputPrice {
+    width: 100px;
+    border-radius: 10px;
+}
