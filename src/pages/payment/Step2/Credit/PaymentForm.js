@@ -24,12 +24,11 @@ export default function PaymentForm() {
         const booking = JSON.parse(localStorage.getItem('booking'));
         const bookinginfo = JSON.parse(localStorage.getItem('booking-info'));
         e.preventDefault();
-
+        dispatch(dispatchFecth());
         await stripe
             .createToken(elements.getElement(CardNumberElement))
             .then(async (token) => {
                 if (token.error === undefined) {
-                    dispatch(dispatchFecth());
                     await axios.get('https://api.exchangerate-api.com/v4/latest/USD').then((result) => {
                         payment
                             .finalPayment({

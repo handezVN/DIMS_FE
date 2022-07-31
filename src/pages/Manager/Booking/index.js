@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames/bind';
-import { Table, Input, Button, Icon, notification } from 'antd';
+import { Table, Input, Button, Icon, notification, Tag } from 'antd';
 import * as Api from '../../../api/ManagerApi';
 import Highlighter from 'react-highlight-words';
 import RoomInfo from '../../../Components/Manager-HotelsDetail/ShowRoomStatus/RoomInfo';
@@ -152,17 +152,22 @@ export default function Booking() {
             ...getColumnSearchProps('paymentMethod'),
         },
         {
-            title: 'Check In',
-            dataIndex: 'qrCheckUp.checkIn',
-            key: 'qrCheckUp.checkIn',
-            ...getColumnSearchProps('qrCheckUp.checkIn'),
+            title: 'Status',
+            dataIndex: 'qrCheckUp',
+            key: 'qrCheckUp',
+            render: (tags) => (
+                <span>
+                    {tags.checkIn === null ? (
+                        <Tag color={'volcano'}>Chưa Check In</Tag>
+                    ) : tags.checkOut === null ? (
+                        <Tag color={'green'}>Chưa Check Out</Tag>
+                    ) : (
+                        <Tag color="geekblue">Đã Check Out</Tag>
+                    )}
+                </span>
+            ),
         },
-        {
-            title: 'Check Out',
-            dataIndex: 'qrCheckUp.checkOut',
-            key: 'qrCheckUp.checkOut',
-            ...getColumnSearchProps('qrCheckUp.checkOut'),
-        },
+
         {
             title: 'Total Earning',
             dataIndex: 'totalPrice',

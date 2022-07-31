@@ -7,7 +7,8 @@ import guestIcon from '../../asset/guest.png';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { roomContext } from '../../pages/hotelDetail';
-export default function RoomType(props) {
+import moment from 'moment';
+export default function RoomType({ props, checkinDate }) {
     const services = [
         {
             id: '01',
@@ -65,8 +66,8 @@ export default function RoomType(props) {
     useEffect(() => {
         let flag = true;
         let tmp = [];
-        if (props.props.rooms.length > 0) {
-            props.props.rooms.map((room, index) => {
+        if (props.rooms.length > 0) {
+            props.rooms.map((room, index) => {
                 if (tmp.length < 1) {
                     tmp.push({
                         description: room.roomDescription,
@@ -75,50 +76,38 @@ export default function RoomType(props) {
                         room: [{ roomId: room.roomId }],
                     });
                 } else {
-                    let tmp_index = 99999;
-                    tmp.forEach((check, index) => {
-                        flag = true;
-                        if (check.price !== room.roomPrice) flag = false;
-                        if (check.description !== room.roomDescription) flag = false;
-                        if (flag) tmp_index = index;
-                    });
-
-                    if (!flag) {
-                        tmp.push({
-                            description: room.roomDescription,
-                            price: room.roomPrice,
-                            count: 1,
-                            room: [{ roomId: room.roomId }],
-                        });
-                    } else {
-                        tmp[tmp_index].count = tmp[tmp_index].count + 1;
-                        const abc = tmp[tmp_index].room;
-
-                        tmp[tmp_index].room = [...abc, { roomId: room.roomId }];
-                    }
+                    tmp[0].count = tmp[0].count + 1;
+                    const abc = tmp[0].room;
+                    tmp[0].room = [...abc, { roomId: room.roomId }];
                 }
-
                 setComTmp(tmp);
                 // tmp.push(index);
                 return null;
             });
         }
+        props.specialPPrice.forEach((e) => {
+            if (moment(e.specialDate).format('YYYY-MM-DD') === moment(checkinDate).format('YYYY-MM-DD')) {
+                tmp[0].price = e.specialPrice1;
+                setComTmp(tmp);
+            }
+        });
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [props.props]);
+    }, [props]);
 
     return (
         <div className={cx('DetailHotel_Room')} key={props.key}>
-            <h5>{props.props.categoryName}</h5>
+            <h5>{props.categoryName}</h5>
             <div className={cx('row', 'DetailHotel_Room_inner')}>
                 <div className={cx('col-md-4', 'DetailHotel_Room_Image')}>
-                    <GalleryImage props={props.props.catePhotos} />
+                    <GalleryImage props={props.catePhotos} />
                 </div>
                 <div className={cx('col-md-8', 'DetailHotel_Room_Info')}>
                     {comTmp.map((tmp, index) => {
                         return (
                             <>
                                 <div key={index}>
-                                    <h5>{props.props.categoryName}</h5>
+                                    <h5>{props.categoryName}</h5>
                                     <div className="row">
                                         <div className={cx('col-md-4', 'DetailHotel_Room_Info_Header')}>
                                             <img
@@ -126,7 +115,7 @@ export default function RoomType(props) {
                                                 alt="Bed"
                                                 style={{ height: 30, width: 30, marginRight: 7 }}
                                             ></img>
-                                            <span>{props.props.quanity} Giường </span>
+                                            <span>{props.quanity} Giường </span>
                                         </div>
                                         <div className={cx('col-md-8', 'DetailHotel_Room_Info_Header')}>
                                             <img
@@ -134,7 +123,7 @@ export default function RoomType(props) {
                                                 alt="Bed"
                                                 style={{ height: 30, width: 30, marginRight: 7 }}
                                             ></img>
-                                            <span>{props.props.quanity * 2} Khách</span>
+                                            <span>{props.quanity * 2} Khách</span>
                                         </div>
                                     </div>
                                     <hr></hr>
@@ -201,10 +190,10 @@ export default function RoomType(props) {
                                                     onClick={() => {
                                                         handleBookNow({
                                                             price: tmp.price,
-                                                            title: props.props.categoryName,
-                                                            quantity: props.props.quanity,
+                                                            title: props.categoryName,
+                                                            quantity: props.quanity,
                                                             roomId: tmp.room[0],
-                                                            hotelId: props.props.hotelId,
+                                                            hotelId: props.hotelId,
                                                         });
                                                     }}
                                                 >
