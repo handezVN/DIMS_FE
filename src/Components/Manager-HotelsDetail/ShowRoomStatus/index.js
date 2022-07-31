@@ -145,7 +145,7 @@ export default function ShowRoomStatus({ hotelId }) {
             roomName: addRoomName,
             categoryId: addRoomCategory,
             floor: parseInt(addRoomFloor),
-            roomDescription: '',
+            roomDescription: null,
             status: true,
         };
         setAddRooms([...AddRooms, newdata]);

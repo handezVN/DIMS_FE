@@ -178,7 +178,7 @@ export const updateRoomInfo = async (roomId, roomName, hotelId, categoryId, floo
             hotelId: hotelId,
             categoryId: categoryId,
             floor: floor,
-            roomDescription: 'string',
+            roomDescription: null,
             status: true,
         },
         {
@@ -232,7 +232,7 @@ export const getListCategory = async (hotelid, token) => {
     return res.data;
 };
 export const AddPriceCategory = async (list, token) => {
-    const res = await axios.post(`api/HotelManage/Add-A-SpecialPrice`,list,{
+    const res = await axios.post(`api/HotelManage/Add-A-SpecialPrice`, list, {
         headers: { Authorization: `Bearer ${token}` },
     });
     return res.data;

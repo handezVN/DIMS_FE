@@ -75,12 +75,12 @@ export default function RoomType(props) {
                         room: [{ roomId: room.roomId }],
                     });
                 } else {
-                    const tmp_index = tmp.map((check, index) => {
+                    let tmp_index = 99999;
+                    tmp.forEach((check, index) => {
                         flag = true;
                         if (check.price !== room.roomPrice) flag = false;
                         if (check.description !== room.roomDescription) flag = false;
-                        if (flag) return index;
-                        return null;
+                        if (flag) tmp_index = index;
                     });
 
                     if (!flag) {

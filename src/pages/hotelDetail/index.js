@@ -229,7 +229,9 @@ export default function HotelDetail() {
                     <div className={cx('DetailHotel_Rooms')} id="rooms">
                         {hotel.lsCate
                             ? hotel.lsCate.map((cate, index) => {
-                                  return <RoomType props={cate} key={index} />;
+                                  if (cate.rooms.length > 0) {
+                                      return <RoomType props={cate} key={index} />;
+                                  }
                               })
                             : ''}
                     </div>
