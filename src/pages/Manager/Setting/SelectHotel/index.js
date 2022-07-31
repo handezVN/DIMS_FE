@@ -11,10 +11,13 @@ export default function HotelSelection() {
     const dispatch = useDispatch();
     const auth = JSON.parse(localStorage.getItem('user'));
     const [hotels, setHotels] = useState([]);
-    const [hotelSelected, setHotelSelect] = useState({
-        hotelid: '',
-    });
     const hotel = JSON.parse(localStorage.getItem('hotelSelected'));
+    const [hotelSelected, setHotelSelect] = useState(
+        hotel || {
+            hotelid: '',
+        },
+    );
+
     useEffect(() => {
         // dispatch(dispatchHostFecth());
         if (auth) {

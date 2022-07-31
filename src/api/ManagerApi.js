@@ -257,3 +257,9 @@ export const DeletePriceOfCategory = async (list, token) => {
     });
     return res.data;
 };
+export const getListRoom = async (hotelid, token) => {
+    const res = await axios.get(`api/HotelManage/List-Rooms?hotelId=${hotelid}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};

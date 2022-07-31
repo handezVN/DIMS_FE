@@ -6,7 +6,7 @@ import { mdiClose, mdiHome, mdiPencil, mdiPlus, mdiTrashCan, mdiWalletTravel } f
 import moment from 'moment';
 import { Modal, notification, Select, Option } from 'antd';
 import { set } from 'date-fns';
-
+import * as Api from '../../../api/ManagerApi';
 export default function BookingInfo({ data, handleClose }) {
     const cx = classNames.bind(styles);
     const { confirm } = Modal;
@@ -17,20 +17,32 @@ export default function BookingInfo({ data, handleClose }) {
             description: description,
         });
     };
+    const hotel = JSON.parse(localStorage.getItem('hotelSelected'));
+    const auth = JSON.parse(localStorage.getItem('user'));
     const [totalExtraFee, setTotalExtraFee] = useState(0);
+    const [listRoom, setListRoom] = useState([]);
     useEffect(() => {
         let extraTmp = 0;
         data.bookingDetails.map((e) => {
             extraTmp = extraTmp + e.extraFee;
         });
         setTotalExtraFee(extraTmp);
+        Api.getListRoom(hotel.hotelid, auth.token).then((result) => setListRoom(result));
     }, [data]);
     console.log(data);
     return (
         <div className={cx('body')}>
             <div className={cx('title')}>
                 <h3>
-                    <Icon path={mdiWalletTravel} size={'30px'}></Icon> BookingId : {data.bookingId || ''}
+                    <Icon path={mdiWalletTravel} size={'30px'}></Icon> BookingId : {data.bookingId || ''} ||
+                    <Icon path={mdiHome} size={'30px'}></Icon> List Room :{' '}
+                    {data.bookingDetails.map((e) => {
+                        const room = listRoom.filter((data) => data.roomId === e.roomId);
+                        console.log(room);
+                        return room.map((e) => {
+                            return <> {e.roomName},</>;
+                        });
+                    })}
                 </h3>
                 <div className={cx('title-right')}>
                     <h3>Booking Info</h3>
