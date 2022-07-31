@@ -113,7 +113,6 @@ export default function Booking() {
             title: 'Id',
             dataIndex: 'bookingId',
             key: 'bookingId',
-            width: '5%',
             ...getColumnSearchProps('bookingId'),
         },
         {
@@ -132,7 +131,6 @@ export default function Booking() {
             title: 'Email',
             dataIndex: 'email',
             key: 'email',
-            width: '20%',
             ...getColumnSearchProps('email'),
         },
         {
@@ -153,7 +151,18 @@ export default function Booking() {
             key: 'paymentMethod',
             ...getColumnSearchProps('paymentMethod'),
         },
-
+        {
+            title: 'Check In',
+            dataIndex: 'qrCheckUp.checkIn',
+            key: 'qrCheckUp.checkIn',
+            ...getColumnSearchProps('qrCheckUp.checkIn'),
+        },
+        {
+            title: 'Check Out',
+            dataIndex: 'qrCheckUp.checkOut',
+            key: 'qrCheckUp.checkOut',
+            ...getColumnSearchProps('qrCheckUp.checkOut'),
+        },
         {
             title: 'Total Earning',
             dataIndex: 'totalPrice',
