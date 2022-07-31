@@ -237,3 +237,23 @@ export const AddPriceCategory = async (list, token) => {
     });
     return res.data;
 };
+export const getListPriceOfCategory = async (hotelid, token) => {
+    const res = await axios.get(`api/HotelManage/List-SpecialPrices?hotelId=${hotelid}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};
+
+export const UpdatePriceOfCategory = async (list, token) => {
+    const res = await axios.put(`api/HotelManage/Update-A-SpecialPrice`, list, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};
+export const DeletePriceOfCategory = async (list, token) => {
+    const res = await axios.delete(`api/HotelManage/Remove-A-SpecialPrice`, {
+        headers: { Authorization: `Bearer ${token}` },
+        data: list,
+    });
+    return res.data;
+};

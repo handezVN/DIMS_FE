@@ -17,6 +17,7 @@ export default function DetailHotels() {
     const categoryShow = params.get('categoryShow');
     const roomShow = params.get('roomShow');
     const photoShow = params.get('photoShow');
+    const calendar = params.get('ShowCalendar');
     const [showRoomStatus, setShowRoomStatus] = useState(false);
     const [showImage, setShowImage] = useState(false);
     const [showCategory, setShowCategory] = useState(false);
@@ -33,6 +34,10 @@ export default function DetailHotels() {
         if (photoShow) {
             setShowImage(photoShow);
             scrolltoItem('photos');
+        }
+        if (calendar) {
+            setShowCalendar(calendar);
+            scrolltoItem('calendar');
         }
     }, [categoryShow, roomShow]);
     const scrolltoItem = (item) => {
@@ -61,7 +66,7 @@ export default function DetailHotels() {
             <div className={cx(['container', showCategory ? 'active-bottom' : 'unActive-bottom'])}>
                 <CategoryHotel hotelid={hotelid}></CategoryHotel>
             </div>
-            <div className={cx(['Menu'])} onClick={() => setShowCalendar(!showCalendar)} id="category">
+            <div className={cx(['Menu'])} onClick={() => setShowCalendar(!showCalendar)} id="calendar">
                 Price Update{' '}
                 <Icon path={mdiChevronDown} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
             </div>

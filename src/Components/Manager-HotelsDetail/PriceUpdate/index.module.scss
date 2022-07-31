@@ -1,6 +1,8 @@
 .body {
     width: 1040px;
     z-index: 999;
+    font-size: 16px;
+    font-weight: 500;
 }
 .row {
     display: flex;
@@ -34,4 +36,100 @@
 .inputPrice {
     width: 100px;
     border-radius: 10px;
+    display: flex;
+    padding: 0 10px;
+}
+.showDatePicker {
+    display: flex;
+    flex-direction: column;
+}
+.btn-editType {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+}
+.btn-edit {
+    background: rgb(247, 181, 58);
+    padding: 5px 20px;
+    border-radius: 10px;
+    color: aliceblue;
+    font-size: 14px;
+    font-weight: 500;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+}
+.btn-edit:hover {
+    color: rgb(202, 157, 72);
+    background: wheat;
+    border: 1px solid rgb(214, 167, 80);
+    cursor: pointer;
+}
+
+.btn-delete {
+    background: rgb(194, 82, 82);
+    padding: 5px 20px;
+    border-radius: 10px;
+    color: aliceblue;
+    font-size: 14px;
+    font-weight: 500;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+}
+.btn-delete:hover {
+    color: rgb(194, 82, 82);
+    background: aliceblue;
+    border: 1px solid rgb(194, 82, 82);
+    cursor: pointer;
+}
+.btn-save {
+    background: rgb(28 165 28);
+    padding: 5px 20px;
+    border-radius: 10px;
+    color: aliceblue;
+    font-size: 14px;
+    font-weight: 500;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+}
+.btn-save:hover {
+    color: rgb(28 165 28);
+    background: wheat;
+    border: 1px solid rgb(28 165 28);
+    cursor: pointer;
+}
+.btn-add {
+    border: 1px solid rgb(28 165 28);
+    padding: 5px 5px;
+    margin-top: 10px;
+    border-radius: 10px;
+    color: black;
+    font-size: 14px;
+    font-weight: 500;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 34px;
+    cursor: pointer;
+}
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-addMore {
+    margin: 20px;
+    border: 1px solid;
+    padding: 5px 20px;
+    border-radius: 10px;
+    cursor: pointer;
 }
