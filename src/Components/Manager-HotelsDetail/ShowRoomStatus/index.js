@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames/bind';
 import FloorItem from './FloorItem';
-import { mdiClose, mdiHome } from '@mdi/js';
+import { mdiClose, mdiHome, mdiRefresh, mdiReload } from '@mdi/js';
 import Icon from '@mdi/react';
 import { mdiMagnify } from '@mdi/js';
 import { Divider, Checkbox, Select, notification, Result, Modal } from 'antd';
@@ -45,6 +45,7 @@ export default function ShowRoomStatus({ hotelId }) {
     const [addRoomName, setAddRoomName] = useState('');
     const [addRoomFloor, setAddRoomFloor] = useState('');
     const [addRoomCategory, setAddRoomCategory] = useState('');
+    const [categoryListTmp, setCategoryListTmp] = useState([]);
     let floorlist1 = [];
     let categoryList1 = [];
     const getStatusRoom = async () => {
@@ -59,8 +60,14 @@ export default function ShowRoomStatus({ hotelId }) {
                 dispatch(dispatchHostSuccess());
             });
     };
-    useEffect(() => {
+    const refresh = () => {
         getStatusRoom();
+        Api.getListCategory(hotelId, auth.token).then((result) => {
+            setCategoryList(result);
+        });
+    };
+    useEffect(() => {
+        refresh();
     }, []);
     useEffect(() => {
         let newsData = [];
@@ -106,7 +113,7 @@ export default function ShowRoomStatus({ hotelId }) {
             floorlist1 = removeDulicate(floorlist1);
             categoryList1 = removeDulicate(categoryList1);
             setFloorlist(floorlist1);
-            setCategoryList(categoryList1);
+            setCategoryListTmp(categoryList1);
             setAddRoomCategory(categoryList1[0].id);
         }
     };
@@ -242,6 +249,19 @@ export default function ShowRoomStatus({ hotelId }) {
     };
     return (
         <div>
+            <div
+                onClick={() => refresh()}
+                style={{
+                    width: 120,
+                    height: 30,
+                    cursor: 'pointer',
+                    border: '1px solid',
+                    borderRadius: 10,
+                    textAlign: 'center',
+                }}
+            >
+                <Icon path={mdiReload} size={'30px'}></Icon> Refresh
+            </div>
             <div className={cx('body')}>
                 <div className={cx('title')}>
                     <h3>All Room Status</h3>
@@ -257,7 +277,7 @@ export default function ShowRoomStatus({ hotelId }) {
                 </div>
                 <div className={cx('container')}>
                     <div className={cx('left')}>
-                        {(filterFloor ? floorlist : categoryList).map((filter) => {
+                        {(filterFloor ? floorlist : categoryListTmp).map((filter) => {
                             return (
                                 <div className={cx('Floor')} key={`${filter.id}a`}>
                                     <div>
@@ -324,13 +344,13 @@ export default function ShowRoomStatus({ hotelId }) {
                                 <div>
                                     <div>Loại Phòng</div>
                                     <Select
-                                        defaultValue={categoryList[0].id}
+                                        defaultValue={categoryList[0].categoryId}
                                         value={addRoomCategory}
                                         style={{ width: 200 }}
                                         onChange={(e) => setAddRoomCategory(e)}
                                     >
                                         {categoryList.map((e) => {
-                                            return <Option value={e.id}>{e.categoryName}</Option>;
+                                            return <Option value={e.categoryId}>{e.categoryName}</Option>;
                                         })}
                                     </Select>
                                 </div>

@@ -19,7 +19,7 @@ function Login() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { email, password, err, success, cfPassword, codeActive } = user;
-    const [forgotPass, setForGotPass] = useState(false);
+    const [forgotPass, setForGotPass] = useState(true);
     const handleChangeInput = (e) => {
         const { name, value } = e.target;
         setUser({ ...user, [name]: value, err: '', success: '' });
@@ -113,7 +113,7 @@ function Login() {
                 .then((result) => {
                     openNotificationWithIcon('success', 'Success', 'Đã thay đổi mật khẩu thành công !');
                     setUpdateInfo(false);
-                    setForGotPass(false);
+                    setForGotPass(true);
                 })
                 .catch((err) => {
                     console.log(err);

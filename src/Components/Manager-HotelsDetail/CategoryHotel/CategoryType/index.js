@@ -60,8 +60,7 @@ export default function CategoryType({ data, hotelId, addnew, iconDelete }) {
     const [priceDefault, setPriceDefault] = useState(100);
     const [quanity, setQuanity] = useState(1);
     const auth = JSON.parse(localStorage.getItem('user'));
-
-    useEffect(() => {
+    const refresh = () => {
         if (data) {
             setPhotos(data.photos);
             setCategoryName(data.categoryName);
@@ -69,6 +68,9 @@ export default function CategoryType({ data, hotelId, addnew, iconDelete }) {
             setPriceDefault(data.priceDefault);
             setQuanity(data.quanity);
         }
+    };
+    useEffect(() => {
+        refresh();
     }, []);
     const openNotificationWithIcon = (type, message, description) => {
         notification[type]({

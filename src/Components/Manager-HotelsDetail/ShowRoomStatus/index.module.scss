@@ -132,6 +132,7 @@
 .btn-Sort {
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
 }
 
 .btnSortCategory {
@@ -208,6 +209,7 @@
     font-size: 14px;
     text-align: center;
     color: white;
+    cursor: pointer;
 }
 
 .btn-add-save {
@@ -220,6 +222,7 @@
     font-size: 14px;
     text-align: center;
     color: white;
+    cursor: pointer;
 }
 
 .btn-add-cancel {
@@ -232,6 +235,7 @@
     font-size: 14px;
     text-align: center;
     color: white;
+    cursor: pointer;
 }
 .ActiveAdd {
     display: flex;

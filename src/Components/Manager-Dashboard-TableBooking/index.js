@@ -1,26 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import Highlighter from 'react-highlight-words';
+import { Table, Input, Button, Icon, notification, Tag } from 'antd';
+import Icon2 from '@mdi/react';
 import styles from './index.module.scss';
 import classNames from 'classnames/bind';
-import { Table, Input, Button, Icon, notification, Tag } from 'antd';
-import * as Api from '../../../api/ManagerApi';
-import Highlighter from 'react-highlight-words';
-import RoomInfo from '../../../Components/Manager-HotelsDetail/ShowRoomStatus/RoomInfo';
+import { mdiClose } from '@mdi/js';
+import * as Api from '../../api/ManagerApi';
+import { dispatchFecth, dispatchHostFecth, dispatchHostSuccess } from '../../redux/actions/authAction';
 import { useDispatch } from 'react-redux';
-import { dispatchHostFecth, dispatchHostSuccess } from '../../../redux/actions/authAction';
-import BookingInfo from '../../../Components/Manager-Dashboard-BoxInfo/BookingInfo';
-import { mdiReload } from '@mdi/js';
-import Icon2 from '@mdi/react';
-export default function Booking() {
-    const dispatch = useDispatch();
+import BookingInfo from '../Manager-Dashboard-BoxInfo/BookingInfo';
+export default function TableInfo({ data, onClose }) {
     const cx = classNames.bind(styles);
-    const [data, setData] = useState([]);
-    const auth = JSON.parse(localStorage.getItem('user'));
-    const hotelSelected = JSON.parse(localStorage.getItem('hotelSelected'));
+    const dispatch = useDispatch();
+    let searchInput;
     const [state, setState] = useState({
         searchText: '',
         searchedColumn: '',
     });
-    let searchInput;
+    const [pagination, setPagination] = useState({
+        total: data.bookings.length,
+        totalPages: data.bookings.length / 10,
+    });
+    const auth = JSON.parse(localStorage.getItem('user'));
     let getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
             <div style={{ padding: 8 }}>
@@ -85,37 +86,6 @@ export default function Booking() {
         clearFilters();
         setState({ searchText: '' });
     };
-    const [pagination, setPagination] = useState({
-        total: 1,
-        totalPages: 0,
-    });
-    const refresh = () => {
-        dispatch(dispatchHostFecth());
-        Api.getBooking(hotelSelected.hotelid, 1, 10, auth.token)
-            .then((data) => {
-                setData(data.result);
-                setPagination({ total: data.totalItems, totalPages: data.totalPages });
-            })
-            .finally(() => dispatch(dispatchHostSuccess()));
-    };
-    useEffect(() => {
-        refresh();
-    }, []);
-    useEffect(() => {
-        if (pagination.totalPages > 0) {
-            Promise.all(getAllBooking)
-                .catch((err) => console.log(err))
-                .then((result) => {
-                    setData([...data, ...datatmp]);
-                });
-        }
-    }, [pagination]);
-    let datatmp = [];
-    const getAllBooking = [...Array(parseInt(pagination.totalPages))].map((e, i) => {
-        return Api.getBooking(hotelSelected.hotelid, i + 2, 10, auth.token).then((result) => {
-            datatmp.push(...result.result);
-        });
-    });
     const columns = [
         {
             title: 'Id',
@@ -159,22 +129,6 @@ export default function Booking() {
             key: 'paymentMethod',
             ...getColumnSearchProps('paymentMethod'),
         },
-        {
-            title: 'Status',
-            dataIndex: 'qrCheckUp',
-            key: 'qrCheckUp',
-            render: (tags) => (
-                <span>
-                    {tags.checkIn === null ? (
-                        <Tag color={'volcano'}>Chưa Check In</Tag>
-                    ) : tags.checkOut === null ? (
-                        <Tag color={'green'}>Chưa Check Out</Tag>
-                    ) : (
-                        <Tag color="geekblue">Đã Check Out</Tag>
-                    )}
-                </span>
-            ),
-        },
 
         {
             title: 'Total Earning',
@@ -207,37 +161,27 @@ export default function Booking() {
     };
     return (
         <div className={cx('body')}>
-            <div className={cx('container')}>
-                <div style={{ width: '100%', paddingLeft: 30, paddingBottom: 10 }}>
-                    <div
-                        onClick={() => refresh()}
-                        style={{
-                            width: 120,
-                            height: 30,
-                            cursor: 'pointer',
-                            border: '1px solid',
-                            borderRadius: 10,
-                            textAlign: 'center',
-                            background: 'white',
-                        }}
-                    >
-                        <Icon2 path={mdiReload} size={'30px'}></Icon2> Refresh
-                    </div>
-                </div>
-                <Table
-                    columns={columns}
-                    dataSource={data}
-                    className={cx('table')}
-                    pagination={pagination}
-                    rowKey={(e) => e.bookingId}
-                    key={(e) => e.bookingId}
-                    onRowClick={(e) => handleClick(e)}
-                />
-                {listBookingDetail.map((e) => {
-                    // return <RoomInfo data={e} handleClose={handleCloseRoom}></RoomInfo>;
-                    return <BookingInfo data={e} handleClose={handleCloseBooking}></BookingInfo>;
-                })}
+            <div
+                style={{ display: 'flex', justifyContent: 'flex-end', marginRight: 30, cursor: 'pointer' }}
+                onClick={() => onClose(data.tableId)}
+            >
+                <Icon2 path={mdiClose} size={'30px'}>
+                    {' '}
+                </Icon2>
             </div>
+            <Table
+                columns={columns}
+                dataSource={data.bookings}
+                className={cx('table')}
+                pagination={pagination}
+                rowKey={(e) => e.bookingId}
+                key={(e) => e.bookingId}
+                onRowClick={(e) => handleClick(e)}
+            />
+            {listBookingDetail.map((e) => {
+                // return <RoomInfo data={e} handleClose={handleCloseRoom}></RoomInfo>;
+                return <BookingInfo data={e} handleClose={handleCloseBooking}></BookingInfo>;
+            })}
         </div>
     );
 }
