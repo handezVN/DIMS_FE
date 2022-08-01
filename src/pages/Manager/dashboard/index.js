@@ -89,7 +89,7 @@ export default function Dashboard() {
                             },
                         ])
                     }
-                    style={{ display: 'contents' }}
+                    style={{ display: 'contents', cursor: 'pointer' }}
                 >
                     <BoxInfo
                         background={'#53A1FD'}
@@ -110,7 +110,7 @@ export default function Dashboard() {
                             },
                         ])
                     }
-                    style={{ display: 'contents' }}
+                    style={{ display: 'contents', cursor: 'pointer' }}
                 >
                     <BoxInfo
                         background={'#2EC4B6'}
@@ -137,7 +137,7 @@ export default function Dashboard() {
                             },
                         ])
                     }
-                    style={{ display: 'contents' }}
+                    style={{ display: 'contents', cursor: 'pointer' }}
                 >
                     <BoxInfo
                         background={'orange'}
