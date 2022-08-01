@@ -6,7 +6,7 @@ import { showErrMsg, showSuccessMsg } from '../../Components/utils/notification/
 import * as authApi from '../../api/authApi';
 import { useDispatch } from 'react-redux';
 import { dispatchFailed, dispatchFecth, dispatchLogin, dispatchSuccess } from '../../redux/actions/authAction';
-
+import { notification } from 'antd';
 const initialState = {
     email: '',
     password: '',
@@ -24,35 +24,66 @@ export default function Register() {
         const { name, value } = e.target;
         setUser({ ...user, [name]: value, err: '', success: '' });
     };
+    const openNotificationWithIcon = (type, title, content) => {
+        notification[type]({
+            message: title,
+            description: content,
+        });
+    };
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(dispatchFecth());
-        authApi
-            .RegisterUser({ email, password, cfPassword })
-            .then((data) => {
-                dispatch(dispatchSuccess(data));
-                authApi
-                    .LoginUser({ email, password })
-                    .then((data) => {
-                        dispatch(dispatchSuccess(data));
-                        setUser({ ...user, err: '', success: data.msg });
-                        localStorage.setItem('user', JSON.stringify(data));
-                        dispatch(dispatchLogin(data));
-                        navigate('/');
-                    })
-                    .catch((err) => {
-                        dispatch(dispatchFailed(err));
-                        err.message && setUser({ ...user, err: err.message, success: '' });
-                    });
-                // setUser({ ...user, err: '', success: data.msg });
-                // localStorage.setItem('user', JSON.stringify(data));
-                // dispatch(dispatchRegister(data));
-                // navigate('/');
-            })
-            .catch((err) => {
-                dispatch(dispatchFailed(err));
-                err.message && setUser({ ...user, err: err.message, success: '' });
-            });
+
+        let check = true;
+        let msg = '';
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if (email.length < 1) {
+            check = false;
+            msg = msg + 'Bạn chưa nhập tên đăng nhập \n';
+        }
+        if (!filter.test(email)) {
+            check = false;
+            msg = msg + 'Please provide a valid email address\n';
+        }
+        if (password.length < 6) {
+            check = false;
+            msg = msg + 'Password cần phải lớn hơn 5 ký tự \n';
+        }
+        if (cfPassword !== password) {
+            check = false;
+            msg = msg + 'Confirm not match the password \n';
+        }
+        if (check) {
+            dispatch(dispatchFecth());
+            authApi
+                .RegisterUser({ email, password, cfPassword })
+                .then((data) => {
+                    dispatch(dispatchSuccess(data));
+                    authApi
+                        .LoginUser({ email, password })
+                        .then((data) => {
+                            dispatch(dispatchSuccess(data));
+                            setUser({ ...user, err: '', success: data.msg });
+                            localStorage.setItem('user', JSON.stringify(data));
+                            dispatch(dispatchLogin(data));
+                            navigate('/');
+                        })
+                        .catch((err) => {
+                            dispatch(dispatchFailed(err));
+                            err.message && setUser({ ...user, err: err.message, success: '' });
+                        });
+                    // setUser({ ...user, err: '', success: data.msg });
+                    // localStorage.setItem('user', JSON.stringify(data));
+                    // dispatch(dispatchRegister(data));
+                    // navigate('/');
+                })
+                .catch((err) => {
+                    dispatch(dispatchFailed(err));
+                    err.message && setUser({ ...user, err: err.message, success: '' });
+                });
+        } else {
+            openNotificationWithIcon('warning', 'Warning', msg);
+        }
+
         // localStorage.setItem('user', JSON.stringify(token));
         // alert('Login Succes');
         // window.location.href = '/';
