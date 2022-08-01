@@ -36,6 +36,7 @@ export default function Dashboard() {
                                 imgUrl={order.hotelPhotos[0].photoUrl}
                                 startDate={order.startDate}
                                 totalPrice={order.totalPrice}
+                                qrCode={order.qrcheckup.qrUrl}
                                 key={index}
                             ></BookingItem>
                         );
