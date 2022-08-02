@@ -1,9 +1,9 @@
 import classNames from 'classnames/bind';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './login.module.scss';
 import { dispatchFailed, dispatchFecth, dispatchLogin, dispatchSuccess } from '../../redux/actions/authAction';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { showErrMsg, showSuccessMsg } from '../../Components/utils/notification/notification';
 import { notification } from 'antd';
 import * as authApi from '../../api/authApi';
@@ -14,10 +14,16 @@ const initialState = {
     success: '',
 };
 function Login() {
+    const navigate = useNavigate();
+    const isHost = useSelector((state) => state.auth.isHost);
+    useEffect(() => {
+        if (isHost === true) {
+            navigate('/');
+        }
+    }, [isHost]);
     const cx = classNames.bind(styles);
     const [user, setUser] = useState(initialState);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { email, password, err, success, cfPassword, codeActive } = user;
     const [forgotPass, setForGotPass] = useState(true);
     const handleChangeInput = (e) => {

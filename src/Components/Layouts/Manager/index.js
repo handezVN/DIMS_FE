@@ -12,12 +12,24 @@ export default function DefaultLayOut({ children }) {
     const auth = useSelector((state) => state.auth.isLogged);
     const [slidebar, setSlideBar] = useState(false);
     const navigation = useNavigate();
+    const [hotelSelected, setHotelSelect] = useState(
+        JSON.parse(localStorage.getItem('hotelSelected')) || {
+            hotelid: '',
+        },
+    );
+    const [flag, setFlag] = useState(false);
     useEffect(() => {
         if (!auth) {
             navigation('/login');
+            setFlag(false);
         }
+        if (hotelSelected.hotelid === '') {
+            navigation('/manager/setting/hotelselection');
+            setFlag(false);
+        }
+        setFlag(true);
     }, [auth]);
-    return auth ? (
+    return flag ? (
         <div>
             <Header slidebar={slidebar} setSlideBar={setSlideBar}></Header>
             <div className={cx('container')}>

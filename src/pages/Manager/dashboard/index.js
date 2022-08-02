@@ -9,7 +9,9 @@ import ShowRoomStatus from '../../../Components/Manager-HotelsDetail/ShowRoomSta
 import { mdiCashCheck, mdiCashClock, mdiCashFast, mdiWalletTravel } from '@mdi/js';
 import BoxInfo from '../../../Components/Manager-Dashboard-BoxInfo';
 import TableInfo from '../../../Components/Manager-Dashboard-TableBooking';
-
+import { Button, DatePicker } from 'antd';
+import moment from 'moment';
+import ChartInfo from '../../../Components/Manager-Dashboard-Chart/index.tsx';
 export default function Dashboard() {
     const cx = classNames.bind(styles);
     const [hotelSelected, setHotelSelect] = useState(
@@ -17,7 +19,7 @@ export default function Dashboard() {
             hotelid: '',
         },
     );
-
+    const { RangePicker } = DatePicker;
     const navigation = useNavigate();
     const dispatch = useDispatch();
     const auth = JSON.parse(localStorage.getItem('user'));
@@ -31,7 +33,18 @@ export default function Dashboard() {
     const [checkOut, setCheckOut] = useState({});
     const [noncheckOut, setNonCheckOut] = useState({});
     const [TotalInMonth, setTotalInMonth] = useState({});
+    const [TotalSearch, setTotalSearch] = useState({});
     const [listTable, setListTable] = useState([]);
+    const [listDate, setListDate] = useState({
+        fromDate: '',
+        toDate: '',
+    });
+    const handleUpdateDate = (data) => {
+        setListDate({
+            fromDate: moment(data[0]._d).format('YYYY-MM-DD'),
+            toDate: moment(data[1]._d).format('YYYY-MM-DD'),
+        });
+    };
     useEffect(() => {
         if (hotelSelected.hotelid === '') {
             navigation('/manager/setting/hotelselection');
@@ -75,19 +88,41 @@ export default function Dashboard() {
         const newlist = listTable.filter((e) => e.tableId !== id);
         setListTable(newlist);
     };
+
+    const handleSearch = () => {
+        return HostApi.getMoneyCheckOut(hotelSelected.hotelid, listDate.fromDate, listDate.toDate, auth.token)
+            .then((result) => {
+                setTotalSearch(result);
+                setListTable([
+                    ...listTable,
+                    {
+                        tableId: listTable.length + 3,
+                        bookings: result.bookings,
+                        total: result.totalPriceByfilter,
+                    },
+                ]);
+            })
+            .catch((err) => console.log(err));
+    };
+    const scrolltoItem = (item) => {
+        const e = document.getElementById(item);
+        e.scrollIntoView();
+    };
     return (
         <div className={cx('body')}>
             <div className={cx(['list-info-box'])}>
                 <div
-                    onClick={() =>
+                    onClick={() => {
+                        scrolltoItem('bookingItem');
                         setListTable([
                             ...listTable,
                             {
                                 tableId: 1,
                                 bookings: noncheckOut.bookings,
+                                total: noncheckOut.totalPriceByfilter,
                             },
-                        ])
-                    }
+                        ]);
+                    }}
                     style={{ display: 'contents', cursor: 'pointer' }}
                 >
                     <BoxInfo
@@ -100,15 +135,17 @@ export default function Dashboard() {
                     ></BoxInfo>
                 </div>
                 <div
-                    onClick={() =>
+                    onClick={() => {
+                        scrolltoItem('bookingItem');
                         setListTable([
                             ...listTable,
                             {
                                 tableId: 2,
                                 bookings: checkOut.bookings,
+                                total: checkOut.totalPriceByfilter,
                             },
-                        ])
-                    }
+                        ]);
+                    }}
                     style={{ display: 'contents', cursor: 'pointer' }}
                 >
                     <BoxInfo
@@ -127,15 +164,17 @@ export default function Dashboard() {
                     title={'Booking in Online'}
                 ></BoxInfo>
                 <div
-                    onClick={() =>
+                    onClick={() => {
+                        scrolltoItem('bookingItem');
                         setListTable([
                             ...listTable,
                             {
-                                tableId: 4,
+                                tableId: 3,
                                 bookings: TotalInMonth.bookings,
+                                total: TotalInMonth.totalPriceByfilter,
                             },
-                        ])
-                    }
+                        ]);
+                    }}
                     style={{ display: 'contents', cursor: 'pointer' }}
                 >
                     <BoxInfo
@@ -149,10 +188,28 @@ export default function Dashboard() {
                     ></BoxInfo>
                 </div>
             </div>
+
             <ShowRoomStatus hotelId={hotelSelected.hotelid}></ShowRoomStatus>
-            {listTable.map((e) => {
-                return <TableInfo data={e} onClose={handleClose}></TableInfo>;
-            })}
+
+            <ChartInfo></ChartInfo>
+            <div style={{ marginBottom: 20 }}>
+                Search Earning In Range{' '}
+                <RangePicker
+                    ranges={{
+                        Today: [moment(), moment().subtract(-1, 'days')],
+                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    }}
+                    onChange={(e) => handleUpdateDate(e)}
+                />{' '}
+                <Button type="primary" onClick={handleSearch}>
+                    Search
+                </Button>
+            </div>
+            <div style={{ marginBottom: 300 }} id="bookingItem">
+                {listTable.map((e) => {
+                    return <TableInfo data={e} onClose={handleClose}></TableInfo>;
+                })}
+            </div>
         </div>
     );
 }

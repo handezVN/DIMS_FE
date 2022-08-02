@@ -179,7 +179,12 @@ export default function SlideBar({ SlideBar }) {
                     )}
                 </div>
                 <div className={cx('SlideBar_Item')}>
-                    <div className={cx('SlideBar_Main_Item')} onClick={() => navigation(`/manager/booking`)}>
+                    <div
+                        className={cx('SlideBar_Main_Item')}
+                        onClick={() => {
+                            hotelSelected ? navigation(`/manager/booking`) : console.log('1');
+                        }}
+                    >
                         <div className={cx('d-flex')}>
                             <Icon
                                 path={mdiBriefcaseVariant}

@@ -162,9 +162,22 @@ export default function TableInfo({ data, onClose }) {
     return (
         <div className={cx('body')}>
             <div
-                style={{ display: 'flex', justifyContent: 'flex-end', marginRight: 30, cursor: 'pointer' }}
+                style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginRight: 30,
+                    marginLeft: 30,
+                    cursor: 'pointer',
+                }}
                 onClick={() => onClose(data.tableId)}
             >
+                <div style={{ fontSize: 16, fontWeight: '600' }}>
+                    Total Earning :{' '}
+                    <span className={cx('money')}>
+                        {(data.total * 1000).toLocaleString(undefined, { maximumFractionDigits: 0 })}
+                    </span>{' '}
+                    VNĐ
+                </div>
                 <Icon2 path={mdiClose} size={'30px'}>
                     {' '}
                 </Icon2>
