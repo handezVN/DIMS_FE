@@ -5,6 +5,8 @@ import * as authApi from '../../api/authApi';
 import { useSelector, useDispatch } from 'react-redux';
 import { dispatchFecth, dispatchSuccess } from '../../redux/actions/authAction';
 import BookingItem from '../../Components/Dashboard-BookingItem';
+import { Empty, Button } from 'antd';
+import { useNavigate } from 'react-router-dom';
 export default function Dashboard() {
     const cx = classNames.bind(styles);
     const [data, setData] = useState([]);
@@ -20,6 +22,7 @@ export default function Dashboard() {
                 .finally(dispatch(dispatchSuccess()));
         }
     }, [auth]);
+    const navigation = useNavigate();
     return (
         <div className={cx('body')}>
             <div className={cx('container')}>
@@ -42,7 +45,16 @@ export default function Dashboard() {
                         );
                     })
                 ) : (
-                    <div>Bạn chưa có đơn hàng nào !</div>
+                    <Empty>
+                        <Button
+                            type="primary"
+                            onClick={() => {
+                                navigation('/');
+                            }}
+                        >
+                            Booking Now
+                        </Button>
+                    </Empty>
                 )}
             </div>
         </div>
