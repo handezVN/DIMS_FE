@@ -173,15 +173,6 @@ function Login() {
                             <span className={cx('login_or')}>Hoặc</span>
                         </div>
 
-                        <div
-                            className="fb-login-button"
-                            data-width=""
-                            data-size="large"
-                            data-button-type="continue_with"
-                            data-layout="default"
-                            data-auto-logout-link="false"
-                            data-use-continue-as="false"
-                        ></div>
                         <span>
                             Chưa có tài khoản ? <Link to="/register">Đăng ký</Link>
                         </span>

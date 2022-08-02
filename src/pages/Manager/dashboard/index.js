@@ -33,7 +33,6 @@ export default function Dashboard() {
     const [TotalInMonth, setTotalInMonth] = useState({});
     const [listTable, setListTable] = useState([]);
     useEffect(() => {
-        console.log(hotelSelected);
         if (hotelSelected.hotelid === '') {
             navigation('/manager/setting/hotelselection');
         } else {
