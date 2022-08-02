@@ -78,7 +78,7 @@ export default function Register() {
                 })
                 .catch((err) => {
                     dispatch(dispatchFailed(err));
-                    err.message && setUser({ ...user, err: err.message, success: '' });
+                    openNotificationWithIcon('error', 'Error', 'Email này đã được sử dụng !');
                 });
         } else {
             openNotificationWithIcon('warning', 'Warning', msg);
@@ -93,8 +93,6 @@ export default function Register() {
             <div className={cx('container')}>
                 <form className={cx('loginForm')} onSubmit={handleSubmit}>
                     <h4 className={cx('titleForm')}>Đăng Ký</h4>
-                    {err && showErrMsg(err)}
-                    {success && showSuccessMsg(success)}
                     <div className={cx('form-group')}>
                         <input
                             type="email"

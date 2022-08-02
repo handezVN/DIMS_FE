@@ -55,7 +55,7 @@ export default function PaymentPage2() {
                                                 'inner-left-navbar-item',
                                                 method.match('banking') ? 'selection' : '',
                                             )}
-                                            onClick={() => setMethod('banking')}
+                                            onClick={() => alert('Banking is maintenance')}
                                         >
                                             Chuyển khoản ngân hàng
                                         </button>

@@ -3,7 +3,7 @@ import PaymentHeader from '../DefaultLayout/header';
 import classNames from 'classnames/bind';
 import styles from './index.module.scss';
 import moment from 'moment';
-import { Checkbox } from 'antd';
+import { Checkbox, notification } from 'antd';
 import { Result, Button } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -23,8 +23,8 @@ export default function PaymentPage2() {
     const [name2, setName2] = useState('');
     const [number2, setNumber2] = useState('');
     const [img, setImg] = useState('');
-    const islogged = useSelector((state) => state.auth.isLogged)
-    console.log(islogged)
+    const islogged = useSelector((state) => state.auth.isLogged);
+    console.log(islogged);
     useEffect(() => {
         const stringif_booking = localStorage.getItem('booking');
         const parse_booking = JSON.parse(stringif_booking);
@@ -42,17 +42,43 @@ export default function PaymentPage2() {
         // localStorage.removeItem('booking');
     }, []);
     const handleSubmit = () => {
-        const newState = {
-            role: role,
-            name: name,
-            email: email,
-            number: number,
-            specicalSuggest: specicalSuggest,
-            name2: name2,
-            number2: number2,
-        };
-        localStorage.setItem('booking-info', JSON.stringify(newState));
-        navigator('/payment/step2');
+        let flag = true;
+        let msg = '';
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+        if (name.length < 1) {
+            flag = false;
+            msg = msg + 'Tên vui lòng không để trống !';
+        }
+        if (number.length > 11 || number.length < 10) {
+            flag = false;
+            msg = msg + 'Số điện thoại của bạn không được tìm thấy tại Việt Nam ! ';
+        }
+        if (!filter.test(email)) {
+            flag = false;
+            msg = msg + 'Please provide a valid email address !';
+        }
+        if (flag) {
+            const newState = {
+                role: role,
+                name: name,
+                email: email,
+                number: number,
+                specicalSuggest: specicalSuggest,
+                name2: name2,
+                number2: number2,
+            };
+            localStorage.setItem('booking-info', JSON.stringify(newState));
+            navigator('/payment/step2');
+        } else {
+            openNotificationWithIcon('warning', 'Warning', msg);
+        }
+    };
+    const openNotificationWithIcon = (type, title, content) => {
+        notification[type]({
+            message: title,
+            description: content,
+            placement: 'topLeft',
+        });
     };
     return (
         <div>
@@ -312,10 +338,7 @@ export default function PaymentPage2() {
                     }
                 />
             )}
-            {
-                islogged  ? '' : <LoginPopup/>
-            }
-            
+            {islogged ? '' : <LoginPopup />}
         </div>
     );
 }

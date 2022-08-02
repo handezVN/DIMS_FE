@@ -54,7 +54,10 @@ export default function PaymentForm() {
                     alert(token.error.message);
                 }
             })
-            .catch((err) => alert('Your Card is inCorrect !'));
+            .catch((err) => alert('Your Card is inCorrect !'))
+            .finally(() => {
+                dispatch(dispatchSuccess());
+            });
     };
 
     return (

@@ -36,11 +36,11 @@ function Login() {
         let msg = '';
         if (email.length < 1) {
             check = false;
-            msg = msg + 'Bạn chưa nhập tên đăng nhập \n';
+            msg = msg + 'Bạn chưa nhập tên đăng nhập | ';
         }
         if (password.length < 6) {
             check = false;
-            msg = msg + 'Password cần phải lớn hơn 5 ký tự';
+            msg = msg + 'Password cần phải lớn hơn 5 ký tự | ';
         }
         if (check) {
             try {
@@ -53,10 +53,15 @@ function Login() {
                         localStorage.setItem('user', JSON.stringify(data));
                         dispatch(dispatchLogin(data));
                         navigate('/');
+                        openNotificationWithIcon('success', 'Success', 'Đã đăng nhập thành công !');
                     })
                     .catch((err) => {
                         dispatch(dispatchFailed(err));
-                        err.message && setUser({ ...user, err: err.message, success: '' });
+                        openNotificationWithIcon(
+                            'error',
+                            'Error',
+                            'Vui lòng kiểm tra lại email hoặc mật khẩu của bạn !',
+                        );
                     });
                 // const res = await axios.post('/api/Auth/login-user', { email, password });
             } catch (err) {
@@ -116,7 +121,7 @@ function Login() {
                     setForGotPass(true);
                 })
                 .catch((err) => {
-                    console.log(err);
+                    openNotificationWithIcon('error', 'Error', 'Mã Active Code này không khả dụng');
                 });
         } else {
             openNotificationWithIcon('warning', 'Warning', msg);
@@ -128,8 +133,6 @@ function Login() {
                 {forgotPass ? (
                     <form className={cx('loginForm')} onSubmit={handleSubmit}>
                         <h4>Đăng Nhập</h4>
-                        {err && showErrMsg(err)}
-                        {success && showSuccessMsg(success)}
                         <div className="form-group">
                             <label htmlFor="exampleInputEmail1">Email address</label>
                             <input

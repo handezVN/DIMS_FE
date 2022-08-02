@@ -49,11 +49,88 @@ function Hotels() {
     const [filter, setFilter] = useState(false);
     const [sort, setSort] = useState(false);
     const onChangeSelected = (e) => {
-        console.log('radio checked', e.target.value);
+        if (e.target.value == 2) {
+            const filtertmp = defaultHotels.filter((hotel) => hotel.smallPrice >= 5000);
+            setHotels(filtertmp);
+        } else {
+            setHotels(defaultHotels);
+        }
     };
+    const [starList, setStarList] = useState([]);
     function onChangeChecked(e) {
-        console.log(` checked ${e.target.value}= ${e.target.checked} `);
+        if (e.target.value == 1) {
+            if (e.target.checked) {
+                const filtertmp = defaultHotels.filter((hotel) => hotel.star === 5);
+                setStarList([...starList, ...filtertmp]);
+            } else {
+                const filtertmp = starList.filter((hotel) => hotel.star !== 5);
+                if (filtertmp.length < 1) {
+                    setStarList([]);
+                } else {
+                    setStarList(filtertmp);
+                }
+            }
+        }
+        if (e.target.value == 2) {
+            if (e.target.checked) {
+                const filtertmp = defaultHotels.filter((hotel) => hotel.star === 4);
+                setStarList([...starList, ...filtertmp]);
+            } else {
+                const filtertmp = starList.filter((hotel) => hotel.star !== 4);
+                if (filtertmp.length < 1) {
+                    setStarList([]);
+                } else {
+                    setStarList(filtertmp);
+                }
+            }
+        }
+        if (e.target.value == 3) {
+            if (e.target.checked) {
+                const filtertmp = defaultHotels.filter((hotel) => hotel.star === 3);
+                setStarList([...starList, ...filtertmp]);
+            } else {
+                const filtertmp = starList.filter((hotel) => hotel.star !== 3);
+                if (filtertmp.length < 1) {
+                    setStarList([]);
+                } else {
+                    setStarList(filtertmp);
+                }
+            }
+        }
+        if (e.target.value == 4) {
+            if (e.target.checked) {
+                const filtertmp = defaultHotels.filter((hotel) => hotel.star === 2);
+                setStarList([...starList, ...filtertmp]);
+            } else {
+                const filtertmp = starList.filter((hotel) => hotel.star !== 2);
+                if (filtertmp.length < 1) {
+                    setStarList([]);
+                } else {
+                    setStarList(filtertmp);
+                }
+            }
+        }
+        if (e.target.value == 5) {
+            if (e.target.checked) {
+                const filtertmp = defaultHotels.filter((hotel) => hotel.star === 1);
+                setStarList([...starList, ...filtertmp]);
+            } else {
+                const filtertmp = starList.filter((hotel) => hotel.star !== 1);
+                if (filtertmp.length < 1) {
+                    setStarList([]);
+                } else {
+                    setStarList(filtertmp);
+                }
+            }
+        }
     }
+    useEffect(() => {
+        if (starList.length > 0) {
+            setHotels(starList);
+        } else {
+            setHotels(defaultHotels);
+        }
+    }, [starList]);
     const radioStyle = {
         display: 'block',
         height: '30px',
@@ -382,6 +459,8 @@ function Hotels() {
                                                         province={namelocation}
                                                         checkinDate={checkinDate}
                                                         night={night}
+                                                        star={hotel.star}
+                                                        totalRate={hotel.totalRate}
                                                     />
                                                 </div>
                                             );

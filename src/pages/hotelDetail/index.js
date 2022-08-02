@@ -156,10 +156,9 @@ export default function HotelDetail() {
                     <div className={cx('detailHotel_Type')}>
                         <div className={cx('hotelType')}>Khách sạn</div>
                         <div className={cx('star')}>
-                            <i className="fa-solid fa-star"></i>
-                            <i className="fa-solid fa-star"></i>
-                            <i className="fa-solid fa-star"></i>
-                            <i className="fa-solid fa-star"></i>
+                            {Array.from({ length: hotel.star }, (e) => {
+                                return <i className="fa-solid fa-star"></i>;
+                            })}
                         </div>
                     </div>
                     <div className={cx('detailHotel_Type')}>
