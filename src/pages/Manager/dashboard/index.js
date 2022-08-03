@@ -11,7 +11,7 @@ import BoxInfo from '../../../Components/Manager-Dashboard-BoxInfo';
 import TableInfo from '../../../Components/Manager-Dashboard-TableBooking';
 import { Button, DatePicker } from 'antd';
 import moment from 'moment';
-import ChartInfo from '../../../Components/Manager-Dashboard-Chart/index.tsx';
+import { ChartMonthInfo, ChartYearInfo } from '../../../Components/Manager-Dashboard-Chart/index.tsx';
 export default function Dashboard() {
     const cx = classNames.bind(styles);
     const [hotelSelected, setHotelSelect] = useState(
@@ -190,8 +190,9 @@ export default function Dashboard() {
             </div>
 
             <ShowRoomStatus hotelId={hotelSelected.hotelid}></ShowRoomStatus>
+            <ChartMonthInfo></ChartMonthInfo>
+            <ChartYearInfo></ChartYearInfo>
 
-            <ChartInfo></ChartInfo>
             <div style={{ marginBottom: 20 }}>
                 Search Earning In Range{' '}
                 <RangePicker

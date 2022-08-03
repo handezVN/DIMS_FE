@@ -101,7 +101,7 @@ export default function RoomInfo({ data, handleClose, categoryList, hotelId }) {
                             onChange={(e) => setEditRoomCategory(e)}
                         >
                             {categoryList.map((e) => {
-                                return <Option value={e.id}>{e.categoryName}</Option>;
+                                return <Option value={e.categoryId}>{e.categoryName}</Option>;
                             })}
                         </Select>
                     </div>
