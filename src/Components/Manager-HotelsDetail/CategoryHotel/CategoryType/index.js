@@ -11,8 +11,7 @@ import Icon from '@mdi/react';
 import { useDispatch } from 'react-redux';
 import { dispatchHostSuccess, dispatchHostFailed, dispatchHostFecth } from '../../../../redux/actions/authAction';
 import axios from 'axios';
-import { set } from 'date-fns';
-export default function CategoryType({ data, hotelId, addnew, iconDelete }) {
+export default function CategoryType({ data, hotelId, addnew, iconDelete, handleDeleteCategory }) {
     const dispatch = useDispatch();
     const services = [
         {
@@ -54,7 +53,6 @@ export default function CategoryType({ data, hotelId, addnew, iconDelete }) {
     const cx = classNames.bind(styles);
     // const [count, setCount] = useState(0);
     const [edit, setEdit] = useState(addnew || false);
-    const handleEdit = () => {};
     const [categoryName, setCategoryName] = useState('');
     const [cateDescrpittion, setCateDescrpittion] = useState('');
     const [priceDefault, setPriceDefault] = useState(100);
@@ -71,7 +69,7 @@ export default function CategoryType({ data, hotelId, addnew, iconDelete }) {
     };
     useEffect(() => {
         refresh();
-    }, []);
+    }, []); //react-hooks/exhaustive-deps
     const openNotificationWithIcon = (type, message, description) => {
         notification[type]({
             message: message,
@@ -88,48 +86,66 @@ export default function CategoryType({ data, hotelId, addnew, iconDelete }) {
         setPhotos(newPhotos);
     };
     const handleButton = () => {
-        if (addnew) {
-            dispatch(dispatchHostFecth());
-            Api.AddHotelCategory({
-                token: auth.token,
-                hotelId: hotelId,
-                categoryName: categoryName,
-                cateDescrpittion: cateDescrpittion,
-                priceDefault: priceDefault,
-                quanity: quanity,
-            })
-                .then(() => {
-                    openNotificationWithIcon('success', 'Success', 'Đã Cập nhật thành công');
-                    dispatch(dispatchHostSuccess());
-                })
-                .catch((err) => {
-                    dispatch(dispatchHostFailed());
-                    openNotificationWithIcon('error', 'Failed', 'Đã có lỗi xảy ra khi cập nhật !');
-                });
-        } else if (edit) {
-            Api.UpdateHotelCategory({
-                token: auth.token,
-                hotelId: hotelId,
-                categoryId: data.categoryId,
-                categoryName: categoryName,
-                cateDescrpittion: cateDescrpittion,
-                priceDefault: priceDefault,
-                quanity: quanity,
-            })
-                .then(() => {
-                    openNotificationWithIcon('success', 'Success', 'Đã Cập nhật thành công');
-                })
-                .catch((err) => {
-                    console.log(err);
-                    openNotificationWithIcon('error', 'Failed', 'Đã có lỗi xảy ra khi cập nhật !');
-                });
+        let flag = true;
+        let msg = '';
+        if (categoryName.length < 1) {
+            msg = msg + 'Vui lòng không để trống tên loại phòng .';
+            flag = false;
         }
-        setEdit(!edit);
+        if (quanity < 1) {
+            flag = false;
+            msg = msg + 'Số lượng giường cần phải lớn hơn 1 .';
+        }
+        if (priceDefault < 50) {
+            flag = false;
+            msg = msg + 'Phòng của bạn quá rẻ ! Ít nhất phải lớn hơn 50k';
+        }
+        if (flag) {
+            if (addnew) {
+                dispatch(dispatchHostFecth());
+                Api.AddHotelCategory({
+                    token: auth.token,
+                    hotelId: hotelId,
+                    categoryName: categoryName,
+                    cateDescrpittion: cateDescrpittion,
+                    priceDefault: priceDefault,
+                    quanity: quanity,
+                })
+                    .then(() => {
+                        openNotificationWithIcon('success', 'Success', 'Đã Cập nhật thành công');
+                        dispatch(dispatchHostSuccess());
+                    })
+                    .catch((err) => {
+                        dispatch(dispatchHostFailed());
+                        openNotificationWithIcon('error', 'Failed', 'Đã có lỗi xảy ra khi cập nhật !');
+                    });
+            } else if (edit) {
+                Api.UpdateHotelCategory({
+                    token: auth.token,
+                    hotelId: hotelId,
+                    categoryId: data.categoryId,
+                    categoryName: categoryName,
+                    cateDescrpittion: cateDescrpittion,
+                    priceDefault: priceDefault,
+                    quanity: quanity,
+                })
+                    .then(() => {
+                        openNotificationWithIcon('success', 'Success', 'Đã Cập nhật thành công');
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        openNotificationWithIcon('error', 'Failed', 'Đã có lỗi xảy ra khi cập nhật !');
+                    });
+            }
+            setEdit(!edit);
+        } else {
+            openNotificationWithIcon('warning', 'Warning', msg);
+        }
     };
     const showUpImage = (files) => {
         let uploadImgs = [];
         let uploadImgs2 = [];
-        [...Array(files.length)].map((e, i) => {
+        [...Array(files.length)].forEach((e, i) => {
             uploadImgs.push(URL.createObjectURL(files[i]));
             uploadImgs2.push({ photoUrl: URL.createObjectURL(files[i]) });
         });
@@ -177,12 +193,21 @@ export default function CategoryType({ data, hotelId, addnew, iconDelete }) {
             .catch(() => dispatch(dispatchHostFailed()))
             .finally(() => dispatch(dispatchHostSuccess()));
     };
+
     return (
         <div>
             <div className={cx('DetailHotel_Room')}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                     <h5>{categoryName}</h5>
-                    <Icon path={mdiDelete} title="Delete Item" size={'30px'} horizontal vertical rotate={180} />
+                    <Icon
+                        path={mdiDelete}
+                        title="Delete Item"
+                        size={'30px'}
+                        horizontal
+                        vertical
+                        rotate={180}
+                        onClick={() => handleDeleteCategory(data.categoryId)}
+                    />
                 </div>
                 <div className={cx('row', 'DetailHotel_Room_inner')}>
                     <div className={cx('col-md-4', 'DetailHotel_Room_Image')}>
