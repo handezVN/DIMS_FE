@@ -63,11 +63,23 @@ function Login() {
                     })
                     .catch((err) => {
                         dispatch(dispatchFailed(err));
-                        openNotificationWithIcon(
-                            'error',
-                            'Error',
-                            'Vui lòng kiểm tra lại email hoặc mật khẩu của bạn !',
-                        );
+                        authApi
+                            .LoginHost({ email, password })
+                            .then((data) => {
+                                dispatch(dispatchSuccess(data));
+                                setUser({ ...user, err: '', success: data.msg });
+                                localStorage.setItem('user', JSON.stringify(data));
+                                dispatch(dispatchLogin(data));
+                                navigate('/');
+                                openNotificationWithIcon('success', 'Success', 'Đã đăng nhập thành công !');
+                            })
+                            .catch((err) =>
+                                openNotificationWithIcon(
+                                    'error',
+                                    'Error',
+                                    'Vui lòng kiểm tra lại email hoặc mật khẩu của bạn !',
+                                ),
+                            );
                     });
                 // const res = await axios.post('/api/Auth/login-user', { email, password });
             } catch (err) {

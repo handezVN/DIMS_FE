@@ -4,6 +4,10 @@ export const LoginUser = async ({ email, password }) => {
     const res = await axios.post(`/api/Auth/login-user`, { email, password });
     return res.data;
 };
+export const LoginHost = async ({ email, password }) => {
+    const res = await axios.post(`/api/Auth/login-Host`, { email, password });
+    return res.data;
+};
 export const RegisterUser = async ({ email, password, cfPassword }) => {
     const res = await axios.post(`/api/Auth/register`, { email, password, confirmPassword: cfPassword });
     return res.data;

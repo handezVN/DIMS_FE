@@ -7,7 +7,7 @@ import Switch from 'antd/lib/switch';
 import * as payment from '../../../../api/paymentApi';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { dispatchFecth, dispatchSuccess } from '../../../../redux/actions/authAction';
+import { dispatchFailed, dispatchFecth, dispatchSuccess } from '../../../../redux/actions/authAction';
 export default function PaymentForm() {
     const [success, setSuccess] = useState(false);
     const stripe = useStripe();
@@ -46,9 +46,14 @@ export default function PaymentForm() {
                                 roomsId: booking.room,
                                 tokenid: auth.token,
                             })
-                            .then((result) => navigator('/payment/step3'))
-                            .catch((err) => alert(err.response.data.message))
-                            .finally(() => dispatch(dispatchSuccess()));
+                            .then((result) => {
+                                dispatch(dispatchSuccess());
+                                navigator('/payment/step3');
+                            })
+                            .catch((err) => {
+                                alert(err.response.data.message);
+                                dispatch(dispatchFailed());
+                            });
                     });
                 } else {
                     alert(token.error.message);
