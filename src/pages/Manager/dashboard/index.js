@@ -9,7 +9,7 @@ import ShowRoomStatus from '../../../Components/Manager-HotelsDetail/ShowRoomSta
 import { mdiCashCheck, mdiCashClock, mdiCashFast, mdiWalletTravel } from '@mdi/js';
 import BoxInfo from '../../../Components/Manager-Dashboard-BoxInfo';
 import TableInfo from '../../../Components/Manager-Dashboard-TableBooking';
-import { Button, DatePicker } from 'antd';
+import { Button, DatePicker, Spin } from 'antd';
 import moment from 'moment';
 import { ChartMonthInfo, ChartYearInfo } from '../../../Components/Manager-Dashboard-Chart/index.tsx';
 export default function Dashboard() {
@@ -45,19 +45,19 @@ export default function Dashboard() {
             toDate: moment(data[1]._d).format('YYYY-MM-DD'),
         });
     };
+    const [isLoading, setLoading] = useState(false);
     useEffect(() => {
         if (hotelSelected.hotelid === '') {
             navigation('/manager/setting/hotelselection');
         } else {
             if (auth) {
-                dispatch(dispatchHostFecth());
+                setLoading(true);
                 Promise.all([getMoneyCheckOut(), getMoneyNonCheckOut(), getTotalMoneyInMonth()])
                     .then(() => {
-                        dispatch(dispatchHostSuccess());
+                        setLoading(false);
                     })
                     .catch((err) => {
-                        console.log(err);
-                        dispatch(dispatchHostFailed());
+                        setLoading(false);
                     });
             }
         }
@@ -110,85 +110,86 @@ export default function Dashboard() {
     };
     return (
         <div className={cx('body')}>
-            <div className={cx(['list-info-box'])}>
-                <div
-                    onClick={() => {
-                        scrolltoItem('bookingItem');
-                        setListTable([
-                            ...listTable,
-                            {
-                                tableId: 1,
-                                bookings: noncheckOut.bookings,
-                                total: noncheckOut.totalPriceByfilter,
-                            },
-                        ]);
-                    }}
-                    style={{ display: 'contents', cursor: 'pointer' }}
-                >
+            <Spin tip="Loading..." spinning={isLoading} wrapperClassName={cx('spinWrap')}>
+                <div className={cx(['list-info-box'])}>
+                    <div
+                        onClick={() => {
+                            scrolltoItem('bookingItem');
+                            setListTable([
+                                ...listTable,
+                                {
+                                    tableId: 1,
+                                    bookings: noncheckOut.bookings,
+                                    total: noncheckOut.totalPriceByfilter,
+                                },
+                            ]);
+                        }}
+                        style={{ display: 'contents', cursor: 'pointer' }}
+                    >
+                        <BoxInfo
+                            background={'#53A1FD'}
+                            icon={mdiCashClock}
+                            strong={` ${(noncheckOut.totalPriceByfilter * 1000).toLocaleString(undefined, {
+                                maximumFractionDigits: 0,
+                            })} VNĐ`}
+                            title={'Non CheckOut'}
+                        ></BoxInfo>
+                    </div>
+                    <div
+                        onClick={() => {
+                            scrolltoItem('bookingItem');
+                            setListTable([
+                                ...listTable,
+                                {
+                                    tableId: 2,
+                                    bookings: checkOut.bookings,
+                                    total: checkOut.totalPriceByfilter,
+                                },
+                            ]);
+                        }}
+                        style={{ display: 'contents', cursor: 'pointer' }}
+                    >
+                        <BoxInfo
+                            background={'#2EC4B6'}
+                            icon={mdiCashCheck}
+                            strong={`${(checkOut.totalPriceByfilter * 1000).toLocaleString(undefined, {
+                                maximumFractionDigits: 0,
+                            })} VNĐ`}
+                            title={'CheckOut'}
+                        ></BoxInfo>
+                    </div>
                     <BoxInfo
-                        background={'#53A1FD'}
-                        icon={mdiCashClock}
-                        strong={` ${(noncheckOut.totalPriceByfilter * 1000).toLocaleString(undefined, {
-                            maximumFractionDigits: 0,
-                        })} VNĐ`}
-                        title={'Non CheckOut'}
+                        background={'#8e44ad'}
+                        icon={mdiWalletTravel}
+                        strong={'10'}
+                        title={'Booking in Online'}
                     ></BoxInfo>
+                    <div
+                        onClick={() => {
+                            scrolltoItem('bookingItem');
+                            setListTable([
+                                ...listTable,
+                                {
+                                    tableId: 3,
+                                    bookings: TotalInMonth.bookings,
+                                    total: TotalInMonth.totalPriceByfilter,
+                                },
+                            ]);
+                        }}
+                        style={{ display: 'contents', cursor: 'pointer' }}
+                    >
+                        <BoxInfo
+                            background={'orange'}
+                            icon={mdiCashFast}
+                            strong={`${(TotalInMonth.totalPriceByfilter * 1000).toLocaleString(undefined, {
+                                maximumFractionDigits: 0,
+                            })} VNĐ`}
+                            title={'Total Earning'}
+                            subContent={`In ${currentDate} days`}
+                        ></BoxInfo>
+                    </div>
                 </div>
-                <div
-                    onClick={() => {
-                        scrolltoItem('bookingItem');
-                        setListTable([
-                            ...listTable,
-                            {
-                                tableId: 2,
-                                bookings: checkOut.bookings,
-                                total: checkOut.totalPriceByfilter,
-                            },
-                        ]);
-                    }}
-                    style={{ display: 'contents', cursor: 'pointer' }}
-                >
-                    <BoxInfo
-                        background={'#2EC4B6'}
-                        icon={mdiCashCheck}
-                        strong={`${(checkOut.totalPriceByfilter * 1000).toLocaleString(undefined, {
-                            maximumFractionDigits: 0,
-                        })} VNĐ`}
-                        title={'CheckOut'}
-                    ></BoxInfo>
-                </div>
-                <BoxInfo
-                    background={'#8e44ad'}
-                    icon={mdiWalletTravel}
-                    strong={'10'}
-                    title={'Booking in Online'}
-                ></BoxInfo>
-                <div
-                    onClick={() => {
-                        scrolltoItem('bookingItem');
-                        setListTable([
-                            ...listTable,
-                            {
-                                tableId: 3,
-                                bookings: TotalInMonth.bookings,
-                                total: TotalInMonth.totalPriceByfilter,
-                            },
-                        ]);
-                    }}
-                    style={{ display: 'contents', cursor: 'pointer' }}
-                >
-                    <BoxInfo
-                        background={'orange'}
-                        icon={mdiCashFast}
-                        strong={`${(TotalInMonth.totalPriceByfilter * 1000).toLocaleString(undefined, {
-                            maximumFractionDigits: 0,
-                        })} VNĐ`}
-                        title={'Total Earning'}
-                        subContent={`In ${currentDate} days`}
-                    ></BoxInfo>
-                </div>
-            </div>
-
+            </Spin>
             <ShowRoomStatus hotelId={hotelSelected.hotelid}></ShowRoomStatus>
             <ChartMonthInfo></ChartMonthInfo>
             <ChartYearInfo></ChartYearInfo>
