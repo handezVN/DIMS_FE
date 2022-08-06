@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { roomContext } from '../../pages/hotelDetail';
 import moment from 'moment';
-export default function RoomType({ props, checkinDate }) {
+export default function RoomType({ props, checkinDate, totalNight }) {
     const services = [
         {
             id: '01',
@@ -85,9 +85,23 @@ export default function RoomType({ props, checkinDate }) {
                 return null;
             });
         }
-        props.specialPPrice.forEach((e) => {
+        props.specialPPrice.forEach((e, index) => {
             if (moment(e.specialDate).format('YYYY-MM-DD') === moment(checkinDate).format('YYYY-MM-DD')) {
-                tmp[0].price = e.specialPrice1;
+                let pricetmp = tmp[0].price;
+                tmp[0].price = 0;
+                if (totalNight > 1) {
+                    for (let i = 1; i < totalNight; i++) {
+                        if (props.specialPPrice[index + i]) {
+                            tmp[0].price = tmp[0].price + props.specialPPrice[index + i].specialPrice1;
+                        } else {
+                            tmp[0].price = tmp[0].price + pricetmp;
+                        }
+                    }
+                }
+                tmp[0].price = tmp[0].price + e.specialPrice1;
+                if (totalNight > 1) {
+                    tmp[0].price = tmp[0].price / totalNight;
+                }
                 setComTmp(tmp);
             }
         });
@@ -189,7 +203,7 @@ export default function RoomType({ props, checkinDate }) {
                                                     className={cx('DetailHotel_Room_Info_Button')}
                                                     onClick={() => {
                                                         handleBookNow({
-                                                            price: tmp.price,
+                                                            price: tmp.price * totalNight,
                                                             title: props.categoryName,
                                                             quantity: props.quanity,
                                                             roomId: tmp.room[0],

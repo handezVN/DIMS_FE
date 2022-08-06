@@ -6,9 +6,12 @@ import { DatePicker, List, notification } from 'antd';
 import * as Api from '../../../api/ManagerApi';
 import Icon from '@mdi/react';
 import { mdiBookEdit, mdiClose, mdiDelete, mdiPlus } from '@mdi/js';
+import { useDispatch } from 'react-redux';
+import { dispatchHostFailed, dispatchHostFecth, dispatchHostSuccess } from '../../../redux/actions/authAction';
 export default function CategoryPrice() {
     const { RangePicker } = DatePicker;
     const cx = classNames.bind(styles);
+    const dispatch = useDispatch();
     const [listCategory, setListCategory] = useState([]);
     const [listPrice, setListPrice] = useState([]);
     const [listDate, setListDate] = useState([
@@ -185,13 +188,16 @@ export default function CategoryPrice() {
     const handleSubmit = () => {
         if (listDate[0].fromDate !== '' && listDate[0].toDate !== '') {
             const datas = ConvertData();
+            dispatch(dispatchHostFecth());
             Api.AddPriceCategory(datas, auth.token)
                 .then(() => {
                     openNotificationWithIcon('success', 'Success', 'Đã Cập nhật thành công');
                     setReadListData([]);
+                    dispatch(dispatchHostSuccess());
                 })
                 .catch((err) => {
                     openNotificationWithIcon('error', 'Failed', `Đã có lỗi xảy ra khi cập nhật ! ${err}`);
+                    dispatch(dispatchHostFailed());
                 })
                 .finally(() => {
                     getListPriceOfCategory();
@@ -239,13 +245,16 @@ export default function CategoryPrice() {
                 );
                 newList.push(...listDate);
             });
+            dispatch(dispatchHostFecth());
             Api.DeletePriceOfCategory(newList, auth.token)
                 .then(() => {
                     openNotificationWithIcon('success', 'Success', 'Đã Xoá');
                     setReadListData([]);
+                    dispatch(dispatchHostSuccess());
                 })
                 .catch((err) => {
                     openNotificationWithIcon('error', 'Failed', `Đã có lỗi xảy ra khi cập nhật ! ${err}`);
+                    dispatch(dispatchHostFailed());
                 })
                 .finally(() => {
                     getListPriceOfCategory();
@@ -265,14 +274,16 @@ export default function CategoryPrice() {
             );
             newList.push(...listDate);
         });
-
+        dispatch(dispatchHostFecth());
         Api.UpdatePriceOfCategory(newList, auth.token)
             .then(() => {
                 openNotificationWithIcon('success', 'Success', 'Đã Cập nhật thành công');
                 setReadListData([]);
+                dispatch(dispatchHostSuccess());
             })
             .catch((err) => {
                 openNotificationWithIcon('error', 'Failed', `Đã có lỗi xảy ra khi cập nhật ! ${err}`);
+                dispatch(dispatchHostFailed());
             })
             .finally(() => {
                 getListPriceOfCategory();

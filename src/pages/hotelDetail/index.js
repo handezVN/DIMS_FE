@@ -229,7 +229,14 @@ export default function HotelDetail() {
                         {hotel.lsCate
                             ? hotel.lsCate.map((cate, index) => {
                                   if (cate.rooms.length > 0) {
-                                      return <RoomType props={cate} checkinDate={checkinDate} key={index} />;
+                                      return (
+                                          <RoomType
+                                              props={cate}
+                                              checkinDate={checkinDate}
+                                              totalNight={night}
+                                              key={index}
+                                          />
+                                      );
                                   }
                               })
                             : ''}
