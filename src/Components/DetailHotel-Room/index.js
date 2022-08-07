@@ -8,6 +8,9 @@ import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { roomContext } from '../../pages/hotelDetail';
 import moment from 'moment';
+import { notification } from 'antd';
+import { AddCart_Fetch } from '../../redux/actions/addCartAction';
+import { useDispatch } from 'react-redux';
 export default function RoomType({ props, checkinDate, totalNight }) {
     const services = [
         {
@@ -50,16 +53,106 @@ export default function RoomType({ props, checkinDate, totalNight }) {
         const newContext = {
             ...hotelContext,
             price: price,
-            title: title,
-            quantity: quantity,
+            title: [title],
+            quantity: [quantity],
             room: [roomId],
             hotelId: hotelId,
+            roomQuantity: 1,
         };
         localStorage.setItem('booking', JSON.stringify(newContext));
 
         navigator('/payment/step1');
     };
-
+    const openNotificationWithIcon = (type, message, description) => {
+        notification[type]({
+            message: message,
+            description: description,
+            placement: 'bottomRight',
+        });
+    };
+    const dispatch = useDispatch();
+    const handleAddNow = ({ price, title, quantity, roomId, hotelId, categoryId, categoryImg, maxRoom }) => {
+        dispatch(AddCart_Fetch());
+        const readCard = JSON.parse(localStorage.getItem('add_booking_cart'));
+        if (readCard === null) {
+            const newContext = [
+                {
+                    ...hotelContext,
+                    price: price,
+                    title: title,
+                    quantity: quantity,
+                    roomId: roomId,
+                    hotelId: hotelId,
+                    roomQuantity: 1,
+                    categoryId: categoryId,
+                    categoryImg: categoryImg,
+                    maxRoom: maxRoom,
+                },
+            ];
+            openNotificationWithIcon('success', 'Success !', `Đã thêm vào danh sách phòng`);
+            // console.log(newContext);
+            localStorage.setItem('add_booking_cart', JSON.stringify(newContext));
+        } else {
+            const checkHotel = readCard.find((e) => e.hotelId === hotelId);
+            if (checkHotel) {
+                const check = readCard.find((e) => e.categoryId === categoryId);
+                if (check !== undefined) {
+                    const newData = readCard.map((e) => {
+                        if (e.categoryId === categoryId) {
+                            if (e.roomQuantity + 1 > roomId.length) {
+                                openNotificationWithIcon(
+                                    'error',
+                                    'Error !',
+                                    `Phòng này tối đa chỉ còn có ${roomId.length} phòng`,
+                                );
+                            } else {
+                                e.roomQuantity = e.roomQuantity + 1;
+                                openNotificationWithIcon('success', 'Success !', `Đã thêm vào danh sách phòng`);
+                            }
+                        }
+                        return e;
+                    });
+                    localStorage.setItem('add_booking_cart', JSON.stringify(newData));
+                    console.log(newData);
+                } else {
+                    const newContext = [
+                        ...readCard,
+                        {
+                            ...hotelContext,
+                            price: price,
+                            title: title,
+                            quantity: quantity,
+                            roomId: roomId,
+                            hotelId: hotelId,
+                            roomQuantity: 1,
+                            categoryId: categoryId,
+                            categoryImg: categoryImg,
+                            maxRoom: maxRoom,
+                        },
+                    ];
+                    openNotificationWithIcon('success', 'Success !', `Đã thêm vào danh sách phòng`);
+                    localStorage.setItem('add_booking_cart', JSON.stringify(newContext));
+                }
+            } else {
+                const newContext = [
+                    {
+                        ...hotelContext,
+                        price: price,
+                        title: title,
+                        quantity: quantity,
+                        roomId: roomId,
+                        hotelId: hotelId,
+                        roomQuantity: 1,
+                        categoryId: categoryId,
+                        categoryImg: categoryImg,
+                        maxRoom: maxRoom,
+                    },
+                ];
+                openNotificationWithIcon('success', 'Success !', `Đã thêm vào danh sách phòng`);
+                localStorage.setItem('add_booking_cart', JSON.stringify(newContext));
+            }
+        }
+    };
     // const [count, setCount] = useState(0);
     const [comTmp, setComTmp] = useState([]);
 
@@ -131,13 +224,15 @@ export default function RoomType({ props, checkinDate, totalNight }) {
                                             ></img>
                                             <span>{props.quanity} Giường </span>
                                         </div>
-                                        <div className={cx('col-md-8', 'DetailHotel_Room_Info_Header')}>
-                                            <img
-                                                src={guestIcon}
-                                                alt="Bed"
-                                                style={{ height: 30, width: 30, marginRight: 7 }}
-                                            ></img>
-                                            <span>{props.quanity * 2} Khách</span>
+                                        <div className={cx('col-md-8', 'DetailHotel_Room_Info_Header_Right')}>
+                                            <div>
+                                                <img
+                                                    src={guestIcon}
+                                                    alt="Bed"
+                                                    style={{ height: 30, width: 30, marginRight: 7 }}
+                                                ></img>
+                                                <span>{props.quanity * 2} Khách</span>
+                                            </div>
                                         </div>
                                     </div>
                                     <hr></hr>
@@ -199,22 +294,45 @@ export default function RoomType({ props, checkinDate, totalNight }) {
                                                     VNĐ
                                                 </span>
                                                 <i>/ phòng / đêm</i>
-                                                <button
-                                                    className={cx('DetailHotel_Room_Info_Button')}
-                                                    onClick={() => {
-                                                        handleBookNow({
-                                                            price: tmp.price * totalNight,
-                                                            title: props.categoryName,
-                                                            quantity: props.quanity,
-                                                            roomId: tmp.room[0],
-                                                            hotelId: props.hotelId,
-                                                        });
-                                                    }}
-                                                >
-                                                    Đặt Ngay
-                                                </button>
-                                                <i>Còn {tmp.count} phòng</i>
                                             </div>
+                                        </div>
+                                    </div>
+                                    <div className={cx('method')}>
+                                        <div className={cx('method-btn')}>
+                                            <button
+                                                className={cx('DetailHotel_Room_Info_Button_AddCard')}
+                                                onClick={() => {
+                                                    handleAddNow({
+                                                        price: tmp.price * totalNight,
+                                                        title: props.categoryName,
+                                                        quantity: props.quanity,
+                                                        roomId: tmp.room,
+                                                        hotelId: props.hotelId,
+                                                        categoryId: props.categoryId,
+                                                        categoryImg: props.catePhotos[0],
+                                                        maxRoom: tmp.count,
+                                                    });
+                                                }}
+                                            >
+                                                Thêm phòng
+                                            </button>
+                                            <button
+                                                className={cx('DetailHotel_Room_Info_Button')}
+                                                onClick={() => {
+                                                    handleBookNow({
+                                                        price: tmp.price * totalNight,
+                                                        title: props.categoryName,
+                                                        quantity: props.quanity,
+                                                        roomId: tmp.room[0],
+                                                        hotelId: props.hotelId,
+                                                    });
+                                                }}
+                                            >
+                                                Đặt Ngay
+                                            </button>
+                                        </div>
+                                        <div className={cx('method-btn')} style={{ justifyContent: 'center' }}>
+                                            <i>Còn {tmp.count} phòng</i>
                                         </div>
                                     </div>
                                 </div>

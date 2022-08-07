@@ -25,6 +25,7 @@ export default function PaymentForm() {
         const bookinginfo = JSON.parse(localStorage.getItem('booking-info'));
         e.preventDefault();
         dispatch(dispatchFecth());
+        // console.log(auth.token);
         await stripe
             .createToken(elements.getElement(CardNumberElement))
             .then(async (token) => {
@@ -43,15 +44,17 @@ export default function PaymentForm() {
                                 description: bookinginfo.specicalSuggest,
                                 voucherId: '',
                                 currencyRate: result.data.rates.VND,
-                                roomsId: booking.room,
+                                roomsId: booking.roomId,
                                 tokenid: auth.token,
                             })
                             .then((result) => {
                                 dispatch(dispatchSuccess());
                                 navigator('/payment/step3');
+                                localStorage.removeItem('add_booking_cart');
                             })
                             .catch((err) => {
-                                alert(err.response.data.message);
+                                alert('Error ! Please try again !');
+                                console.log(err);
                                 dispatch(dispatchFailed());
                             });
                     });

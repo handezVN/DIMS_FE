@@ -43,6 +43,11 @@
     display: flex;
     align-items: center;
 }
+.DetailHotel_Room_Info_Header_Right {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 .DetailHotel_Room_Info_Button {
     width: 150px;
     height: 40px;
@@ -54,4 +59,26 @@
     border-radius: 20px;
     margin-top: 20px;
     border: none;
+}
+.DetailHotel_Room_Info_Button_AddCard {
+    width: 150px;
+    height: 40px;
+    background-color: white;
+    color: #2a78ec;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    border: 1px solid #2a78ec;
+    border-radius: 20px;
+    margin-top: 20px;
+}
+.method {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.method-btn {
+    display: flex;
+    width: 320px;
+    justify-content: space-between;
 }

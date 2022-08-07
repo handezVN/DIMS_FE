@@ -127,12 +127,20 @@ export default function PaymentPage2() {
                                     </div>
 
                                     <div className={cx('inner-right-content-confirm')}>
-                                        <div className={cx('inner-right-content-confirm-title')}>
-                                            <div className={cx('inner-right-content-confirm-title-right')}>
-                                                Phòng: {booking.title}
-                                            </div>
-                                            <div>x1</div>
-                                        </div>
+                                        {booking.title ? (
+                                            booking.title.map((title, index) => {
+                                                return (
+                                                    <div className={cx('inner-right-content-confirm-title')}>
+                                                        <div className={cx('inner-right-content-confirm-title-right')}>
+                                                            Phòng: {title}
+                                                        </div>
+                                                        <div>x {booking.roomQuantity[index]}</div>
+                                                    </div>
+                                                );
+                                            })
+                                        ) : (
+                                            <></>
+                                        )}
                                         <div className={cx('inner-right-content-confirm-price')}>
                                             <div className={cx('inner-right-content-confirm-price-left')}>
                                                 Giá từ khách sạn
