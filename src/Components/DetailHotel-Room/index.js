@@ -93,7 +93,9 @@ export default function RoomType({ props, checkinDate, totalNight }) {
             // console.log(newContext);
             localStorage.setItem('add_booking_cart', JSON.stringify(newContext));
         } else {
-            const checkHotel = readCard.find((e) => e.hotelId === hotelId);
+            const checkHotel = readCard.find(
+                (e) => e.hotelId === hotelId && e.date === hotelContext.date && e.night === hotelContext.night,
+            );
             if (checkHotel) {
                 const check = readCard.find((e) => e.categoryId === categoryId);
                 if (check !== undefined) {

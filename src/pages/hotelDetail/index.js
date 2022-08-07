@@ -11,12 +11,19 @@ import { useDispatch } from 'react-redux';
 import { dispatchFecth, dispatchFailed, dispatchSuccess } from '../../redux/actions/authAction';
 import { createContext } from 'react';
 import GalleryMainImage from '../../Components/DetailHotel-MainImageGallery';
+import moment from 'moment';
+import { Button, DatePicker } from 'antd';
 export const roomContext = createContext();
 export default function HotelDetail() {
     const cx = classNames.bind(styles);
     const dispatch = useDispatch();
     const [Params] = useSearchParams();
     const navigator = useNavigate();
+    const { RangePicker } = DatePicker;
+    const dateFormat = 'YYYY-MM-DD';
+    function disabledDate(current) {
+        return current <= moment().subtract(1, 'days');
+    }
     // // UseState and set Params
     // eslint-disable-next-line
     const [checkinDate, setCheckInDate] = useState(Params.get('ArrivalDate')); // eslint-disable-next-line
@@ -27,6 +34,8 @@ export default function HotelDetail() {
     const [hotel, setHotel] = useState({});
     const [listImages, setListImages] = useState([]);
     const [roomSmallPrice, setRoomSmallPrice] = useState({});
+    const [datetmp, setDateTmp] = useState(checkinDate);
+    const [nightTmp, setNightTmp] = useState(night);
     let list = [];
     // Call API
     useEffect(() => {
@@ -213,6 +222,43 @@ export default function HotelDetail() {
                             <Feature_Icon url={features[6].url} title={features[2].title} />
                         </div>
                     </div>
+                </div>
+            </div>
+            <div className={cx('Date-Picker')}>
+                <div className={cx('Date-Picker-Container')}>
+                    <span style={{ fontSize: 16, fontWeight: '600' }}>Chọn lại ngày:</span>
+                    <RangePicker
+                        size="large"
+                        disabledDate={disabledDate}
+                        ranges={{
+                            Today: [moment(), moment().subtract(-1, 'days')],
+                            'This Month': [moment().startOf('month'), moment().endOf('month')],
+                        }}
+                        defaultValue={[
+                            moment(checkinDate, dateFormat),
+                            moment(checkinDate, dateFormat).subtract(-night, 'days'),
+                        ]}
+                        className={cx('dates-input')}
+                        onChange={(e) => {
+                            setDateTmp(e[0].format('YYYY-MM-DD'));
+                            const tmp = (e[1] - e[0]) / (24 * 3600 * 1000);
+                            setNightTmp(tmp);
+                        }}
+                    />
+                    <Button
+                        type="primary"
+                        style={{ height: '100%' }}
+                        onClick={() => {
+                            setCheckInDate(datetmp);
+                            setNight(nightTmp);
+                            navigator(
+                                `/hotels/hoteldetail?hotelId=${hotelid}&ArrivalDate=${datetmp}&TotalNight=${nightTmp}&peopleQuanity=1`,
+                            );
+                        }}
+                    >
+                        {' '}
+                        Cập Nhật
+                    </Button>
                 </div>
             </div>
             <div className={cx('container_body')}>

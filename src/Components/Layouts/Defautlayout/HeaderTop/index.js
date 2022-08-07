@@ -213,7 +213,16 @@ export default function Header() {
                                         </div>
                                         <div className={cx('inner-right-content-title')}>
                                             <b>
-                                                <h5>{listCart[0].hotelname}</h5>
+                                                <h5
+                                                    onClick={() => {
+                                                        navigator(
+                                                            `/hotels/hoteldetail?hotelId=${listCart[0].hotelId}&ArrivalDate=${listCart[0].date}&TotalNight=${listCart[0].night}&peopleQuanity=1`,
+                                                        );
+                                                    }}
+                                                    style={{ cursor: 'pointer' }}
+                                                >
+                                                    {listCart[0].hotelname}
+                                                </h5>
                                             </b>
                                         </div>
                                         <div className={cx('row', 'inner-right-content-address')}>

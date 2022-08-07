@@ -91,3 +91,18 @@
     padding: 20px;
     border-radius: 20px;
 }
+.Date-Picker-Container {
+    width: 700px;
+    height: 40px;
+    border-radius: 10px;
+    background: white;
+    margin: 20px;
+    box-shadow: var(--boxshadow);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.Date-Picker {
+    display: flex;
+    justify-content: center;
+}
