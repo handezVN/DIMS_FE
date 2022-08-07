@@ -60,11 +60,12 @@ export default function PaymentForm() {
                     });
                 } else {
                     alert(token.error.message);
+                    dispatch(dispatchFailed());
                 }
             })
             .catch((err) => {
+                dispatch(dispatchSuccess());
                 alert('Your Card is inCorrect !');
-                dispatch(dispatchFailed());
             });
     };
 
