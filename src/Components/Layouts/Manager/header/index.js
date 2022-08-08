@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useDispatch } from 'react-redux';
 import { dispatchLogout } from '../../../../redux/actions/authAction';
 import { useNavigate } from 'react-router-dom';
-
+import logo from '../../../../asset/Logo-ver2.png';
 export default function Header({ slidebar, setSlideBar }) {
     const cx = classNames.bind(styles);
     const [show, setShow] = useState(false);
@@ -52,11 +52,7 @@ export default function Header({ slidebar, setSlideBar }) {
                     onClick={() => setSlideBar(!slidebar)}
                 ></div>
                 <div className={cx('header-container')}>
-                    <Search
-                        placeholder="input search text"
-                        onSearch={(value) => console.log(value)}
-                        style={{ width: 200 }}
-                    />
+                    <img src={logo} alt=""></img>
                     <div>
                         <Dropdown overlay={menu} className={cx('header_account')}>
                             <div>

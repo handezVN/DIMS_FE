@@ -54,8 +54,8 @@ export default function RoomType({ props, checkinDate, totalNight }) {
             ...hotelContext,
             price: price,
             title: [title],
-            quantity: [quantity],
-            room: [roomId],
+            quantity: quantity,
+            roomId: [roomId],
             hotelId: hotelId,
             roomQuantity: 1,
         };

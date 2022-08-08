@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './index.module.scss';
 import classNames from 'classnames/bind';
-import logo from './vntrip.png';
+import logo from '../../../asset/Logo-ver2.png';
 
 export default function PaymentHeader(props) {
     const cx = classNames.bind(styles);

@@ -226,7 +226,9 @@ export default function HotelDetail() {
             </div>
             <div className={cx('Date-Picker')}>
                 <div className={cx('Date-Picker-Container')}>
-                    <span style={{ fontSize: 16, fontWeight: '600' }}>Chọn lại ngày:</span>
+                    <span style={{ fontSize: 16, fontWeight: '600' }} className={cx('Date-Picker-Title')}>
+                        Chọn lại ngày:
+                    </span>
                     <RangePicker
                         size="large"
                         disabledDate={disabledDate}

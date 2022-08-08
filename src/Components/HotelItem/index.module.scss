@@ -17,6 +17,7 @@
     height: 100%;
     object-fit: cover;
 }
+
 @media (max-width: 724px) {
     .hotelItem__img {
         width: 35%;
@@ -36,6 +37,7 @@
         box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
         position: relative;
     }
+
     .mobile-click {
         z-index: 1000;
         height: 100%;

@@ -132,6 +132,12 @@
     width: 100%;
     z-index: 10000;
 }
+.cart-selection {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+    align-items: center;
+}
 // .hot-line-item{
 //     display: flex;
 //     align-items: center;
@@ -162,6 +168,11 @@
     .hot-line-item {
         display: contents;
     }
+    .card-container {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 @media (min-width: 1170px) {
@@ -190,9 +201,6 @@
     width: 100%;
     position: absolute;
     z-index: 999;
-    content-visibility: hidden;
-}
-.card-hover:hover {
     top: 100%;
     width: 380px;
     min-height: 400px;
@@ -203,6 +211,15 @@
     content-visibility: visible;
     overflow: scroll;
 }
+.overcart {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 998;
+}
+
 .cart-hotel-img {
     width: 100%;
     height: auto;
@@ -283,4 +300,15 @@
     display: flex;
     justify-content: center;
     cursor: pointer;
+}
+@media (max-width: 724px) {
+    .card-hover {
+        height: 600px;
+    }
+}
+
+@media (max-height: 800px) {
+    .card-hover {
+        height: 450px;
+    }
 }

@@ -27,14 +27,21 @@ const HotelItem = (props) => {
                                         <h3>
                                             {props.name}{' '}
                                             <div>
-                                                {Array.from({ length: props.star }, (e) => {
-                                                    return (
-                                                        <i
-                                                            className="fa-solid fa-star"
-                                                            style={{ fontSize: '16px', color: '#2a78ec' }}
-                                                        ></i>
-                                                    );
-                                                })}
+                                                {props.star > 0 ? (
+                                                    Array.from({ length: props.star }, (e) => {
+                                                        return (
+                                                            <i
+                                                                className="fa-solid fa-star"
+                                                                style={{ fontSize: '16px', color: '#2a78ec' }}
+                                                            ></i>
+                                                        );
+                                                    })
+                                                ) : (
+                                                    <i
+                                                        className="fa-solid fa-star"
+                                                        style={{ fontSize: '16px', color: 'white' }}
+                                                    ></i>
+                                                )}
                                             </div>
                                         </h3>
                                         <span>{props.address}</span>
@@ -45,8 +52,8 @@ const HotelItem = (props) => {
                                 </div>
                                 <div className="col-lg-4">
                                     <div className="hotelItem__right">
-                                        <div style={{ color: '#2a78ec' }}>
-                                            Điểm Đánh Giá{' '}
+                                        <div className="hotelItem__right_rate" style={{ color: '#2a78ec' }}>
+                                            <div className="hotelItem__right_title_rate"> Điểm Đánh Giá </div>
                                             <div
                                                 style={{
                                                     display: 'flex',
@@ -70,20 +77,22 @@ const HotelItem = (props) => {
                                                 </svg>
                                                 {props.totalRate}
                                             </div>
+                                            <br></br>
+                                            <br></br>
                                         </div>
-                                        <br></br>
-                                        <br></br>
-                                        <del>
-                                            {oldPrice.toLocaleString(undefined, { maximumFractionDigits: 0 })} VNĐ
-                                        </del>
+                                        <div className="hotelItem__right_Content">
+                                            <del>
+                                                {oldPrice.toLocaleString(undefined, { maximumFractionDigits: 0 })} VNĐ
+                                            </del>
 
-                                        <span color="red">
-                                            {price.toLocaleString(undefined, { maximumFractionDigits: 0 })} VNĐ
-                                        </span>
-                                        <i>/phòng/đêm</i>
-                                        <Button type="primary" className={cx('btn-viewroom')} onClick={HandleViewRoom}>
-                                            <b>Xem phòng</b>
-                                        </Button>
+                                            <span color="red">
+                                                {price.toLocaleString(undefined, { maximumFractionDigits: 0 })} VNĐ
+                                            </span>
+                                            <i>/phòng/đêm</i>
+                                            <Button type="primary" className={cx('btn-viewroom')}>
+                                                <b>Xem phòng</b>
+                                            </Button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

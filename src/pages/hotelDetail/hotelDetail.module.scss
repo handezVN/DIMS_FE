@@ -80,6 +80,11 @@
         flex-direction: column;
     }
 }
+@media (max-width: 724px) {
+    .Date-Picker-Title {
+        display: none;
+    }
+}
 .DetailHotel_Room_Image {
     position: relative;
 }
