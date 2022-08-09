@@ -5,7 +5,7 @@ import FloorItem from './FloorItem';
 import { mdiClose, mdiHome, mdiRefresh, mdiReload } from '@mdi/js';
 import Icon from '@mdi/react';
 import { mdiMagnify } from '@mdi/js';
-import { Divider, Checkbox, Select, notification, Result, Modal } from 'antd';
+import { Divider, Checkbox, Select, notification, Result, Modal, Spin } from 'antd';
 import { mdiPlus } from '@mdi/js';
 import * as Api from '../../../api/ManagerApi';
 import { useDispatch } from 'react-redux';
@@ -19,6 +19,7 @@ export default function ShowRoomStatus({ hotelId }) {
     const auth = JSON.parse(localStorage.getItem('user'));
     const [datas, setDatas] = useState([]);
     const [datatmp, setDataTmp] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const removeDulicate = (arr) => {
         const uniqueIds = [];
         const unique = arr.filter((element) => {
@@ -49,7 +50,8 @@ export default function ShowRoomStatus({ hotelId }) {
     let floorlist1 = [];
     let categoryList1 = [];
     const getStatusRoom = async () => {
-        dispatch(dispatchHostFecth());
+        // dispatch(dispatchHostFecth());
+        setIsLoading(true);
         await Api.getStatusAllRooms(auth.token, hotelId)
             .then((result) => {
                 setDatas(result);
@@ -57,7 +59,8 @@ export default function ShowRoomStatus({ hotelId }) {
                 filterRoom(result);
             })
             .finally(() => {
-                dispatch(dispatchHostSuccess());
+                // dispatch(dispatchHostSuccess());
+                setIsLoading(false);
             });
     };
     const refresh = () => {
@@ -263,176 +266,182 @@ export default function ShowRoomStatus({ hotelId }) {
                 <Icon path={mdiReload} size={'30px'}></Icon> Refresh
             </div>
             <div className={cx('body')}>
-                <div className={cx('title')}>
-                    <h3>All Room Status</h3>
-                    <div className={cx('title-right')}>
-                        {!addRoom ? (
-                            <div className={cx('addRoom-btn')} onClick={() => setAddRoom(!addRoom)}>
-                                <Icon path={mdiPlus} size={'20px'} color={'white'}></Icon> Add Room
-                            </div>
-                        ) : (
-                            <></>
-                        )}
+                <Spin tip="Loading..." spinning={isLoading} wrapperClassName={cx('spinWrap')}>
+                    <div className={cx('title')}>
+                        <h3>All Room Status</h3>
+                        <div className={cx('title-right')}>
+                            {!addRoom ? (
+                                <div className={cx('addRoom-btn')} onClick={() => setAddRoom(!addRoom)}>
+                                    <Icon path={mdiPlus} size={'20px'} color={'white'}></Icon> Add Room
+                                </div>
+                            ) : (
+                                <></>
+                            )}
+                        </div>
                     </div>
-                </div>
-                <div className={cx('container')}>
-                    <div className={cx('left')}>
-                        {(filterFloor ? floorlist : categoryListTmp).map((filter) => {
-                            return (
-                                <div className={cx('Floor')} key={`${filter.id}a`}>
-                                    <div>
-                                        <h3 className={cx('Floor_title')}>
-                                            {filterFloor ? `Lầu ${filter.floor} ` : filter.categoryName} :
-                                        </h3>
-                                    </div>
-                                    {datas.map((data) => {
-                                        if (filterFloor ? data.floor == filter.floor : data.categoryId == filter.id) {
-                                            return (
-                                                <div
-                                                    className={cx('Room_Item')}
-                                                    key={data.roomId}
-                                                    onClick={() => handleRoomClick(data)}
-                                                >
-                                                    <div>
-                                                        <Icon
-                                                            path={mdiHome}
-                                                            size={'24px'}
-                                                            color={
-                                                                data.allStatus === 2
-                                                                    ? '#3DC5B5'
-                                                                    : data.allStatus === 3
-                                                                    ? '#E31717'
-                                                                    : data.allStatus === 1
-                                                                    ? '#000'
-                                                                    : '#F9A000'
-                                                            }
-                                                        ></Icon>
+                    <div className={cx('container')}>
+                        <div className={cx('left')}>
+                            {(filterFloor ? floorlist : categoryListTmp).map((filter) => {
+                                return (
+                                    <div className={cx('Floor')} key={`${filter.id}a`}>
+                                        <div>
+                                            <h3 className={cx('Floor_title')}>
+                                                {filterFloor ? `Lầu ${filter.floor} ` : filter.categoryName} :
+                                            </h3>
+                                        </div>
+                                        {datas.map((data) => {
+                                            if (
+                                                filterFloor ? data.floor == filter.floor : data.categoryId == filter.id
+                                            ) {
+                                                return (
+                                                    <div
+                                                        className={cx('Room_Item')}
+                                                        key={data.roomId}
+                                                        onClick={() => handleRoomClick(data)}
+                                                    >
+                                                        <div>
+                                                            <Icon
+                                                                path={mdiHome}
+                                                                size={'24px'}
+                                                                color={
+                                                                    data.allStatus === 2
+                                                                        ? '#3DC5B5'
+                                                                        : data.allStatus === 3
+                                                                        ? '#E31717'
+                                                                        : data.allStatus === 1
+                                                                        ? '#000'
+                                                                        : '#F9A000'
+                                                                }
+                                                            ></Icon>
+                                                        </div>
+                                                        <div>{data.roomName}</div>
                                                     </div>
-                                                    <div>{data.roomName}</div>
-                                                </div>
-                                            );
-                                        }
-                                        return <></>;
-                                    })}
-                                </div>
-                            );
-                        })}
-                    </div>
-                    <div className={cx('right')}>
-                        {addRoom ? (
-                            <div className={cx('addNewRoom')}>
-                                <div>
-                                    <div>Tên Phòng:</div>
-                                    <input
-                                        placeholder="Room Name"
-                                        style={{ width: 200 }}
-                                        value={addRoomName}
-                                        onChange={(e) => setAddRoomName(e.target.value)}
-                                    ></input>
-                                </div>
-                                <div>
-                                    <div>Lầu</div>
-
-                                    <input
-                                        placeholder="Lầu"
-                                        className={cx('FloorInput')}
-                                        type={'number'}
-                                        value={addRoomFloor}
-                                        onChange={(e) => setAddRoomFloor(e.target.value)}
-                                    ></input>
-                                </div>
-                                <div>
-                                    <div>Loại Phòng</div>
-                                    <Select
-                                        defaultValue={categoryList[0].categoryId}
-                                        value={addRoomCategory}
-                                        style={{ width: 200 }}
-                                        onChange={(e) => setAddRoomCategory(e)}
-                                    >
-                                        {categoryList.map((e) => {
-                                            return <Option value={e.categoryId}>{e.categoryName}</Option>;
+                                                );
+                                            }
+                                            return <></>;
                                         })}
-                                    </Select>
-                                </div>
-                                <div className={cx('btn-add')} onClick={() => handleAddRoom()}>
-                                    Add
-                                </div>
-                                <div className={cx('ActiveAdd')}>
-                                    <div className={cx('btn-add-save')} onClick={() => handleAddRoomSubmit()}>
-                                        Save
                                     </div>
-                                    <div className={cx('btn-add-cancel')} onClick={() => handleCancel()}>
-                                        Cancel
+                                );
+                            })}
+                        </div>
+                        <div className={cx('right')}>
+                            {addRoom ? (
+                                <div className={cx('addNewRoom')}>
+                                    <div>
+                                        <div>Tên Phòng:</div>
+                                        <input
+                                            placeholder="Room Name"
+                                            style={{ width: 200 }}
+                                            value={addRoomName}
+                                            onChange={(e) => setAddRoomName(e.target.value)}
+                                        ></input>
                                     </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div>
-                                {' '}
-                                <div className={cx('searchBox')}>
-                                    <input
-                                        placeholder="Nhâp tên phòng"
-                                        className={cx('searchRoom')}
-                                        value={searchRoom}
-                                        onChange={(e) => setSearchRoom(e.target.value)}
-                                    ></input>
-                                    <Icon path={mdiMagnify} size={'24px'} className={cx('searchIcon')}></Icon>
-                                </div>
-                                <Divider className={cx('divider')}>Filter</Divider>
-                                <div className={cx('FilterRoom')}>
-                                    <div>Hiển Thị Phòng :</div>
-                                    <ul>
-                                        <li>
-                                            <div className={cx('FilterRoom_item')}>
-                                                <div>Phòng trống</div>
-                                                <div>
-                                                    <Checkbox
-                                                        value={SelectRoomAvailable}
-                                                        onChange={() => setSelectRoomAvailable(!SelectRoomAvailable)}
-                                                    ></Checkbox>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className={cx('FilterRoom_item')}>
-                                                <div>Phòng đang có khách</div>
-                                                <div>
-                                                    <Checkbox
-                                                        value={SelectRoomNotAvailable}
-                                                        onChange={() =>
-                                                            setSelectRoomNotAvailable(!SelectRoomNotAvailable)
-                                                        }
-                                                    ></Checkbox>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div className={cx('FilterRoom_item')}>
-                                                <div>Phòng cần vệ sinh</div>
-                                                <div>
-                                                    <Checkbox
-                                                        value={SelectRoomNotClean}
-                                                        onChange={() => setSelectRoomNotClean(!SelectRoomNotClean)}
-                                                    ></Checkbox>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <Divider className={cx('divider')}>Sort</Divider>
-                                <div className={cx('SortRoom')}>Sắp xếp phòng theo :</div>
-                                <div className={cx('btn-Sort')}>
-                                    <div className={cx('btnSortFloor')} onClick={() => setFilterFloor(true)}>
-                                        Lầu
-                                    </div>{' '}
-                                    <div className={cx('btnSortCategory')} onClick={() => setFilterFloor(false)}>
-                                        Loại Phòng
+                                    <div>
+                                        <div>Lầu</div>
+
+                                        <input
+                                            placeholder="Lầu"
+                                            className={cx('FloorInput')}
+                                            type={'number'}
+                                            value={addRoomFloor}
+                                            onChange={(e) => setAddRoomFloor(e.target.value)}
+                                        ></input>
+                                    </div>
+                                    <div>
+                                        <div>Loại Phòng</div>
+                                        <Select
+                                            defaultValue={categoryList[0].categoryId}
+                                            value={addRoomCategory}
+                                            style={{ width: 200 }}
+                                            onChange={(e) => setAddRoomCategory(e)}
+                                        >
+                                            {categoryList.map((e) => {
+                                                return <Option value={e.categoryId}>{e.categoryName}</Option>;
+                                            })}
+                                        </Select>
+                                    </div>
+                                    <div className={cx('btn-add')} onClick={() => handleAddRoom()}>
+                                        Add
+                                    </div>
+                                    <div className={cx('ActiveAdd')}>
+                                        <div className={cx('btn-add-save')} onClick={() => handleAddRoomSubmit()}>
+                                            Save
+                                        </div>
+                                        <div className={cx('btn-add-cancel')} onClick={() => handleCancel()}>
+                                            Cancel
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        )}
+                            ) : (
+                                <div>
+                                    {' '}
+                                    <div className={cx('searchBox')}>
+                                        <input
+                                            placeholder="Nhâp tên phòng"
+                                            className={cx('searchRoom')}
+                                            value={searchRoom}
+                                            onChange={(e) => setSearchRoom(e.target.value)}
+                                        ></input>
+                                        <Icon path={mdiMagnify} size={'24px'} className={cx('searchIcon')}></Icon>
+                                    </div>
+                                    <Divider className={cx('divider')}>Filter</Divider>
+                                    <div className={cx('FilterRoom')}>
+                                        <div>Hiển Thị Phòng :</div>
+                                        <ul>
+                                            <li>
+                                                <div className={cx('FilterRoom_item')}>
+                                                    <div>Phòng trống</div>
+                                                    <div>
+                                                        <Checkbox
+                                                            value={SelectRoomAvailable}
+                                                            onChange={() =>
+                                                                setSelectRoomAvailable(!SelectRoomAvailable)
+                                                            }
+                                                        ></Checkbox>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div className={cx('FilterRoom_item')}>
+                                                    <div>Phòng đang có khách</div>
+                                                    <div>
+                                                        <Checkbox
+                                                            value={SelectRoomNotAvailable}
+                                                            onChange={() =>
+                                                                setSelectRoomNotAvailable(!SelectRoomNotAvailable)
+                                                            }
+                                                        ></Checkbox>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div className={cx('FilterRoom_item')}>
+                                                    <div>Phòng cần vệ sinh</div>
+                                                    <div>
+                                                        <Checkbox
+                                                            value={SelectRoomNotClean}
+                                                            onChange={() => setSelectRoomNotClean(!SelectRoomNotClean)}
+                                                        ></Checkbox>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <Divider className={cx('divider')}>Sort</Divider>
+                                    <div className={cx('SortRoom')}>Sắp xếp phòng theo :</div>
+                                    <div className={cx('btn-Sort')}>
+                                        <div className={cx('btnSortFloor')} onClick={() => setFilterFloor(true)}>
+                                            Lầu
+                                        </div>{' '}
+                                        <div className={cx('btnSortCategory')} onClick={() => setFilterFloor(false)}>
+                                            Loại Phòng
+                                        </div>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </div>
+                </Spin>
             </div>
             {listRoomsDetail.map((e) => {
                 return (
