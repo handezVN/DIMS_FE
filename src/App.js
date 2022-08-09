@@ -79,7 +79,17 @@ function App() {
                     })}
                     {privateRoutes.map((route, index) => {
                         const Page = route.component;
-                        return <Route key={index} path={route.path} element={<Page />}></Route>;
+                        return (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                    <>
+                                        <Page /> {show && <Verify isUser={show} email={email}></Verify>}{' '}
+                                    </>
+                                }
+                            ></Route>
+                        );
                     })}
                 </Routes>
             </div>

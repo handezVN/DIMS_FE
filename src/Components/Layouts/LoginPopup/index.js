@@ -2,7 +2,13 @@ import classNames from 'classnames/bind';
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import styles from './index.module.scss';
-import { dispatchFailed, dispatchFecth, dispatchLogin, dispatchSuccess } from '../../../redux/actions/authAction';
+import {
+    dispatchFailed,
+    dispatchFecth,
+    dispatchGetUser,
+    dispatchLogin,
+    dispatchSuccess,
+} from '../../../redux/actions/authAction';
 import { useDispatch } from 'react-redux';
 import * as authApi from '../../../../src/api/authApi';
 import { message } from 'antd';
@@ -25,6 +31,7 @@ export default function LoginPopup() {
         const { name, value } = e.target;
         setUser({ ...user, [name]: value, err: '', success: '' });
     };
+
     const handleSubmitLogin = async (e) => {
         e.preventDefault();
         try {
@@ -69,6 +76,7 @@ export default function LoginPopup() {
                         setUser({ ...user, err: '', success: data.msg });
                         localStorage.setItem('user', JSON.stringify(data));
                         dispatch(dispatchLogin(data));
+                        dispatch(dispatchGetUser());
                     })
                     .catch((err) => {
                         dispatch(dispatchFailed(err));
@@ -81,6 +89,7 @@ export default function LoginPopup() {
             })
             .catch((err) => {
                 dispatch(dispatchFailed(err));
+                openNotificationWithIcon('error', 'Error', 'Email này đã được đăng ký !');
                 err.message && setUser({ ...user, err: err.message, success: '' });
             });
         // localStorage.setItem('user', JSON.stringify(token));

@@ -69,7 +69,7 @@ export default function Register() {
                         })
                         .catch((err) => {
                             dispatch(dispatchFailed(err));
-                            err.message && setUser({ ...user, err: err.message, success: '' });
+                            // openNotificationWithIcon('error', 'Error', 'Email này đã được sử dụng !');
                         });
                     // setUser({ ...user, err: '', success: data.msg });
                     // localStorage.setItem('user', JSON.stringify(data));
@@ -78,7 +78,7 @@ export default function Register() {
                 })
                 .catch((err) => {
                     dispatch(dispatchFailed(err));
-                    openNotificationWithIcon('error', 'Error', 'Email này đã được sử dụng !');
+                    openNotificationWithIcon('error', 'Error', 'Email này đã được đăng ký !');
                 });
         } else {
             openNotificationWithIcon('warning', 'Warning', msg);
