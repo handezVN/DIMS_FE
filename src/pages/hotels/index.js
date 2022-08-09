@@ -447,10 +447,7 @@ function Hotels() {
                                             return (
                                                 <div key={hotel.hotelId}>
                                                     <HotelItem
-                                                        image={hotel.photos.map((photo) => {
-                                                            if (photo.isMain) return photo.photoUrl;
-                                                            return 'https://picsum.photos/200/300?random=1';
-                                                        })}
+                                                        image={hotel.photos}
                                                         name={hotel.hotelName}
                                                         address={hotel.hotelAddress}
                                                         oldPrice={hotel.smallPrice * 1500}

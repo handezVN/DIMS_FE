@@ -1,6 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './index.module.scss';
 import { Button } from 'antd';
+import { useEffect, useState } from 'react';
 const cx = classNames.bind(styles);
 const HotelItem = (props) => {
     const price = parseInt(props.price);
@@ -12,13 +13,21 @@ const HotelItem = (props) => {
             }&peopleQuanity=${1}`,
         );
     };
+    const [image, setImage] = useState(props.image[0].photoUrl);
+    useEffect(() => {
+        const newData = props.image.filter((e) => e.isMain === true);
+        if (newData.length > 0) {
+            setImage(newData[0].photoUrl);
+        }
+        console.log(newData);
+    }, []);
     return (
         <div className="listHotel__item">
             <div className={cx('mobile-click')} onClick={HandleViewRoom}>
                 <div className={cx('hotelItem')}>
                     <div className="row">
                         <div className={cx('hotelItem__img', 'col-lg-4 col-4')}>
-                            <img src={props.image} alt={props.name} class="" />
+                            <img src={image} alt={props.name} class="" />
                         </div>
                         <div className={cx('hotelItem_mobile', 'col-lg-8', 'col-8')}>
                             <div className="row">
