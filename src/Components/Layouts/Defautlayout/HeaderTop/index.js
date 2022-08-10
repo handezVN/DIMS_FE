@@ -195,7 +195,17 @@ export default function Header() {
                         <div className={cx('card-container')}>
                             <div className={cx('card')}>
                                 {cartShow ? (
-                                    <div className={cx('card-hover')}>
+                                    <div
+                                        className={cx('card-hover')}
+                                        style={{
+                                            maxHeight:
+                                                window.innerWidth > 720
+                                                    ? window.innerHeight - 48
+                                                    : window.innerHeight > 800
+                                                    ? 500
+                                                    : 400,
+                                        }}
+                                    >
                                         {listCart.length < 1 ? (
                                             <div
                                                 style={{
