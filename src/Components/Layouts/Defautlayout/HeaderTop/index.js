@@ -262,7 +262,9 @@ export default function Header() {
                                                         <span>Ngày nhận phòng</span>
                                                     </div>
                                                     <div>
-                                                        <span>{moment(listCart[0].date).format('DD-MM-YYYY')}</span>
+                                                        <span>
+                                                            14:00 {moment(listCart[0].date).format('DD-MM-YYYY')}
+                                                        </span>
                                                     </div>
                                                 </div>
                                                 <div className={cx('inner-right-content-info')}>
@@ -271,6 +273,7 @@ export default function Header() {
                                                     </div>
                                                     <div>
                                                         <span>
+                                                            12:00 {` `}
                                                             {moment(listCart[0].date)
                                                                 .subtract(-listCart[0].night, 'days')
                                                                 .format('DD-MM-YYYY')}

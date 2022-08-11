@@ -102,7 +102,7 @@ export default function PaymentPage2() {
                                             <span>Ngày nhận phòng</span>
                                         </div>
                                         <div>
-                                            <span>{moment(booking.date).format('DD-MM-YYYY')}</span>
+                                            <span>14:00 {moment(booking.date).format('DD-MM-YYYY')}</span>
                                         </div>
                                     </div>
                                     <div className={cx('inner-right-content-info')}>
@@ -111,6 +111,7 @@ export default function PaymentPage2() {
                                         </div>
                                         <div>
                                             <span>
+                                                12:00{' '}
                                                 {moment(booking.date)
                                                     .subtract(-booking.night, 'days')
                                                     .format('DD-MM-YYYY')}
