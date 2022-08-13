@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './index.module.scss';
 import Divider from 'antd/lib/divider';
-import { Modal, Button } from 'antd';
+import { Modal, Button, Tabs } from 'antd';
 import Icon from '@mdi/react';
 import { mdiQrcode } from '@mdi/js';
 export default function BookingItem({
@@ -15,12 +15,55 @@ export default function BookingItem({
     categoryName,
     totalPrice,
     qrCode,
+    bookingDetails,
 }) {
     const cx = classNames.bind(styles);
+    const { TabPane } = Tabs;
+    function callback(key) {
+        console.log(key);
+    }
     function info() {
         Modal.info({
-            title: 'QR Code to Check In Hotel',
-            content: <img src={qrCode} style={{ height: 270, width: 270 }}></img>,
+            title: 'Mã phòng của bạn sẽ xuất hiện sau khi bạn CheckIn thành công !',
+            content: (
+                <Tabs defaultActiveKey="1" onChange={callback} className={cx('Qr-Tabs')}>
+                    <TabPane
+                        tab="QR CheckIn"
+                        key="1"
+                        style={{
+                            width: '100%',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <img src={qrCode} style={{ height: 270, width: 270 }}></img>
+                    </TabPane>
+                    {bookingDetails.map((e, index) => {
+                        if (e.qr !== null) {
+                            return (
+                                <TabPane
+                                    tab={`Phòng ${e.roomName}`}
+                                    key={e.bookingDetailId}
+                                    style={{
+                                        width: '100%',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: 'center',
+                                    }}
+                                >
+                                    <div>{categoryName}</div>
+                                    <img src={e.qr.qrUrl} style={{ height: 270, width: 270 }}></img>
+                                    <div>
+                                        <Button type="primary"> Đổi Mã Mới</Button>
+                                    </div>
+                                </TabPane>
+                            );
+                        }
+                    })}
+                </Tabs>
+            ),
+            className: 'hello',
             onOk() {},
         });
     }

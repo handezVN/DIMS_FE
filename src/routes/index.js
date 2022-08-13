@@ -13,8 +13,10 @@ import dashboard from '../pages/dashboard';
 import HotelsHost from '../pages/Manager/Hotels';
 import DetailHotels from '../pages/Manager/Hotels/HotelDetail';
 import HotelSelection from '../pages/Manager/Setting/SelectHotel';
+import PageNotExits from '../pages/PageNotExits';
 const publicRoutes = [
     { path: '/', component: Home },
+    { path: '*', component: PageNotExits },
     { path: '/dashboard', component: dashboard },
     { path: '/hotels', component: Hotels },
     { path: '/login', component: Login },

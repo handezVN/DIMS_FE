@@ -10,6 +10,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import * as authAPI from '../src/api/authApi';
 import Verify from './Components/utils/verifyEmail';
+import PageNotExits from './pages/PageNotExits';
 function App() {
     const dispatch = useDispatch();
     useEffect(() => {
