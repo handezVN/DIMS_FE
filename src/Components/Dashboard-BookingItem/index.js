@@ -2,9 +2,11 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import styles from './index.module.scss';
 import Divider from 'antd/lib/divider';
-import { Modal, Button, Tabs } from 'antd';
+import { Modal, Button, Tabs, notification } from 'antd';
 import Icon from '@mdi/react';
 import { mdiQrcode } from '@mdi/js';
+import * as Api from '../../api/authApi';
+
 export default function BookingItem({
     imgUrl,
     hotelName,
@@ -19,9 +21,41 @@ export default function BookingItem({
 }) {
     const cx = classNames.bind(styles);
     const { TabPane } = Tabs;
+    const auth = JSON.parse(localStorage.getItem('user'));
     function callback(key) {
         console.log(key);
     }
+    const openNotificationWithIcon = (type, message, description) => {
+        notification[type]({
+            message: message,
+            description: description,
+        });
+    };
+    const handleGetNewQRCode = () => {
+        console.log('heloo');
+        if (window.confirm('Xác nhận đổi mã QR code !')) {
+            // dispatch(dispatchHostFecth());
+            Api.ReNewQrCode({
+                token: auth.token,
+                bookingDetailId: bookingDetails.bookingDetailId,
+                bookingId: bookingId,
+            })
+                .then((result) => {
+                    openNotificationWithIcon(
+                        'success',
+                        'Get new QR Code Success ! ',
+                        'Mã QR mới đã được gửi lại vào Email mà bạn đã đăng ký !',
+                    );
+                })
+                .catch((err) => {
+                    openNotificationWithIcon(
+                        'error',
+                        'Get new QR Code Failed ! ',
+                        'Server hiện đang bận vui lòng thử lại sau !',
+                    );
+                });
+        }
+    };
     function info() {
         Modal.info({
             title: 'Mã phòng của bạn sẽ xuất hiện sau khi bạn CheckIn thành công !',
@@ -53,9 +87,12 @@ export default function BookingItem({
                                     }}
                                 >
                                     <div>{categoryName}</div>
-                                    <img src={e.qr.qrUrl} style={{ height: 270, width: 270 }}></img>
+                                    <img src={e.qr.qrUrl} style={{ height: 270, width: 270 }} alt="QR Code"></img>
                                     <div>
-                                        <Button type="primary"> Đổi Mã Mới</Button>
+                                        <Button type="primary" onClick={handleGetNewQRCode}>
+                                            {' '}
+                                            Đổi Mã Mới
+                                        </Button>
                                     </div>
                                 </TabPane>
                             );
