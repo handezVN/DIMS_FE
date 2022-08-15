@@ -165,7 +165,7 @@ export default function Booking() {
             key: 'qrCheckUp',
             render: (tags) => (
                 <span>
-                    {tags.checkIn === null ? (
+                    {tags === null ? (
                         <Tag color={'volcano'}>Chưa Check In</Tag>
                     ) : tags.checkOut === null ? (
                         <Tag color={'green'}>Chưa Check Out</Tag>

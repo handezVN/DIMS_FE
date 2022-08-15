@@ -58,11 +58,19 @@ export default function BookingInfo({ data, handleClose }) {
                 <div className={cx('roomDetailContent-one')}>
                     <div className={cx(['d-flex', 'content_item'])}>
                         <div>Check In Date : </div>
-                        <div>{moment(data.qrCheckUp.checkIn).format('HH:MM ,DD-MM-YY')}</div>
+                        <div>
+                            {moment(data.qrCheckUp !== null ? data.qrCheckUp.checkIn : undefined).format(
+                                'HH:MM ,DD-MM-YY',
+                            )}
+                        </div>
                     </div>
                     <div className={cx(['d-flex', 'content_item'])}>
                         <div>Check Out Date : </div>
-                        <div>{moment(data.qrCheckUp.checkOut).format('HH:MM ,DD-MM-YY')}</div>
+                        <div>
+                            {moment(data.qrCheckUp !== null ? data.qrCheckUp.checkOut : undefined).format(
+                                'HH:MM ,DD-MM-YY',
+                            )}
+                        </div>
                     </div>
                     <div className={cx(['d-flex', 'content_item'])}>
                         <div>Type : </div>
