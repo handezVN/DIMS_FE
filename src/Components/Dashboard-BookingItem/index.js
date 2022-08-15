@@ -6,6 +6,8 @@ import { Modal, Button, Tabs, notification } from 'antd';
 import Icon from '@mdi/react';
 import { mdiQrcode } from '@mdi/js';
 import * as Api from '../../api/authApi';
+import { useDispatch } from 'react-redux';
+import { dispatchHostFecth, dispatchHostSuccess } from '../../redux/actions/authAction';
 
 export default function BookingItem({
     imgUrl,
@@ -19,6 +21,7 @@ export default function BookingItem({
     qrCode,
     bookingDetails,
 }) {
+    const dispatch = useDispatch();
     const cx = classNames.bind(styles);
     const { TabPane } = Tabs;
     const auth = JSON.parse(localStorage.getItem('user'));
@@ -31,15 +34,11 @@ export default function BookingItem({
             description: description,
         });
     };
-    const handleGetNewQRCode = () => {
-        console.log('heloo');
+    const handleGetNewQRCode = (data) => {
+        // console.log(data);
         if (window.confirm('Xác nhận đổi mã QR code !')) {
-            // dispatch(dispatchHostFecth());
-            Api.ReNewQrCode({
-                token: auth.token,
-                bookingDetailId: bookingDetails.bookingDetailId,
-                bookingId: bookingId,
-            })
+            dispatch(dispatchHostFecth());
+            Api.ReNewQrCode(auth.token, bookingId, data)
                 .then((result) => {
                     openNotificationWithIcon(
                         'success',
@@ -53,6 +52,9 @@ export default function BookingItem({
                         'Get new QR Code Failed ! ',
                         'Server hiện đang bận vui lòng thử lại sau !',
                     );
+                })
+                .finally(() => {
+                    dispatch(dispatchHostSuccess());
                 });
         }
     };
@@ -89,8 +91,7 @@ export default function BookingItem({
                                     <div>{categoryName}</div>
                                     <img src={e.qr.qrUrl} style={{ height: 270, width: 270 }} alt="QR Code"></img>
                                     <div>
-                                        <Button type="primary" onClick={handleGetNewQRCode}>
-                                            {' '}
+                                        <Button type="primary" onClick={() => handleGetNewQRCode(e.bookingDetailId)}>
                                             Đổi Mã Mới
                                         </Button>
                                     </div>

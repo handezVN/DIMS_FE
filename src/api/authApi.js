@@ -50,7 +50,7 @@ export const ChangeForGot_Password = async (email, password, confirmPassword, un
     return res.data;
 };
 
-export const ReNewQrCode = async ({ token, bookingId, bookingDetailId }) => {
+export const ReNewQrCode = async (token, bookingId, bookingDetailId) => {
     const res = await axios.put(
         `https://dims-system.herokuapp.com/api/UserQr/User-get-new-Qr-room?bookingID=${bookingId}&bookingdetailID=${bookingDetailId}`,
         '',
