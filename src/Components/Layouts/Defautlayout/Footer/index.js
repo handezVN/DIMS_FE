@@ -15,10 +15,10 @@ export default function Footer() {
                             <div className="row">
                                 {/* Grid column */}
                                 <div className="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
-                                    <h6 className="text-uppercase mb-4 font-weight-bold">Company name</h6>
+                                    <h6 className="text-uppercase mb-4 font-weight-bold">DIMS Project</h6>
                                     <p>
-                                        Here you can use rows and columns to organize your footer content. Lorem ipsum
-                                        dolor sit amet, consectetur adipisicing elit.
+                                        Design and implement a management system for a chain of hotels and motels using
+                                        IoT technology
                                     </p>
                                 </div>
                                 {/* Grid column */}
@@ -28,22 +28,22 @@ export default function Footer() {
                                     <h6 className="text-uppercase mb-4 font-weight-bold">Products</h6>
                                     <p>
                                         <a className="text" href="https://www.facebook.com/TA.Handez/">
-                                            MDBootstrap
+                                            Ant Design
                                         </a>
                                     </p>
                                     <p>
                                         <a className="text" href="https://www.facebook.com/TA.Handez/">
-                                            MDWordPress
+                                            React
                                         </a>
                                     </p>
                                     <p>
                                         <a className="text" href="https://www.facebook.com/TA.Handez/">
-                                            BrandFlow
+                                            Redux
                                         </a>
                                     </p>
                                     <p>
                                         <a className="text" href="https://www.facebook.com/TA.Handez/">
-                                            Bootstrap Angular
+                                            Bootstrap
                                         </a>
                                     </p>
                                 </div>
@@ -55,16 +55,16 @@ export default function Footer() {
                                 <div className="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
                                     <h6 className="text-uppercase mb-4 font-weight-bold">Contact</h6>
                                     <p>
-                                        <i className="fas fa-home mr-3" /> New York, NY 10012, US
+                                        <i className="fas fa-home mr-3" /> FPT University , HCM City
                                     </p>
                                     <p>
-                                        <i className="fas fa-envelope mr-3" /> info@gmail.com
+                                        <i className="fas fa-envelope mr-3" /> dimsmainsystem@gmail.com
                                     </p>
                                     <p>
-                                        <i className="fas fa-phone mr-3" /> + 01 234 567 88
+                                        <i className="fas fa-phone mr-3" /> + 84 79 799 1707
                                     </p>
                                     <p>
-                                        <i className="fas fa-print mr-3" /> + 01 234 567 89
+                                        <i className="fas fa-print mr-3" /> + 84 79 799 1707
                                     </p>
                                 </div>
                                 {/* Grid column */}
