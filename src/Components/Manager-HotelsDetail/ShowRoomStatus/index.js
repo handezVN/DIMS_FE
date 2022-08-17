@@ -9,7 +9,7 @@ import { Divider, Checkbox, Select, notification, Result, Modal, Spin } from 'an
 import { mdiPlus } from '@mdi/js';
 import * as Api from '../../../api/ManagerApi';
 import { useDispatch } from 'react-redux';
-import { dispatchHostFecth, dispatchHostSuccess } from '../../../redux/actions/authAction';
+import { dispatchGetRoomSucces, dispatchHostFecth, dispatchHostSuccess } from '../../../redux/actions/authAction';
 import { mdiPencil } from '@mdi/js';
 import RoomInfo from './RoomInfo';
 export default function ShowRoomStatus({ hotelId }) {
@@ -56,6 +56,7 @@ export default function ShowRoomStatus({ hotelId }) {
             .then((result) => {
                 setDatas(result);
                 setDataTmp(result);
+                dispatch(dispatchGetRoomSucces(result));
                 filterRoom(result);
             })
             .finally(() => {

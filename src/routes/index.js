@@ -8,9 +8,7 @@ import PaymentPage2 from '../pages/payment/Step2/Payment_Step2';
 import PaymentPage3 from '../pages/payment/Step3/Payment_Step3';
 import Dashboard from '../pages/Manager/dashboard';
 import Booking from '../pages/Manager/Booking';
-import Rooms from '../pages/Manager/Rooms';
 import dashboard from '../pages/dashboard';
-import HotelsHost from '../pages/Manager/Hotels';
 import DetailHotels from '../pages/Manager/Hotels/HotelDetail';
 import HotelSelection from '../pages/Manager/Setting/SelectHotel';
 import PageNotExits from '../pages/PageNotExits';
@@ -35,8 +33,6 @@ const hostRoutes = [
     { path: '/manager/setting/hotelselection', component: HotelSelection },
     { path: '/manager/booking', component: Booking },
     { path: '/manager/datalog', component: DataLog },
-    { path: '/manager/room', component: Rooms },
-    { path: '/manager/hotels', component: HotelsHost },
     { path: '/mananger/hotels/detailHotels', component: DetailHotels },
 ];
 export { publicRoutes, privateRoutes, hostRoutes };

@@ -38,6 +38,12 @@ export const dispatchSuccess = () => {
         type: ACTIONS.SUCCESS,
     };
 };
+export const dispatchGetRoomSucces = (payload) => {
+    return {
+        type: ACTIONS.ROOM_SUCCESS,
+        payload,
+    };
+};
 export const dispatchFailed = () => {
     return {
         type: ACTIONS.FAILED,
