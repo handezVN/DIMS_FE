@@ -1,5 +1,20 @@
 import axios from 'axios';
 
+export const getQRCodeLog = async (from, to, token) => {
+    const res = await axios.get(`api/HostManage/Get-all-qr-view-Log?hotelId=0&startDate=${from}&endDate=${to}`, {
+        headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+};
+export const getDoorLog = async (roomId, from, to, token) => {
+    const res = await axios.get(
+        `https://dims-system.herokuapp.com/api/HostManage/Get-all-door-Log?roomId=${roomId}&startDate=${from}&endDate=${to}`,
+        {
+            headers: { Authorization: `Bearer ${token}` },
+        },
+    );
+    return res.data;
+};
 export const getListHotels = async (token) => {
     const res = await axios.get('api/HotelManage/List-Hotels', {
         headers: { Authorization: `Bearer ${token}` },

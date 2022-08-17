@@ -14,6 +14,7 @@ import HotelsHost from '../pages/Manager/Hotels';
 import DetailHotels from '../pages/Manager/Hotels/HotelDetail';
 import HotelSelection from '../pages/Manager/Setting/SelectHotel';
 import PageNotExits from '../pages/PageNotExits';
+import DataLog from '../pages/Manager/DataLog';
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '*', component: PageNotExits },
@@ -33,6 +34,7 @@ const hostRoutes = [
     { path: '/manager/dashboard', component: Dashboard },
     { path: '/manager/setting/hotelselection', component: HotelSelection },
     { path: '/manager/booking', component: Booking },
+    { path: '/manager/datalog', component: DataLog },
     { path: '/manager/room', component: Rooms },
     { path: '/manager/hotels', component: HotelsHost },
     { path: '/mananger/hotels/detailHotels', component: DetailHotels },
