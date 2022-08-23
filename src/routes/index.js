@@ -13,6 +13,7 @@ import DetailHotels from '../pages/Manager/Hotels/HotelDetail';
 import HotelSelection from '../pages/Manager/Setting/SelectHotel';
 import PageNotExits from '../pages/PageNotExits';
 import DataLog from '../pages/Manager/DataLog';
+import PageExpired from '../pages/PageExpired';
 const publicRoutes = [
     { path: '/', component: Home },
     { path: '*', component: PageNotExits },
@@ -21,6 +22,10 @@ const publicRoutes = [
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/hotels/hoteldetail', component: HotelDetail },
+    {
+        path: '/expired',
+        component: PageExpired,
+    },
 ];
 
 const privateRoutes = [

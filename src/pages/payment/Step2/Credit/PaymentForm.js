@@ -53,8 +53,8 @@ export default function PaymentForm() {
                                 localStorage.removeItem('add_booking_cart');
                             })
                             .catch((err) => {
-                                alert('Error ! Please try again !');
-                                console.log(err);
+                                navigator('/expired');
+                                localStorage.removeItem('add_booking_cart');
                                 dispatch(dispatchFailed());
                             });
                     });
