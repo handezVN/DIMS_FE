@@ -8,8 +8,8 @@ export default function PageExpired() {
     };
     return (
         <Result
-            status="404"
-            title="404"
+            status="500"
+            title="500"
             subTitle="Sorry, the page you visited expired ."
             extra={
                 <Button type="primary" onClick={backHome}>

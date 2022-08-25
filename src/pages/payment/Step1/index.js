@@ -25,6 +25,10 @@ export default function PaymentPage2() {
     const [img, setImg] = useState('');
     const islogged = useSelector((state) => state.auth.isLogged);
     console.log(islogged);
+    const scrolltoItem = (item) => {
+        const e = document.getElementById(item);
+        e.scrollIntoView();
+    };
     useEffect(() => {
         const stringif_booking = localStorage.getItem('booking');
         const parse_booking = JSON.parse(stringif_booking);
@@ -40,6 +44,7 @@ export default function PaymentPage2() {
             setImg(parse_booking.hotelImg[0].photoUrl);
         }
         setBooking(parse_booking);
+        scrolltoItem('inner');
         // localStorage.removeItem('booking');
     }, []);
     const handleSubmit = () => {
@@ -82,7 +87,7 @@ export default function PaymentPage2() {
         });
     };
     return (
-        <div>
+        <div id={'inner'}>
             {booking ? (
                 <div className={cx('reset-css')}>
                     <PaymentHeader step1="true"></PaymentHeader>
