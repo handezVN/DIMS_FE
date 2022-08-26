@@ -7,6 +7,8 @@ import * as Api from '../../api/ManagerApi';
 import { Select } from 'antd';
 import moment from 'moment';
 import { Spin, Alert } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { dispatchGetAllDaysInMonth, dispatchGetAllMonthInYears } from '../../redux/actions/authAction';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 interface MoneyApi {
     bookings: [];
@@ -44,6 +46,7 @@ export function ChartYearInfo() {
 
         return dates.length;
     }
+    const dispatch = useDispatch();
     const hotelSelected = JSON.parse(localStorage.getItem('hotelSelected') || '');
     const auth = JSON.parse(localStorage.getItem('user') || '');
     const [listMoney, setListMoney] = useState([]);
@@ -59,18 +62,33 @@ export function ChartYearInfo() {
         });
     });
     // uploaders;
-
+    const oldData = useSelector((state) => state.RoomReducer.monthsinyear || []);
+    const [isLoading, setIsLoading] = useState(false);
     useEffect(() => {
-        Promise.all(getMoney)
-            .catch((err) => {
-                console.log(err);
-            })
-            .then((result) => {
-                datatmp.sort(function (a, b) {
-                    return a.month - b.month;
+        let flag = true;
+        if (oldData.length > 0) {
+            flag = false;
+            if (year === d.getFullYear()) {
+                setListMoney(oldData);
+            } else {
+                flag = true;
+            }
+        }
+        if (flag) {
+            setIsLoading(true);
+            Promise.all(getMoney)
+                .catch((err) => {
+                    console.log(err);
+                })
+                .then((result) => {
+                    datatmp.sort(function (a, b) {
+                        return a.month - b.month;
+                    });
+                    setListMoney(datatmp);
+                    dispatch(dispatchGetAllMonthInYears(datatmp));
+                    setIsLoading(false);
                 });
-                setListMoney(datatmp);
-            });
+        }
     }, [year]);
     const labels = [
         'January',
@@ -104,7 +122,9 @@ export function ChartYearInfo() {
                 <Option value={d.getFullYear() - 2}>{d.getFullYear() - 2}</Option>
                 <Option value={d.getFullYear() - 3}>{d.getFullYear() - 3}</Option>
             </Select>
-            <Bar options={options} data={data} />;
+            <Spin tip="Loading..." spinning={isLoading}>
+                <Bar options={options} data={data} />;
+            </Spin>
         </div>
     );
 }
@@ -147,11 +167,13 @@ export function ChartMonthInfo() {
 
         return dates.length;
     }
+    const dispatch = useDispatch();
     const hotelSelected = JSON.parse(localStorage.getItem('hotelSelected') || '');
     const auth = JSON.parse(localStorage.getItem('user') || '');
     const [listMoney, setListMoney] = useState([]);
     let datatmp = [];
     let dates = [];
+
     const getMoneyOfDate = [...Array(datesInMonth)].map((e, i) => {
         // Initial FormData
         // Make an AJAX upload request using Axios (replace Cloudinary URL below with your own)
@@ -173,23 +195,39 @@ export function ChartMonthInfo() {
     // });
     // uploaders;
     const [isLoading, setIsLoading] = useState(false);
+    const oldData = useSelector((state) => state.RoomReducer.daysinmonth || []);
     useEffect(() => {
-        setDateInMonth(getAllDaysInMonth(year, month));
-        console.log(month, getAllDaysInMonth(year, month));
-        setIsLoading(true);
-        Promise.all(getMoneyOfDate)
-            .catch((err) => {
-                console.log(err);
-            })
-            .then((result) => {
-                datatmp.sort(function (a, b) {
-                    return a.dates - b.dates;
+        let flag = true;
+        if (oldData.length > 0) {
+            flag = false;
+            if (year === d.getFullYear() || month === d.getMonth()) {
+                setListMoney(oldData);
+                dates = [];
+                oldData.forEach((element) => {
+                    dates.push(element.dates);
                 });
-                setListMoney(datatmp);
-                console.log(datatmp);
                 setLabels(dates);
-            })
-            .finally(() => setIsLoading(false));
+            } else {
+                flag = true;
+            }
+        }
+        if (flag) {
+            setDateInMonth(getAllDaysInMonth(year, month));
+            setIsLoading(true);
+            Promise.all(getMoneyOfDate)
+                .catch((err) => {
+                    console.log(err);
+                })
+                .then((result) => {
+                    datatmp.sort(function (a, b) {
+                        return a.dates - b.dates;
+                    });
+                    setListMoney(datatmp);
+                    dispatch(dispatchGetAllDaysInMonth(datatmp));
+                    setLabels(dates);
+                })
+                .finally(() => setIsLoading(false));
+        }
     }, [month, year]);
     const labels2 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '00', '11', '12'];
     const data = {

@@ -20,7 +20,7 @@ export default function DataLog() {
     const [To, setTo] = useState(moment().subtract(-1, 'days').format(dateFormat));
     const [From2, setFrom2] = useState(moment().format('YYYY-MM-DD'));
     const [To2, setTo2] = useState(moment().subtract(-1, 'days').format(dateFormat));
-    const [selectRoom, setRoom] = useState(ListRoom[0].roomId);
+    const [selectRoom, setRoom] = useState(-1);
     const auth = JSON.parse(localStorage.getItem('user'));
     const { RangePicker } = DatePicker;
     const openNotificationWithIcon = (type, message, description) => {
@@ -46,6 +46,11 @@ export default function DataLog() {
     useEffect(() => {
         refresh();
     }, []);
+    useEffect(() => {
+        if (ListRoom.length > 0) {
+            setRoom([ListRoom[0].roomId]);
+        }
+    }, [ListRoom]);
     function onChange(value) {
         selectRoom(value);
     }
@@ -59,6 +64,7 @@ export default function DataLog() {
     const handleSearchGetQrCodeLog = () => {
         getQRCodeLog();
     };
+    console.log(ListRoom);
     return (
         <div className={cx('body')}>
             <div className={cx('container')}>
@@ -122,13 +128,19 @@ export default function DataLog() {
                                         onChange={onChange}
                                         onSearch={onSearch}
                                     >
-                                        {ListRoom.map((room) => {
-                                            return (
-                                                <Option value={`RoomID-${room.roomId}`} key={room.roomId}>
-                                                    Phòng {room.roomName}
-                                                </Option>
-                                            );
-                                        })}
+                                        {ListRoom.length > 0 ? (
+                                            ListRoom.map((room) => {
+                                                return (
+                                                    <Option value={`RoomID-${room.roomId}`} key={room.roomId}>
+                                                        Phòng {room.roomName}
+                                                    </Option>
+                                                );
+                                            })
+                                        ) : (
+                                            <Option value={`RoomID-99999`} key={-99999}>
+                                                Phòng 99999
+                                            </Option>
+                                        )}
                                     </Select>
                                     ,
                                     <RangePicker

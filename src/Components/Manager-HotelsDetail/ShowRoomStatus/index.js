@@ -5,10 +5,10 @@ import FloorItem from './FloorItem';
 import { mdiClose, mdiHome, mdiRefresh, mdiReload } from '@mdi/js';
 import Icon from '@mdi/react';
 import { mdiMagnify } from '@mdi/js';
-import { Divider, Checkbox, Select, notification, Result, Modal, Spin } from 'antd';
+import { Divider, Checkbox, Select, notification, Result, Modal, Spin, List } from 'antd';
 import { mdiPlus } from '@mdi/js';
 import * as Api from '../../../api/ManagerApi';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { dispatchGetRoomSucces, dispatchHostFecth, dispatchHostSuccess } from '../../../redux/actions/authAction';
 import { mdiPencil } from '@mdi/js';
 import RoomInfo from './RoomInfo';
@@ -64,15 +64,28 @@ export default function ShowRoomStatus({ hotelId }) {
                 setIsLoading(false);
             });
     };
+    const ListRooms = useSelector((state) => state.RoomReducer.data || []);
     const refresh = () => {
         getStatusRoom();
         Api.getListCategory(hotelId, auth.token).then((result) => {
             setCategoryList(result);
         });
     };
+
     useEffect(() => {
-        refresh();
+        if (ListRooms.length > 0) {
+            setDataTmp(ListRooms);
+            filterRoom(ListRooms);
+            Api.getListCategory(hotelId, auth.token).then((result) => {
+                setCategoryList(result);
+            });
+        } else {
+            refresh();
+        }
     }, []);
+    useEffect(() => {
+        setDatas(datatmp);
+    }, [datatmp]);
     useEffect(() => {
         let newsData = [];
         let flag = false;

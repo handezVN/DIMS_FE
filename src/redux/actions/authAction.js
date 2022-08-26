@@ -79,3 +79,17 @@ export const dispatchHostFailed = () => {
         type: ACTIONS.HOSTFAILED,
     };
 };
+
+export const dispatchGetAllDaysInMonth = (payload) => {
+    return {
+        type: ACTIONS.GET_ALLDAYSINMONTH,
+        payload,
+    };
+};
+
+export const dispatchGetAllMonthInYears = (payload) => {
+    return {
+        type: ACTIONS.GET_AllMONTHSINYEARS,
+        payload,
+    };
+};

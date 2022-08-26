@@ -90,6 +90,7 @@ export default function Dashboard() {
     };
 
     const handleSearch = () => {
+        dispatch(dispatchHostFecth());
         return HostApi.getMoneyCheckOut(hotelSelected.hotelid, listDate.fromDate, listDate.toDate, auth.token)
             .then((result) => {
                 setTotalSearch(result);
@@ -101,8 +102,10 @@ export default function Dashboard() {
                         total: result.totalPriceByfilter,
                     },
                 ]);
+                dispatch(dispatchHostSuccess());
+                scrolltoItem('bookingSearch');
             })
-            .catch((err) => console.log(err));
+            .catch((err) => dispatch(dispatchHostFailed()));
     };
     const scrolltoItem = (item) => {
         const e = document.getElementById(item);
@@ -161,7 +164,7 @@ export default function Dashboard() {
                     <BoxInfo
                         background={'#8e44ad'}
                         icon={mdiWalletTravel}
-                        strong={'10'}
+                        strong={'Maintenance'}
                         title={'Booking in Online'}
                     ></BoxInfo>
                     <div
@@ -207,7 +210,7 @@ export default function Dashboard() {
                     Search
                 </Button>
             </div>
-            <div style={{ marginBottom: 300 }} id="bookingItem">
+            <div style={{ marginBottom: 300 }} id="bookingSearch">
                 {listTable.map((e) => {
                     return <TableInfo data={e} onClose={handleClose}></TableInfo>;
                 })}
