@@ -167,7 +167,7 @@ export default function DataLog() {
                                 <Typography.Text mark>
                                     [{moment(item.createDate).format('HH:MM:SS , DD-MM-YYYY')}]
                                 </Typography.Text>{' '}
-                                Door Status : QR Code <b>{item.doorLogStatus ? 'True' : 'False'}</b>
+                                Door Status : QR Code <b>{item.doorCondition === '1' ? 'True' : 'False'}</b>
                             </List.Item>
                         )}
                     />
