@@ -34,14 +34,20 @@ export default function DataLog() {
         getQRCodeLog();
     };
     const getQRCodeLog = () => {
-        Api.getQRCodeLog(From, To, auth.token).then((result) => {
-            setData(result);
-        });
+        dispatch(dispatchHostFecth());
+        Api.getQRCodeLog(From, To, auth.token)
+            .then((result) => {
+                setData(result);
+            })
+            .finally(() => dispatch(dispatchHostSuccess()));
     };
     const getDoorLog = () => {
-        Api.getDoorLog(selectRoom, From2, To2, auth.token).then((result) => {
-            setDoor(result.reverse());
-        });
+        dispatch(dispatchHostFecth());
+        Api.getDoorLog(selectRoom, From2, To2, auth.token)
+            .then((result) => {
+                setDoor(result.reverse());
+            })
+            .finally(() => dispatch(dispatchHostSuccess()));
     };
     useEffect(() => {
         refresh();
@@ -52,7 +58,7 @@ export default function DataLog() {
         }
     }, [ListRoom]);
     function onChange(value) {
-        selectRoom(value);
+        setRoom(value);
     }
 
     function onSearch(val) {
@@ -64,25 +70,11 @@ export default function DataLog() {
     const handleSearchGetQrCodeLog = () => {
         getQRCodeLog();
     };
-    console.log(ListRoom);
+
     return (
         <div className={cx('body')}>
             <div className={cx('container')}>
                 <div style={{ width: '100%', paddingLeft: 30, paddingBottom: 10 }}>
-                    <div
-                        onClick={() => refresh()}
-                        style={{
-                            width: 120,
-                            height: 30,
-                            cursor: 'pointer',
-                            border: '1px solid',
-                            borderRadius: 10,
-                            textAlign: 'center',
-                            background: 'white',
-                        }}
-                    >
-                        <Icon2 path={mdiReload} size={'30px'}></Icon2> Refresh
-                    </div>
                     <List
                         header={
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
@@ -131,7 +123,7 @@ export default function DataLog() {
                                         {ListRoom.length > 0 ? (
                                             ListRoom.map((room) => {
                                                 return (
-                                                    <Option value={`RoomID-${room.roomId}`} key={room.roomId}>
+                                                    <Option value={`${room.roomId}`} key={room.roomId}>
                                                         Phòng {room.roomName}
                                                     </Option>
                                                 );
